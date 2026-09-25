@@ -121,6 +121,7 @@ function mixer() {
     channels.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.channel === scene)));
     if (tally) tally.textContent = channels.find((c) => c.dataset.channel === scene)?.dataset.label ?? '';
     setSceneLinks(scene);
+    document.querySelector<HTMLElement>('[data-mixer]')?.setAttribute('data-scene', scene);
 
     // Monitor: Wischblende von links, wie am Bildmischer
     const prev = current;

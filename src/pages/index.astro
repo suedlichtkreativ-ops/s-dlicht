@@ -26,10 +26,10 @@ const first = scenes[0];
   title={site.name}
   description="Alexander Malkevich filmt und fotografiert Open Airs, Clubnächte und Fight Nights, macht Fotos für Gastro und Marken und baut KI-Spots. Südlicht Studio, Kaufbeuren."
 >
-  <section class="mixer wrap" aria-labelledby="hero-title">
+  <section class="mixer wrap" aria-labelledby="hero-title" data-mixer data-scene="club">
     <div class="mixer-grid">
       <div class="mixer-copy">
-        <h1 id="hero-title" class="display mixer-h1" data-split>Film, Foto und KI&#8209;Spots <em>aus der Szene.</em></h1>
+        <h1 id="hero-title" class="display mixer-h1"><span class="l">Film, Foto</span> <span class="l">und KI&#8209;Spots</span> <em class="l">aus der Szene.</em></h1>
         <p class="lead" data-reveal>Ich filme Open Airs, Clubnächte und Fight Nights, fotografiere für Gastro und Marken und baue KI-Spots. Geschnitten fürs Hochformat, damit man im Feed hängen bleibt.</p>
         <div class="btn-row" data-reveal>
           <a class="btn primary" href="/kontakt/" data-scene-link="kontakt">Projekt anfragen <Arrow /></a>
@@ -88,7 +88,7 @@ const first = scenes[0];
           </div>
           <div class="pgrid">
             {list.slice(0, 3).map((p) => <ProjectCard project={p} />)}
-            <div class="cta-card">
+            <div class:list={['cta-card', { 'span-2': list.slice(0, 3).length === 2 }]}>
               <h3>{s.cta}</h3>
               <div style="display:grid;gap:18px">
                 <p>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>

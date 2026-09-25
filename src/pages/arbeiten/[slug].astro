@@ -62,13 +62,12 @@ const sizesOf = (l: string) => (l === 'wide' ? '100vw' : l === 'third' ? '(max-w
     </div>
   </section>
 
-  <a class="next" href={`/arbeiten/${next.slug}/`}>
+  <a class="next" href={`/arbeiten/${next.slug}/`} aria-label={`Nächstes Projekt: ${next.title}`}>
     <span class="bgimg" aria-hidden="true">
       <Picture src={next.cover} alt="" {...pic} widths={pickWidths([800, 1600])} sizes="100vw" loading="lazy" />
     </span>
     <span class="wrap" style="display:block">
-      <span class="next-k">Nächstes Projekt</span>
-      <span class="display" style="display:block">{next.title}</span>
+      <span class="display">{next.title} <Arrow /></span>
     </span>
   </a>
 
