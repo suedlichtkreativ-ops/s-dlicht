@@ -1,4 +1,5 @@
 ---
+import { pic, pickWidths } from '../data/img';
 import { Picture, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Media from '../components/Media.astro';
@@ -105,7 +106,7 @@ const word = 'Südlicht'.split('');
     <div class="sec-head mono muted"><span class="label">Über mich</span><span>Kaufbeuren</span></div>
     <div class="about">
       <div class="portrait" data-relight>
-        <Picture src={portrait} alt="Portrait von Alexander Malkevich" formats={['avif', 'webp']} widths={[480, 800, 1000]} sizes="(max-width: 860px) 100vw, 40vw" loading="lazy" />
+        <Picture src={portrait} alt="Portrait von Alexander Malkevich" {...pic} widths={pickWidths([480, 800, 1000])} sizes="(max-width: 860px) 100vw, 40vw" loading="lazy" />
       </div>
       <div style="display:grid;gap:28px">
         <h2 id="about-title" class="display h2" data-split>Hi, ich bin Alex.</h2>

@@ -1,4 +1,5 @@
 ---
+import { pic, pickWidths } from '../data/img';
 import { Picture, getImage } from 'astro:assets';
 import type { Item } from '../data/work';
 
@@ -23,8 +24,8 @@ const posterUrl = item.type === 'vid' ? (await getImage({ src: item.poster, widt
     <Picture
       src={item.image}
       alt={alt}
-      formats={['avif', 'webp']}
-      widths={[480, 800, 1200, 1600].filter((w) => w <= item.image.width)}
+      {...pic}
+      widths={pickWidths([480, 800, 1200, 1600].filter((w) => w <= item.image.width))}
       sizes={sizes}
       loading={eager ? 'eager' : 'lazy'}
       fetchpriority={eager ? 'high' : 'auto'}

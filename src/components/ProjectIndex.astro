@@ -1,4 +1,5 @@
 ---
+import { pic, pickWidths } from '../data/img';
 import { Picture, getImage } from 'astro:assets';
 import type { Project } from '../data/work';
 import { catLabel, projectHasAi } from '../data/work';
@@ -13,7 +14,7 @@ const previews = await Promise.all(projects.map((p) => getImage({ src: p.cover, 
       <a href={`/arbeiten/${p.slug}/`} data-peek={i}>
         <span class="num mono muted">{String(i + 1).padStart(2, '0')}</span>
         <span class="thumb" aria-hidden="true">
-          <Picture src={p.cover} alt="" formats={['avif', 'webp']} widths={[200]} sizes="88px" loading="lazy" />
+          <Picture src={p.cover} alt="" {...pic} widths={pickWidths([200])} sizes="88px" loading="lazy" />
         </span>
         <span>
           <span class="t">{p.title}</span>

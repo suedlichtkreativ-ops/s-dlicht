@@ -1,4 +1,5 @@
 ---
+import { pic, pickWidths } from '../data/img';
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Media from '../components/Media.astro';
@@ -17,7 +18,7 @@ const club = projects.find((p) => p.slug === 'loca-noche')!.items[1];
   <section class="wrap" aria-label="Portrait">
     <div class="about" style="align-items:start">
       <div class="portrait" data-relight>
-        <Picture src={portrait} alt="Portrait von Alexander Malkevich" formats={['avif', 'webp']} widths={[480, 800, 1000]} sizes="(max-width: 860px) 100vw, 40vw" loading="eager" />
+        <Picture src={portrait} alt="Portrait von Alexander Malkevich" {...pic} widths={pickWidths([480, 800, 1000])} sizes="(max-width: 860px) 100vw, 40vw" loading="eager" />
       </div>
       <div style="display:grid;gap:28px">
         <p class="lead" data-reveal>Angefangen hab ich mit der Kamera am Ring und im Club. Da lernt man schnell, dass der gute Moment genau einmal passiert.</p>

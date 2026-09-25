@@ -1,4 +1,5 @@
 ---
+import { pic, pickWidths } from '../../data/img';
 import { Picture } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Tile from '../../components/Tile.astro';
@@ -48,7 +49,7 @@ const orient = (it: Project['items'][number]) => {
 
   <a class="next" href={`/arbeiten/${next.slug}/`}>
     <span class="bgimg" aria-hidden="true">
-      <Picture src={next.cover} alt="" formats={['avif', 'webp']} widths={[800, 1600]} sizes="100vw" loading="lazy" />
+      <Picture src={next.cover} alt="" {...pic} widths={pickWidths([800, 1600])} sizes="100vw" loading="lazy" />
     </span>
     <span class="wrap" style="display:block">
       <span class="mono label">Nächstes Projekt</span>
