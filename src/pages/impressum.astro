@@ -1,0 +1,18 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/work';
+---
+<Legal title="Impressum" label="Rechtliches" description="Impressum von Südlicht Studio, Alexander Malkevich, Kaufbeuren.">
+  <h2>Angaben nach § 5 DDG</h2>
+  <p>{site.owner}<br />{site.name}<br />{site.street}<br />{site.zip} {site.city}</p>
+  <h3>Kontakt</h3>
+  <p>Telefon: <a href={`tel:${site.phoneHref}`}>{site.phone}</a><br />Mail: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+  <h3>Umsatzsteuer</h3>
+  <p>Kleinunternehmer nach § 19 UStG, daher wird keine Umsatzsteuer ausgewiesen.</p>
+  <h3>Verbraucherstreitbeilegung</h3>
+  <p>Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+  <h3>Urheberrecht</h3>
+  <p>Fotos, Videos und Grafiken auf dieser Seite stammen von mir, sofern nicht anders angegeben. Logos und Marken gehören den jeweiligen Kunden. Nutzung, Kopie oder Weitergabe nur nach Absprache.</p>
+  <h3>Haftung für Links</h3>
+  <p>Für Inhalte externer Seiten, auf die ich verlinke, sind deren Betreiber verantwortlich. Wenn mir Rechtsverstöße bekannt werden, entferne ich solche Links sofort.</p>
+</Legal>

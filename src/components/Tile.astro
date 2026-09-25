@@ -1,0 +1,41 @@
+---
+import { getImage } from 'astro:assets';
+import Media from './Media.astro';
+import type { Item, Project } from '../data/work';
+
+interface Props {
+  item: Item;
+  project: Project;
+  sizes?: string;
+  class?: string;
+  ratio?: string;
+  caption?: boolean;
+}
+const { item, project, sizes = '(max-width: 560px) 50vw, 33vw', ratio, caption = true } = Astro.props;
+const alt = `${project.title}, ${item.caption}${item.ai ? ', mit KI erstellt' : ''}`;
+const full =
+  item.type === 'img'
+    ? (await getImage({ src: item.image, width: Math.min(1600, item.image.width), format: 'webp' })).src
+    : item.src;
+const poster = item.type === 'vid' ? (await getImage({ src: item.poster, width: 960, format: 'webp' })).src : undefined;
+---
+<button
+  class:list={['tile', Astro.props.class]}
+  type="button"
+  data-tile
+  data-cat={project.cat}
+  data-kind={item.type}
+  data-full={full}
+  data-poster={poster}
+  data-title={project.title}
+  data-caption={item.caption}
+  data-alt={alt}
+  data-ai={String(item.ai)}
+  aria-label={`${alt}, groß ansehen`}
+  aria-haspopup="dialog"
+>
+  <Media item={item} alt={alt} sizes={sizes} ratio={ratio} />
+  {caption && (
+    <span class="tile-cap mono"><span>{project.title}</span><span>{item.caption}</span></span>
+  )}
+</button>

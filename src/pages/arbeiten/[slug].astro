@@ -1,0 +1,63 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Tile from '../../components/Tile.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { catLabel, projectHasAi, projects, type Project } from '../../data/work';
+
+export function getStaticPaths() {
+  return projects.map((p, i) => ({ params: { slug: p.slug }, props: { project: p, next: projects[(i + 1) % projects.length], index: i } }));
+}
+interface Props { project: Project; next: Project; index: number }
+const { project: p, next, index } = Astro.props;
+const [first, ...rest] = p.items;
+// Layout-Rhythmus: Querformat breit, Hochformat nebeneinander
+const orient = (it: Project['items'][number]) => {
+  const w = it.type === 'img' ? it.image.width : it.w;
+  const h = it.type === 'img' ? it.image.height : it.h;
+  return w / h > 1.2 ? 'wide' : w / h < 0.7 ? 'tall' : '';
+};
+---
+<Base title={p.title} description={`${p.title}: ${p.intro}`}>
+  <header class="page-head wrap">
+    <a class="mono muted link-u" href="/arbeiten/">← Alle Arbeiten</a>
+    <p class="mono label" style="margin:28px 0 0">Projekt {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</p>
+    <h1 class="display" data-split style="margin-top:20px">{p.title}</h1>
+    <div class="page-head-row">
+      <p class="lead" data-reveal>{p.intro}</p>
+    </div>
+  </header>
+
+  <section class="wrap" aria-label="Projektdaten">
+    <dl class="p-meta mono" data-reveal>
+      <div><dt>Kunde</dt><dd>{p.title}</dd></div>
+      <div><dt>Bereich</dt><dd>{catLabel(p.cat)}</dd></div>
+      <div><dt>Art</dt><dd>{p.kind}{p.place ? `, ${p.place}` : ''}</dd></div>
+      <div><dt>Leistung</dt><dd>{p.services.join(', ')}{projectHasAi(p) ? ' · mit KI' : ''}</dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap section" style="padding-top:clamp(32px,4vw,56px)" aria-label="Galerie">
+    <div class="p-gallery">
+      <Tile item={first} project={p} class={orient(first) === 'tall' ? 'tall' : 'wide'} sizes="(max-width: 760px) 100vw, 90vw" caption={false} />
+      {rest.map((it) => (
+        <Tile item={it} project={p} class={orient(it)} sizes={orient(it) === 'wide' ? '100vw' : '(max-width: 760px) 100vw, 45vw'} />
+      ))}
+    </div>
+  </section>
+
+  <a class="next" href={`/arbeiten/${next.slug}/`}>
+    <span class="bgimg" aria-hidden="true">
+      <Picture src={next.cover} alt="" formats={['avif', 'webp']} widths={[800, 1600]} sizes="100vw" loading="lazy" />
+    </span>
+    <span class="wrap" style="display:block">
+      <span class="mono label">Nächstes Projekt</span>
+      <span class="display" style="display:block;margin-top:16px">{next.title} →</span>
+    </span>
+  </a>
+
+  <Lightbox />
+  <script>
+    import '../../scripts/gallery.ts';
+  </script>
+</Base>

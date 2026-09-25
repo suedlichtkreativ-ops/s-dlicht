@@ -1,0 +1,30 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import type { Project } from '../data/work';
+import { catLabel, projectHasAi } from '../data/work';
+
+interface Props { projects: Project[] }
+const { projects } = Astro.props;
+const previews = await Promise.all(projects.map((p) => getImage({ src: p.cover, width: 640, format: 'webp' })));
+---
+<ul class="index" data-peek-list>
+  {projects.map((p, i) => (
+    <li data-reveal>
+      <a href={`/arbeiten/${p.slug}/`} data-peek={i}>
+        <span class="num mono muted">{String(i + 1).padStart(2, '0')}</span>
+        <span class="thumb" aria-hidden="true">
+          <Picture src={p.cover} alt="" formats={['avif', 'webp']} widths={[200]} sizes="88px" loading="lazy" />
+        </span>
+        <span>
+          <span class="t">{p.title}</span>
+          {projectHasAi(p) && <span class="mono ki">KI</span>}
+        </span>
+        <span class="meta-r mono muted">{catLabel(p.cat)} · {p.kind}</span>
+        <span class="arr" aria-hidden="true">→</span>
+      </a>
+    </li>
+  ))}
+</ul>
+<div class="peek" aria-hidden="true">
+  {previews.map((img) => <img src={img.src} alt="" width="640" loading="lazy" decoding="async" />)}
+</div>

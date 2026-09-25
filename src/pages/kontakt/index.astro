@@ -1,0 +1,153 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/work';
+
+const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI Werbespot', 'Etwas anderes'];
+---
+<Base title="Kontakt" description="Projekt anfragen bei Südlicht Studio in Kaufbeuren: Aftermovies, Eventfotografie, Motion Design und KI Content.">
+  <header class="page-head wrap">
+    <span class="mono label">Kontakt — Kaufbeuren (DE) <span data-clock>--:--</span></span>
+    <h1 class="display" data-split style="margin-top:20px">Nächstes Event?</h1>
+    <div class="page-head-row">
+      <p class="lead" data-reveal>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
+    </div>
+  </header>
+
+  <section class="wrap section" style="padding-top:clamp(24px,3vw,40px)" aria-labelledby="form-title">
+    <div class="split">
+      <aside style="display:grid;gap:28px;align-content:start" data-reveal>
+        <h2 id="form-title" class="sr-only">Anfrageformular</h2>
+        <div>
+          <p class="mono muted" style="margin:0 0 6px">Mail</p>
+          <a class="lead link-u" href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+        <div>
+          <p class="mono muted" style="margin:0 0 6px">Telefon</p>
+          <a class="lead link-u" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+        </div>
+        <div>
+          <p class="mono muted" style="margin:0 0 6px">Büro</p>
+          <p class="lead" style="margin:0">{site.street}<br />{site.zip} {site.city}</p>
+        </div>
+      </aside>
+
+      <form class="form" id="contact" action="/kontakt.php" method="post" novalidate data-reveal>
+        <fieldset class="field full">
+          <legend>Worum geht's?</legend>
+          <div class="opts">
+            {types.map((t, i) => (
+              <label class="opt"><input type="radio" name="art" value={t} checked={i === 0} /><span>{t}</span></label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" aria-describedby="e-name" />
+          <p class="err" id="e-name"></p>
+        </div>
+        <div class="field">
+          <label for="f-email">E-Mail <span class="req" aria-hidden="true">*</span></label>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" aria-describedby="e-email" />
+          <p class="err" id="e-email"></p>
+        </div>
+        <div class="field">
+          <label for="f-tel">Telefon</label>
+          <input class="input" id="f-tel" name="telefon" type="tel" autocomplete="tel" maxlength="40" />
+        </div>
+        <div class="field">
+          <label for="f-date">Datum & Ort</label>
+          <input class="input" id="f-date" name="termin" type="text" maxlength="160" aria-describedby="h-date" />
+          <p class="hint" id="h-date">Zum Beispiel: 14. März, Kaufbeuren</p>
+        </div>
+        <div class="field full">
+          <label for="f-msg">Nachricht <span class="req" aria-hidden="true">*</span></label>
+          <textarea class="input" id="f-msg" name="nachricht" required maxlength="5000" aria-describedby="e-msg"></textarea>
+          <p class="err" id="e-msg"></p>
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label for="f-web">Website</label>
+          <input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="hidden" name="t" value="" data-ts />
+
+        <div class="field full">
+          <label class="check" for="f-ok">
+            <input id="f-ok" name="datenschutz" type="checkbox" value="ja" required aria-describedby="e-ok" />
+            <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage genutzt werden. Mehr dazu in der <a href="/datenschutz/">Datenschutzerklärung</a>. <span class="req" aria-hidden="true">*</span></span>
+          </label>
+          <p class="err" id="e-ok"></p>
+        </div>
+
+        <div class="full" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <button class="btn primary" type="submit">Anfrage senden <span class="arr" aria-hidden="true">↗</span></button>
+          <span class="mono muted">* Pflichtfeld</span>
+        </div>
+        <div class="full form-status" role="status" aria-live="polite" tabindex="-1" data-status></div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('contact') as HTMLFormElement;
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const ts = form.querySelector<HTMLInputElement>('[data-ts]')!;
+    ts.value = String(Date.now());
+
+    const rules: [string, string, (el: HTMLInputElement) => string][] = [
+      ['f-name', 'e-name', (el) => (el.value.trim() ? '' : 'Bitte gib deinen Namen an.')],
+      ['f-email', 'e-email', (el) => (!el.value.trim() ? 'Bitte gib deine E-Mail an.' : el.validity.typeMismatch ? 'Das sieht nicht nach einer E-Mail aus. Bitte prüf die Schreibweise.' : '')],
+      ['f-msg', 'e-msg', (el) => (el.value.trim().length >= 10 ? '' : 'Schreib mir bitte ein paar Worte zu deinem Projekt (mindestens 10 Zeichen).')],
+      ['f-ok', 'e-ok', (el) => (el.checked ? '' : 'Bitte bestätige die Datenschutzhinweise.')],
+    ];
+    const check = (id: string) => {
+      const r = rules.find(([f]) => f === id)!;
+      const el = document.getElementById(r[0]) as HTMLInputElement;
+      const msg = r[2](el);
+      document.getElementById(r[1])!.textContent = msg;
+      el.setAttribute('aria-invalid', String(!!msg));
+      return !msg;
+    };
+    // Prüfen beim Verlassen des Felds, nicht bei jedem Tastendruck
+    rules.forEach(([id]) => {
+      const el = document.getElementById(id)!;
+      if (id !== 'f-ok') el.addEventListener('blur', () => ((el as HTMLInputElement).value.trim() || el.getAttribute('aria-invalid')) && check(id));
+      el.addEventListener('change', () => el.getAttribute('aria-invalid') === 'true' && check(id));
+    });
+
+    const setStatus = (state: 'ok' | 'error', text: string) => {
+      status.dataset.state = state;
+      status.textContent = text;
+      status.focus();
+    };
+
+    if (new URLSearchParams(location.search).has('fehler')) setStatus('error', 'Das hat nicht geklappt. Bitte prüf die Pflichtfelder oder schreib direkt an info@suedlicht-studio.de.');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const results = rules.map(([id]) => check(id));
+      const firstBad = rules[results.indexOf(false)];
+      if (firstBad) {
+        document.getElementById(firstBad[0])!.focus();
+        return;
+      }
+      btn.setAttribute('aria-busy', 'true');
+      btn.firstChild!.textContent = 'Wird gesendet… ';
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'Senden fehlgeschlagen');
+        form.reset();
+        ts.value = String(Date.now());
+        setStatus('ok', 'Danke! Deine Anfrage ist angekommen. Ich melde mich bei dir.');
+      } catch (err) {
+        setStatus('error', `${(err as Error).message}. Versuch es bitte noch einmal oder schreib direkt an info@suedlicht-studio.de.`);
+      } finally {
+        btn.removeAttribute('aria-busy');
+        btn.firstChild!.textContent = 'Anfrage senden ';
+      }
+    });
+  </script>
+</Base>

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+const links = [
+  { href: '/arbeiten/', label: 'Arbeiten' },
+  { href: '/leistungen/', label: 'Leistungen' },
+  { href: '/ueber/', label: 'Über mich' },
+  { href: '/kontakt/', label: 'Kontakt' },
+];
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isCurrent = (href: string) => (path === href || (href !== '/' && path.startsWith(href)) ? 'page' : undefined);
+---
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="nav-logo" href="/" aria-label="Südlicht Studio, Startseite">
+      <Image src={logo} alt="Südlicht Studio" height={80} loading="eager" fetchpriority="high" />
+    </a>
+    <nav class="nav-main" aria-label="Hauptnavigation">
+      <ul class="nav-links">
+        {links.map((l) => <li><a href={l.href} aria-current={isCurrent(l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="nav-meta">
+      <span class="mono muted clock">Kaufbeuren (DE) <span data-clock>--:--</span></span>
+      <a class="btn" href="/kontakt/">Projekt anfragen <span class="arr" aria-hidden="true">↗</span></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu" inert>
+  <nav aria-label="Mobile Navigation">
+    <ol>
+      <li><a href="/">Start</a></li>
+      {links.map((l) => <li><a href={l.href} aria-current={isCurrent(l.href)}>{l.label}</a></li>)}
+    </ol>
+  </nav>
+  <div class="menu-foot mono muted">
+    <a href="mailto:info@suedlicht-studio.de">info@suedlicht-studio.de</a>
+    <span>Kaufbeuren (DE) <span data-clock>--:--</span></span>
+  </div>
+</div>

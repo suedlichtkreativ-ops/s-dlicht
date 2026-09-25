@@ -1,0 +1,30 @@
+# Baut die Seite und lädt sie per SFTP auf den IONOS Webspace.
+# Einmalig in GitHub unter Settings → Secrets and variables → Actions anlegen:
+#   IONOS_SFTP_HOST  (z. B. access-5012345678.webspace-host.com)
+#   IONOS_SFTP_USER  (SFTP-Benutzer aus dem IONOS Kundenbereich)
+#   IONOS_SFTP_PASS  (Passwort des SFTP-Benutzers)
+# Start: manuell unter Actions → "Deploy zu IONOS" → Run workflow.
+name: Deploy zu IONOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Upload per SFTP
+        env:
+          HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          USER: ${{ secrets.IONOS_SFTP_USER }}
+          PASS: ${{ secrets.IONOS_SFTP_PASS }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          lftp -e "set sftp:auto-confirm yes; set net:max-retries 3; mirror --reverse --delete --verbose --exclude-glob .DS_Store dist/ /; bye" -u "$USER","$PASS" "sftp://$HOST"

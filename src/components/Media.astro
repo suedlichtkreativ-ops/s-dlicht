@@ -1,0 +1,52 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import type { Item } from '../data/work';
+
+interface Props {
+  item: Item;
+  alt: string;
+  sizes?: string;
+  relight?: boolean;
+  tags?: boolean;
+  eager?: boolean;
+  class?: string;
+  /** Seitenverhältnis erzwingen (z. B. "16/8"), sonst natürliches Format */
+  ratio?: string;
+}
+const { item, alt, sizes = '(max-width: 760px) 100vw, 50vw', relight = true, tags = true, eager = false, ratio } = Astro.props;
+const cls = ['media', Astro.props.class].filter(Boolean).join(' ');
+const style = ratio ? `aspect-ratio:${ratio}` : undefined;
+const posterUrl = item.type === 'vid' ? (await getImage({ src: item.poster, width: Math.min(item.w, 960), format: 'webp' })).src : null;
+---
+<div class={cls} style={style} data-relight={relight ? '' : undefined}>
+  {item.type === 'img' ? (
+    <Picture
+      src={item.image}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={[480, 800, 1200, 1600].filter((w) => w <= item.image.width)}
+      sizes={sizes}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+      decoding="async"
+    />
+  ) : (
+    <video
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster={posterUrl!}
+      width={item.w}
+      height={item.h}
+      data-src={item.src}
+      aria-label={alt}
+    ></video>
+  )}
+  {tags && (item.type === 'vid' || item.ai) && (
+    <div class="tags">
+      {item.type === 'vid' && <span class="tag vid">Video</span>}
+      {item.ai && <span class="tag ki">KI</span>}
+    </div>
+  )}
+</div>

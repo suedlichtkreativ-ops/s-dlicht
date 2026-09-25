@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Media from '../components/Media.astro';
+import { services } from '../data/services';
+import { projects } from '../data/work';
+
+const pick = (slug: string, n = 0) => projects.find((p) => p.slug === slug)!.items[n];
+const visuals = [pick('tanzlauter-am-turm', 1), pick('sp-prints', 1), pick('relight', 0), pick('muay-thai-gala', 0)];
+const alts = ['Tanzlauter am Turm, Aftermovie', 'SP Prints, Spot mit Sprecher', 'Relight, mit KI neu belichtet', 'Muay Thai Gala, Schlagabtausch im Ring'];
+const steps = [
+  ['Anfrage', 'Du schreibst mir kurz, was du planst, wann und wo.'],
+  ['Telefonat', 'Wir klären Umfang, Formate und was am Ende rauskommen soll.'],
+  ['Dreh', 'Ich komme mit Kamera, Gimbal und Drohne zum Event oder Shooting.'],
+  ['Schnitt', 'Schnitt, Farbe und Grafik laufen remote aus Kaufbeuren.'],
+  ['Lieferung', 'Du bekommst die fertigen Clips und Fotos für deine Kanäle.'],
+];
+const tools = ['Premiere Pro', 'After Effects', 'Photoshop', 'Illustrator', 'Lightroom', 'DaVinci Resolve', 'Higgsfield', 'Kling'];
+const gear = ['Sony A7 III', 'Drohne', 'Gimbal'];
+---
+<Base title="Leistungen" description="Aftermovies und Reels, Motion und Grafik, KI Bildwelten und Fotografie vor Ort. Südlicht Studio aus Kaufbeuren, im Allgäu und bis Ulm unterwegs.">
+  <header class="page-head wrap">
+    <span class="mono label">Leistungen — 04</span>
+    <h1 class="display" data-split style="margin-top:20px">Leistungen</h1>
+    <div class="page-head-row">
+      <p class="lead" data-reveal>Vom Dreh bis zum fertigen Reel. Zum Event komme ich mit Kamera und Drohne, Schnitt und Grafik laufen remote.</p>
+    </div>
+  </header>
+
+  {services.map((s, i) => (
+    <section class="wrap" style="padding-block:clamp(40px,6vw,88px);border-top:1px solid var(--line)" aria-labelledby={`svc-${i}`}>
+      <div class="split" style="align-items:start">
+        <div style="display:grid;gap:22px;align-content:start">
+          <span class="mono accent">({String(i + 1).padStart(2, '0')})</span>
+          <h2 id={`svc-${i}`} class="display h3" data-split>{s.title}</h2>
+          <p class="body-l" data-reveal style="margin:0">{s.text}</p>
+          <dl class="mono" style="margin:0" data-reveal>
+            <div style="display:grid;border-top:1px solid var(--line)">
+              {s.rows.map(([k, v]) => (
+                <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)"><dt class="muted">{k}</dt><dd style="margin:0;text-align:right">{v}</dd></div>
+              ))}
+            </div>
+          </dl>
+        </div>
+        <Media item={visuals[i]} alt={alts[i]} sizes="(max-width: 860px) 100vw, 60vw" ratio={i % 2 ? '4/5' : '16/10'} class="svc-visual" />
+      </div>
+    </section>
+  ))}
+
+  <section class="wrap section" aria-labelledby="steps-title">
+    <div class="sec-head mono muted"><span class="label">Ablauf</span><span>05 Schritte</span></div>
+    <h2 id="steps-title" class="display h2" data-split style="margin-bottom:clamp(40px,6vw,72px)">So läuft ein Projekt.</h2>
+    <ol class="steps">
+      {steps.map(([t, d], i) => (
+        <li data-reveal><span class="n">{String(i + 1).padStart(2, '0')}</span><h3>{t}</h3><p>{d}</p></li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap section" style="padding-top:0" aria-labelledby="tools-title">
+    <div class="sec-head mono muted"><span class="label" id="tools-title">Werkzeug</span><span>Software & Kamera</span></div>
+    <ul class="clients">
+      {tools.map((t) => <li data-reveal>{t}</li>)}
+    </ul>
+    <ul class="clients" style="margin-top:24px">
+      {gear.map((t) => <li data-reveal style="color:var(--orange)">{t}</li>)}
+    </ul>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <span class="mono label">Kontakt</span>
+      <h2 id="cta-title" class="display" data-split style="margin:24px 0 32px">Lass uns reden.</h2>
+      <div data-reveal><a class="btn primary" href="/kontakt/">Projekt anfragen <span class="arr" aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
+</Base>

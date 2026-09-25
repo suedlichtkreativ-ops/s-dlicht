@@ -1,0 +1,38 @@
+# Südlicht Studio – Apache-Konfiguration für IONOS Webspace
+Options -Indexes
+DirectoryIndex index.html index.php
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+# Immer HTTPS, immer ohne www
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://suedlicht-studio.de%{REQUEST_URI} [L,R=301]
+
+# Alte Anker der bisherigen One-Page-Seite leben als echte Seiten weiter
+RewriteRule ^index\.html$ / [L,R=301]
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000"
+  # Gebaute Assets tragen einen Hash im Namen und ändern sich nie
+  <FilesMatch "\.(avif|webp|jpg|png|svg|woff2|js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(mp4)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json
+</IfModule>
+
+AddType image/avif .avif
+AddType video/mp4 .mp4

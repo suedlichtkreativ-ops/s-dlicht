@@ -1,0 +1,23 @@
+<dialog class="lb" id="lb" aria-label="Großansicht">
+  <div class="lb-in">
+    <div class="lb-top">
+      <div class="mono" id="lbCap" aria-live="polite"></div>
+      <div style="display:flex;gap:14px;align-items:center">
+        <span class="mono muted" id="lbCount"></span>
+        <button class="ic" id="lbClose" type="button" aria-label="Schließen">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="lb-stage" id="lbStage">
+      <img id="lbImg" alt="" />
+      <video id="lbVid" muted loop playsinline controls hidden></video>
+      <button class="ic lb-nav lb-prev" id="lbPrev" type="button" aria-label="Vorherige Arbeit">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2L4 8l6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <button class="ic lb-nav lb-next" id="lbNext" type="button" aria-label="Nächste Arbeit">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+    </div>
+  </div>
+</dialog>
