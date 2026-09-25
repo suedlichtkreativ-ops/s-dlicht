@@ -3,7 +3,8 @@ import Base from '../../layouts/Base.astro';
 import Tile from '../../components/Tile.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import ProjectIndex from '../../components/ProjectIndex.astro';
-import { categories, projects } from '../../data/work';
+import Arrow from '../../components/Arrow.astro';
+import { categories, projects, scenes } from '../../data/work';
 
 // Galerie gemischt statt blockweise: reihum ein Motiv pro Projekt
 const pools = projects.map((p) => p.items.map((item) => ({ item, project: p })));
@@ -11,34 +12,49 @@ const mixed: { item: (typeof pools)[number][number]['item']; project: (typeof pr
 for (let round = 0; pools.some((p) => p.length > round); round++) {
   pools.forEach((p) => p[round] && mixed.push(p[round]));
 }
-const count = (id: string) =>
-  mixed.filter(({ item, project }) => id === 'alle' || (id === 'video' ? item.type === 'vid' : project.cat === id)).length;
+const count = (id: string) => mixed.filter(({ project }) => id === 'alle' || project.scene === id).length;
+const MID = 11;
 ---
-<Base title="Arbeiten" description="Aftermovies, Eventfotografie, Gastro, Marken und KI Bildwelten von Südlicht Studio aus Kaufbeuren.">
+<Base title="Arbeiten" description="Aftermovies, Eventfotografie, Kampfsport, Gastro, Marken und KI-Spots von Südlicht Studio aus Kaufbeuren.">
   <header class="page-head wrap">
-    <span class="mono label">Portfolio — {mixed.length} Arbeiten</span>
-    <h1 class="display" data-split style="margin-top:20px">Arbeiten</h1>
-    <div class="page-head-row">
-      <p class="body-l" data-reveal style="margin:0">Open Airs, Clubnächte, Fight Nights, Gastro und ein paar KI Experimente. Die Videos laufen ohne Ton als Loop. Tippe eine Arbeit an, dann siehst du sie groß. Was mit KI entstanden ist, trägt ein KI Label.</p>
-    </div>
+    <h1 class="display" data-split>Arbeiten</h1>
+    <p class="body-l" data-reveal>{mixed.length} Fotos und Clips aus Club, Ring, Gastro und KI. Videos laufen ohne Ton als Loop. Tippe eine Arbeit an, dann siehst du sie groß. Was mit KI entstanden ist, trägt ein KI-Label.</p>
   </header>
 
   <section class="wrap" aria-label="Galerie">
-    <div class="filters" role="group" aria-label="Arbeiten filtern" data-filters>
-      {categories.map((c, i) => (
-        <button class="chip" type="button" data-cat={c.id} aria-pressed={i === 0 ? 'true' : 'false'}>
-          {c.label}<sup>{count(c.id)}</sup>
-        </button>
-      ))}
+    <div class="filterbar">
+      <div class="filterbar-in" role="group" aria-label="Arbeiten filtern" data-filters>
+        {categories.map((c, i) => (
+          <button class="chip" type="button" data-cat={c.id} aria-pressed={i === 0 ? 'true' : 'false'}>
+            {c.label}<span class="n">{count(c.id)}</span>
+          </button>
+        ))}
+        <span class="chip-sep" aria-hidden="true"></span>
+        <button class="switch" type="button" data-only-video aria-pressed="false"><i aria-hidden="true"></i>Nur Videos</button>
+      </div>
     </div>
+    <p class="gallery-count meta" aria-live="polite" data-gallery-count>{mixed.length} Arbeiten</p>
     <div class="masonry">
-      {mixed.map(({ item, project }) => <Tile item={item} project={project} />)}
+      {mixed.map(({ item, project }, i) => (
+        <>
+          <Tile item={item} project={project} />
+          {i === MID && (
+            <aside class="midcta" data-midcta>
+              <h2>Deine Szene fehlt hier noch?</h2>
+              <p>Schreib mir kurz, was du planst, wann und wo.</p>
+              <a class="btn" href="/kontakt/" data-scene-link="kontakt">Projekt anfragen <Arrow /></a>
+            </aside>
+          )}
+        </>
+      ))}
     </div>
   </section>
 
   <section class="wrap section" aria-labelledby="projects-title">
-    <div class="sec-head mono muted"><span class="label">Alle Projekte</span><span>{String(projects.length).padStart(2, '0')}</span></div>
-    <h2 id="projects-title" class="display h2" data-split style="margin-bottom:clamp(40px,6vw,72px)">Nach Projekt</h2>
+    <div class="head-row">
+      <h2 id="projects-title" class="display h2" data-split>Alle Projekte</h2>
+      <p class="body-l" data-reveal>{projects.length} Projekte, jedes mit eigener Seite.</p>
+    </div>
     <ProjectIndex projects={projects} />
   </section>
 

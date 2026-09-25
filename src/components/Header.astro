@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
+import Arrow from './Arrow.astro';
 
 const links = [
   { href: '/arbeiten/', label: 'Arbeiten' },
@@ -22,8 +23,7 @@ const isCurrent = (href: string) => (path === href || (href !== '/' && path.star
       </ul>
     </nav>
     <div class="nav-meta">
-      <span class="mono muted clock">Kaufbeuren (DE) <span data-clock>--:--</span></span>
-      <a class="btn" href="/kontakt/">Projekt anfragen <span class="arr" aria-hidden="true">↗</span></a>
+      <a class="btn primary" href="/kontakt/">Projekt anfragen <Arrow /></a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
         <span></span><span></span>
       </button>
@@ -33,12 +33,12 @@ const isCurrent = (href: string) => (path === href || (href !== '/' && path.star
 <div class="menu" id="menu" inert>
   <nav aria-label="Mobile Navigation">
     <ol>
-      <li><a href="/">Start</a></li>
+      <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>Start</a></li>
       {links.map((l) => <li><a href={l.href} aria-current={isCurrent(l.href)}>{l.label}</a></li>)}
     </ol>
   </nav>
-  <div class="menu-foot mono muted">
-    <a href="mailto:info@suedlicht-studio.de">info@suedlicht-studio.de</a>
-    <span>Kaufbeuren (DE) <span data-clock>--:--</span></span>
+  <div class="menu-foot">
+    <a class="btn primary" href="/kontakt/">Projekt anfragen <Arrow /></a>
+    <a class="muted" href="mailto:info@suedlicht-studio.de">info@suedlicht-studio.de</a>
   </div>
 </div>

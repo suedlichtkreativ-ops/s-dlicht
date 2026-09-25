@@ -1,35 +1,36 @@
 ---
-import { site } from '../data/work';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import { scenes, site } from '../data/work';
 const year = new Date().getFullYear();
 ---
 <footer class="foot">
   <div class="wrap">
     <div class="foot-grid">
-      <div>
-        <h2>Nächstes Event?</h2>
-        <p class="lead" style="max-width:18em">Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
-        <p style="margin-top:24px"><a class="btn primary" href="/kontakt/">Projekt anfragen <span class="arr" aria-hidden="true">↗</span></a></p>
+      <div class="foot-brand">
+        <Image src={logo} alt="" height={112} loading="lazy" />
+        <p class="body-l" style="max-width:24em">Aftermovies, Eventfotografie, Motion Design und KI-Spots. Aus Kaufbeuren, unterwegs zwischen Allgäu und Ulm.</p>
       </div>
       <div>
         <h2>Kontakt</h2>
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
           <li><a href={`tel:${site.phoneHref}`}>{site.phone}</a></li>
-          <li class="muted">{site.street}<br />{site.zip} {site.city}</li>
+          <li class="muted" style="padding-top:4px">{site.street}<br />{site.zip} {site.city}</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Szenen</h2>
+        <ul>
+          {scenes.map((s) => <li><a href={`/arbeiten/?szene=${s.id}`}>{s.label}</a></li>)}
         </ul>
       </div>
       <div>
         <h2>Seiten</h2>
         <ul>
-          <li><a href="/arbeiten/">Arbeiten</a></li>
           <li><a href="/leistungen/">Leistungen</a></li>
           <li><a href="/ueber/">Über mich</a></li>
           <li><a href="/kontakt/">Kontakt</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Rechtliches</h2>
-        <ul>
           <li><a href="/impressum/">Impressum</a></li>
           <li><a href="/datenschutz/">Datenschutz</a></li>
           <li><a href="/ki-hinweis/">Hinweis zu KI</a></li>
@@ -37,10 +38,9 @@ const year = new Date().getFullYear();
       </div>
     </div>
   </div>
-  <p class="foot-big" aria-hidden="true">Südlicht</p>
   <div class="gradbar" data-bar aria-hidden="true"></div>
-  <div class="wrap foot-bar mono muted">
+  <div class="wrap foot-bar">
     <span>© {year} {site.name}, {site.city}</span>
-    <span>Aftermovies · Eventfotografie · Motion · KI Content</span>
+    <span>KI-Arbeiten sind immer gekennzeichnet.</span>
   </div>
 </footer>

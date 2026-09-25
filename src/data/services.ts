@@ -3,7 +3,7 @@ export const services = [
     title: 'Aftermovies & Reels',
     text: 'Recaps, Teaser und Highlights im Hochformat, auf den Beat geschnitten.',
     rows: [
-      ['Für', 'Open Airs, Clubs, Fight Nights'],
+      ['Für', 'Clubs, Open Airs, Fight Nights'],
       ['Format', '9:16 und 16:9'],
       ['Vor Ort', 'Kamera, Gimbal, Drohne'],
     ],
@@ -18,7 +18,7 @@ export const services = [
     ],
   },
   {
-    title: 'KI Bildwelten',
+    title: 'KI-Spots & Bildwelten',
     text: 'Werbespots und Kampagnenmotive mit Higgsfield und Kling. Immer als KI gekennzeichnet.',
     rows: [
       ['Für', 'Kampagnen, Social Ads'],

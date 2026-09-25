@@ -16,15 +16,29 @@ const poster = (file: string) => {
 
 export type Category = 'events' | 'kampfsport' | 'gastro' | 'marken' | 'automotive' | 'ki';
 
-export const categories: { id: Category | 'alle' | 'video'; label: string }[] = [
+/** Die vier Szenen = die vier Zielgruppen. Einheitliche Begriffe für Startseite, Filter und Formular. */
+export type Scene = 'club' | 'ring' | 'marken' | 'ki';
+
+export const scenes: {
+  id: Scene;
+  label: string;
+  short: string;
+  line: string;
+  headline: string;
+  cta: string;
+  reel: string;
+}[] = [
+  { id: 'club', label: 'Events & Clubs', short: 'Club', line: 'Open Airs, Clubnächte, Aftermovies', headline: 'Open Airs und Clubnächte', cta: 'Nächstes Event geplant?', reel: 'tanz' },
+  { id: 'ring', label: 'Kampfsport', short: 'Ring', line: 'Fight Nights, Galas, Seminare', headline: 'Fight Nights und Kampfsport', cta: 'Fight Night geplant?', reel: 'alina' },
+  { id: 'marken', label: 'Gastro & Marken', short: 'Marken', line: 'Gastro, Shops, Produktclips', headline: 'Gastro, Shops und Marken', cta: 'Shooting für deinen Laden?', reel: 'nfc' },
+  { id: 'ki', label: 'KI-Spots', short: 'KI', line: 'Werbespots ohne Filmteam', headline: 'KI-Spots und KI-Bildwelten', cta: 'Spot ohne Filmteam?', reel: 'schall' },
+];
+export const sceneById = (id: Scene) => scenes.find((s) => s.id === id)!;
+
+/** Filter auf der Arbeiten-Seite: Alle + vier Szenen (Videos als eigener Schalter) */
+export const categories: { id: Scene | 'alle'; label: string }[] = [
   { id: 'alle', label: 'Alle' },
-  { id: 'video', label: 'Videos' },
-  { id: 'events', label: 'Events & Nightlife' },
-  { id: 'kampfsport', label: 'Kampfsport' },
-  { id: 'gastro', label: 'Gastro' },
-  { id: 'marken', label: 'Marken & Werbung' },
-  { id: 'automotive', label: 'Automotive' },
-  { id: 'ki', label: 'KI Bildwelten' },
+  ...scenes.map((s) => ({ id: s.id, label: s.label })),
 ];
 
 export type Item =
@@ -35,6 +49,7 @@ export interface Project {
   slug: string;
   title: string;
   cat: Category;
+  scene: Scene;
   kind: string;
   place?: string;
   intro: string;
@@ -59,6 +74,7 @@ export const projects: Project[] = [
     slug: 'tanzlauter-am-turm',
     title: 'Tanzlauter am Turm',
     cat: 'events',
+    scene: 'club',
     kind: 'Open Air',
     intro:
       'Ein Open Air unter Lichterketten, vom ersten Set am Nachmittag bis zur Stage im Nebel. Das Aftermovie startet aus dem Neon Logo und ist auf den Beat geschnitten.',
@@ -77,6 +93,7 @@ export const projects: Project[] = [
     slug: 'loca-noche',
     title: 'Loca Noche',
     cat: 'events',
+    scene: 'club',
     kind: 'Clubnacht',
     intro:
       'Clubnächte und Sommerpartys auf der Terrasse. Fotos mitten aus der Crowd und ein Aftermovie im Hochformat, gebaut für Instagram und TikTok.',
@@ -97,6 +114,7 @@ export const projects: Project[] = [
     slug: 'muay-thai-gala',
     title: 'Muay Thai Gala',
     cat: 'kampfsport',
+    scene: 'ring',
     kind: 'Fight Night',
     intro:
       'Vom Ritual vor dem Kampf bis zum Champion danach. Am Ring zählt der eine Moment, und der passiert genau einmal.',
@@ -113,6 +131,7 @@ export const projects: Project[] = [
     slug: 'vima-essbar',
     title: 'VIMA ESSBAR',
     cat: 'gastro',
+    scene: 'marken',
     kind: 'Gastro',
     place: 'Kaufbeuren',
     intro:
@@ -131,6 +150,7 @@ export const projects: Project[] = [
     slug: 'koederdepot',
     title: 'KöderDepot',
     cat: 'marken',
+    scene: 'marken',
     kind: 'Marke',
     intro:
       'Markenshooting am Wasser und ein KI Werbespot mit zwei eigenen Figuren. Echte Fotos und KI Film aus einer Hand.',
@@ -147,6 +167,7 @@ export const projects: Project[] = [
     slug: 'automobile-schall',
     title: 'Automobile Schall',
     cat: 'automotive',
+    scene: 'ki',
     kind: 'Automotive',
     intro:
       'Showroom Motive, mit KI neu belichtet, und ein Car Edit mit KI Effekten. Alles mit KI Anteil ist gekennzeichnet.',
@@ -163,6 +184,7 @@ export const projects: Project[] = [
     slug: 'boxen-im-festzelt',
     title: 'Boxen im Festzelt',
     cat: 'kampfsport',
+    scene: 'ring',
     kind: 'Fight Night',
     place: 'Kaufbeuren',
     intro: 'Boxabend im Festzelt in Kaufbeuren. Handschuhe zusammen, Kampf frei.',
@@ -177,6 +199,7 @@ export const projects: Project[] = [
     slug: 'seminar-alina-dalaslan',
     title: 'Seminar mit Alina Dalaslan',
     cat: 'kampfsport',
+    scene: 'ring',
     kind: 'Event Edit',
     intro: 'Event Edit vom Seminar mit Alina Dalaslan im Gladiator Camp, geschnitten fürs Hochformat.',
     services: ['Event Edit', 'Reels'],
@@ -187,6 +210,7 @@ export const projects: Project[] = [
     slug: 'sp-prints',
     title: 'SP Prints',
     cat: 'marken',
+    scene: 'marken',
     kind: 'Produktclips',
     intro: 'Produktclips für NFC Tags: Tap to Win und ein Spot mit Sprecher.',
     services: ['Produktvideo', 'Motion Design'],
@@ -200,6 +224,7 @@ export const projects: Project[] = [
     slug: 'vermoegen-clever-steuern',
     title: 'Vermögen Clever Steuern',
     cat: 'ki',
+    scene: 'ki',
     kind: 'KI Werbespot',
     intro: 'Ein Kapitän im Sturm: KI Werbespot, für den es sonst ein Filmteam und ein Schiff bräuchte.',
     services: ['KI Werbespot'],
@@ -210,6 +235,7 @@ export const projects: Project[] = [
     slug: 'relight',
     title: 'Relight',
     cat: 'ki',
+    scene: 'ki',
     kind: 'KI Bildwelten',
     intro: 'Eigene Aufnahmen, mit KI neu belichtet. Das Ausgangsfoto ist echt, das Licht ist neu.',
     services: ['KI Bildbearbeitung'],
@@ -225,6 +251,7 @@ export const projects: Project[] = [
     slug: 'ghetto-burger',
     title: 'Ghetto Burger',
     cat: 'ki',
+    scene: 'ki',
     kind: 'KI Visual',
     intro: 'Food Trailer als KI Visual für Social Media.',
     services: ['KI Visual'],
@@ -233,7 +260,7 @@ export const projects: Project[] = [
   },
 ];
 
-export const catLabel = (c: Category) => categories.find((x) => x.id === c)!.label;
+export const sceneLabel = (p: Project) => sceneById(p.scene).label;
 export const projectHasAi = (p: Project) => p.items.some((i) => i.ai);
 
 export const clients = [
@@ -247,17 +274,24 @@ export const clients = [
   'Vermögen Clever Steuern',
 ];
 
-export const featured = [
-  'tanzlauter-am-turm',
-  'loca-noche',
-  'muay-thai-gala',
-  'vima-essbar',
-  'koederdepot',
-  'automobile-schall',
-].map((s) => projects.find((p) => p.slug === s)!);
+/** Kundenname → Projektseite, falls es eine gibt */
+export const clientSlug: Record<string, string | undefined> = {
+  'Tanzlauter am Turm': 'tanzlauter-am-turm',
+  'Loca Noche': 'loca-noche',
+  KöderDepot: 'koederdepot',
+  'Automobile Schall': 'automobile-schall',
+  'VIMA ESSBAR': 'vima-essbar',
+  'SP Prints': 'sp-prints',
+  'Vermögen Clever Steuern': 'vermoegen-clever-steuern',
+};
 
-/** Hochformat-Reels für die Startseite */
-export const heroReels = ['tanz', 'loca', 'alina'].map((n) => ({ src: `/video/${n}.mp4`, poster: poster(n) }));
+export const projectsByScene = (sc: Scene) => projects.filter((p) => p.scene === sc);
+
+/** Hochformat-Clip je Szene für den Monitor auf der Startseite */
+export const sceneReel = (s: Scene) => {
+  const n = sceneById(s).reel;
+  return { src: `/video/${n}.mp4`, poster: poster(n) };
+};
 
 export const site = {
   name: 'Südlicht Studio',

@@ -1,12 +1,11 @@
 ---
 import Base from './Base.astro';
-interface Props { title: string; description: string; label: string }
-const { title, description, label } = Astro.props;
+interface Props { title: string; description: string; label?: string }
+const { title, description } = Astro.props;
 ---
 <Base title={title} description={description}>
   <header class="page-head wrap">
-    <span class="mono label">{label}</span>
-    <h1 class="display" data-split style="margin-top:20px;font-size:clamp(56px,10vw,160px)">{title}</h1>
+    <h1 class="display" data-split style="font-size:clamp(56px,10vw,160px)">{title}</h1>
   </header>
   <article class="wrap section prose" style="padding-top:0">
     <slot />

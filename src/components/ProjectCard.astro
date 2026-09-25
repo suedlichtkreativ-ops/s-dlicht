@@ -1,0 +1,19 @@
+---
+import { Picture } from 'astro:assets';
+import type { Project } from '../data/work';
+import { projectHasAi } from '../data/work';
+import { pic, pickWidths } from '../data/img';
+
+interface Props { project: Project; sizes?: string }
+const { project: p, sizes = '(max-width: 560px) 50vw, (max-width: 1100px) 50vw, 25vw' } = Astro.props;
+---
+<a class="pcard" href={`/arbeiten/${p.slug}/`}>
+  <div class="media" data-relight>
+    <Picture src={p.cover} alt={`${p.title}, ${p.kind}`} {...pic} widths={pickWidths([400, 800])} sizes={sizes} loading="lazy" />
+    {projectHasAi(p) && <div class="tags"><span class="tag ki">KI</span></div>}
+  </div>
+  <div>
+    <h3 class="pcard-t">{p.title}</h3>
+    <p class="pcard-m">{p.kind}{p.place ? `, ${p.place}` : ''} · {p.services.join(', ')}</p>
+  </div>
+</a>

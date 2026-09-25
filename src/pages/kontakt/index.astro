@@ -1,42 +1,33 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { site } from '../../data/work';
-
-const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI Werbespot', 'Etwas anderes'];
+import Arrow from '../../components/Arrow.astro';
+import { scenes, site } from '../../data/work';
 ---
-<Base title="Kontakt" description="Projekt anfragen bei Südlicht Studio in Kaufbeuren: Aftermovies, Eventfotografie, Motion Design und KI Content.">
+<Base title="Kontakt" description="Projekt anfragen bei Südlicht Studio in Kaufbeuren: Aftermovies, Eventfotografie, Motion Design und KI-Spots." dock={false}>
   <header class="page-head wrap">
-    <span class="mono label">Kontakt — Kaufbeuren (DE) <span data-clock>--:--</span></span>
-    <h1 class="display" data-split style="margin-top:20px">Nächstes Event?</h1>
-    <div class="page-head-row">
-      <p class="lead" data-reveal>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
+    <h1 class="display" data-split>Nächstes Event?</h1>
+    <p class="lead" data-reveal>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
+    <div class="contact-quick">
+      <a class="btn" href={`tel:${site.phoneHref}`}>Anrufen</a>
+      <a class="btn" href={`mailto:${site.email}`}>Mail schreiben</a>
     </div>
   </header>
 
-  <section class="wrap section" style="padding-top:clamp(24px,3vw,40px)" aria-labelledby="form-title">
-    <div class="split">
-      <aside style="display:grid;gap:28px;align-content:start" data-reveal>
-        <h2 id="form-title" class="sr-only">Anfrageformular</h2>
-        <div>
-          <p class="mono muted" style="margin:0 0 6px">Mail</p>
-          <a class="lead link-u" href={`mailto:${site.email}`}>{site.email}</a>
-        </div>
-        <div>
-          <p class="mono muted" style="margin:0 0 6px">Telefon</p>
-          <a class="lead link-u" href={`tel:${site.phoneHref}`}>{site.phone}</a>
-        </div>
-        <div>
-          <p class="mono muted" style="margin:0 0 6px">Büro</p>
-          <p class="lead" style="margin:0">{site.street}<br />{site.zip} {site.city}</p>
-        </div>
-      </aside>
+  <section class="wrap" style="padding-bottom:clamp(80px,10vw,140px)" aria-labelledby="form-title">
+    <h2 id="form-title" class="sr-only">Anfrageformular</h2>
+    <div class="contact-grid">
+      <dl class="contact-aside" data-reveal>
+        <div><dt>Mail</dt><dd><a class="lead link-u" href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+        <div><dt>Telefon</dt><dd><a class="lead link-u" href={`tel:${site.phoneHref}`}>{site.phone}</a></dd></div>
+        <div><dt>Büro</dt><dd class="lead">{site.street}<br />{site.zip} {site.city}</dd></div>
+      </dl>
 
       <form class="form" id="contact" action="/kontakt.php" method="post" novalidate data-reveal>
         <fieldset class="field full">
           <legend>Worum geht's?</legend>
           <div class="opts">
-            {types.map((t, i) => (
-              <label class="opt"><input type="radio" name="art" value={t} checked={i === 0} /><span>{t}</span></label>
+            {scenes.map((sc, i) => (
+              <label class="opt"><input type="radio" name="art" value={sc.label} data-scene={sc.id} checked={i === 0} /><span>{sc.label}</span></label>
             ))}
           </div>
         </fieldset>
@@ -48,7 +39,7 @@ const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI W
         </div>
         <div class="field">
           <label for="f-email">E-Mail <span class="req" aria-hidden="true">*</span></label>
-          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" aria-describedby="e-email" />
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="160" aria-describedby="e-email" />
           <p class="err" id="e-email"></p>
         </div>
         <div class="field">
@@ -56,9 +47,8 @@ const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI W
           <input class="input" id="f-tel" name="telefon" type="tel" autocomplete="tel" maxlength="40" />
         </div>
         <div class="field">
-          <label for="f-date">Datum & Ort</label>
-          <input class="input" id="f-date" name="termin" type="text" maxlength="160" aria-describedby="h-date" />
-          <p class="hint" id="h-date">Zum Beispiel: 14. März, Kaufbeuren</p>
+          <label for="f-date">Datum und Ort</label>
+          <input class="input" id="f-date" name="termin" type="text" maxlength="160" placeholder="z. B. 14. März, Kaufbeuren" />
         </div>
         <div class="field full">
           <label for="f-msg">Nachricht <span class="req" aria-hidden="true">*</span></label>
@@ -72,7 +62,7 @@ const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI W
         </div>
         <input type="hidden" name="t" value="" data-ts />
 
-        <div class="field full">
+        <div class="full" style="display:grid;gap:8px">
           <label class="check" for="f-ok">
             <input id="f-ok" name="datenschutz" type="checkbox" value="ja" required aria-describedby="e-ok" />
             <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage genutzt werden. Mehr dazu in der <a href="/datenschutz/">Datenschutzerklärung</a>. <span class="req" aria-hidden="true">*</span></span>
@@ -80,9 +70,9 @@ const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI W
           <p class="err" id="e-ok"></p>
         </div>
 
-        <div class="full" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
-          <button class="btn primary" type="submit">Anfrage senden <span class="arr" aria-hidden="true">↗</span></button>
-          <span class="mono muted">* Pflichtfeld</span>
+        <div class="full submit-row">
+          <button class="btn primary" type="submit"><span data-btn-label>Anfrage senden</span> <Arrow /></button>
+          <p class="hint">Deine Anfrage kommt direkt bei mir an. Ich melde mich per Mail oder Telefon.</p>
         </div>
         <div class="full form-status" role="status" aria-live="polite" tabindex="-1" data-status></div>
       </form>
@@ -94,6 +84,11 @@ const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI W
     const status = form.querySelector<HTMLElement>('[data-status]')!;
     const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     const ts = form.querySelector<HTMLInputElement>('[data-ts]')!;
+    const label = btn.querySelector<HTMLElement>('[data-btn-label]')!;
+    // Szene aus dem Link vorauswählen (z. B. /kontakt/?szene=ring)
+    const wanted = new URLSearchParams(location.search).get('szene');
+    const pre = wanted && form.querySelector<HTMLInputElement>(`input[name="art"][data-scene="${CSS.escape(wanted)}"]`);
+    if (pre) pre.checked = true;
     ts.value = String(Date.now());
 
     const rules: [string, string, (el: HTMLInputElement) => string][] = [
@@ -134,19 +129,20 @@ const types = ['Aftermovie / Reels', 'Eventfotografie', 'Motion & Grafik', 'KI W
         return;
       }
       btn.setAttribute('aria-busy', 'true');
-      btn.firstChild!.textContent = 'Wird gesendet… ';
+      label.textContent = 'Wird gesendet…';
       try {
         const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.ok) throw new Error(data.error || 'Senden fehlgeschlagen');
         form.reset();
+        if (pre) pre.checked = true;
         ts.value = String(Date.now());
         setStatus('ok', 'Danke! Deine Anfrage ist angekommen. Ich melde mich bei dir.');
       } catch (err) {
         setStatus('error', `${(err as Error).message}. Versuch es bitte noch einmal oder schreib direkt an info@suedlicht-studio.de.`);
       } finally {
         btn.removeAttribute('aria-busy');
-        btn.firstChild!.textContent = 'Anfrage senden ';
+        label.textContent = 'Anfrage senden';
       }
     });
   </script>

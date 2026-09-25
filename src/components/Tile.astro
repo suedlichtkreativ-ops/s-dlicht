@@ -23,7 +23,8 @@ const poster = item.type === 'vid' ? (await getImage({ src: item.poster, width: 
   class:list={['tile', Astro.props.class]}
   type="button"
   data-tile
-  data-cat={project.cat}
+  data-scene={project.scene}
+  data-url={`/arbeiten/${project.slug}/`}
   data-kind={item.type}
   data-full={full}
   data-poster={poster}
@@ -36,6 +37,6 @@ const poster = item.type === 'vid' ? (await getImage({ src: item.poster, width: 
 >
   <Media item={item} alt={alt} sizes={sizes} ratio={ratio} />
   {caption && (
-    <span class="tile-cap mono"><span>{project.title}</span><span>{item.caption}</span></span>
+    <span class="tile-cap"><b>{project.title}</b><span>{item.caption}</span></span>
   )}
 </button>

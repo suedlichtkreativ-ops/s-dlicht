@@ -1,0 +1,7 @@
+---
+/** Pfeil-Icon (Linienstärke 1.5, passt zu den übrigen Icons) */
+interface Props { dir?: 'right' | 'left' | 'up-right'; class?: string }
+const { dir = 'right' } = Astro.props;
+const d = dir === 'left' ? 'M13 8H3M7 4L3 8l4 4' : dir === 'up-right' ? 'M4 12L12 4M5 4h7v7' : 'M3 8h10M9 4l4 4-4 4';
+---
+<svg class:list={['arr', Astro.props.class]} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={d} /></svg>

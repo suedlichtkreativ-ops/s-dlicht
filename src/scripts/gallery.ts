@@ -2,32 +2,59 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sceneLabels: Record<string, string> = { club: 'Events & Clubs', ring: 'Kampfsport', marken: 'Gastro & Marken', ki: 'KI-Spots' };
 
-/* ── Filter ── */
-const filters = document.querySelector<HTMLElement>('[data-filters]');
 const tiles = [...document.querySelectorAll<HTMLButtonElement>('[data-tile]')];
 
-function matches(t: HTMLElement, cat: string) {
-  return cat === 'alle' || (cat === 'video' ? t.dataset.kind === 'vid' : t.dataset.cat === cat);
-}
+/* ── Filter: Szene + „Nur Videos“, Zustand steht in der URL ── */
+const filters = document.querySelector<HTMLElement>('[data-filters]');
+if (filters) {
+  const chips = [...filters.querySelectorAll<HTMLButtonElement>('[data-cat]')];
+  const videoSwitch = filters.querySelector<HTMLButtonElement>('[data-only-video]')!;
+  const countEl = document.querySelector<HTMLElement>('[data-gallery-count]');
+  const mid = document.querySelector<HTMLElement>('[data-midcta]');
+  const params = new URLSearchParams(location.search);
+  let scene = sceneLabels[params.get('szene') ?? ''] ? params.get('szene')! : 'alle';
+  let onlyVideo = params.get('videos') === '1';
 
-filters?.addEventListener('click', (e) => {
-  const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-cat]');
-  if (!btn || btn.getAttribute('aria-pressed') === 'true') return;
-  const cat = btn.dataset.cat!;
-  filters.querySelectorAll('[data-cat]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-  const apply = () => {
-    tiles.forEach((t) => (t.hidden = !matches(t, cat)));
-    ScrollTrigger.refresh();
-    const shown = tiles.filter((t) => !t.hidden);
-    // Neue Auswahl sofort sichtbar machen, auch wenn der Reveal noch nicht lief
-    gsap.set(shown.map((t) => t.querySelector('[data-relight]')), { clipPath: 'inset(0%)' });
-    gsap.set(shown.map((t) => t.querySelector('img, video')), { scale: 1, filter: 'none' });
-    if (!reduce) gsap.fromTo(shown, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.03 });
+  const matches = (t: HTMLElement) => (scene === 'alle' || t.dataset.scene === scene) && (!onlyVideo || t.dataset.kind === 'vid');
+
+  const apply = (animate: boolean) => {
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.cat === scene)));
+    videoSwitch.setAttribute('aria-pressed', String(onlyVideo));
+    const run = () => {
+      tiles.forEach((t) => (t.hidden = !matches(t)));
+      const shown = tiles.filter((t) => !t.hidden);
+      if (mid) mid.hidden = shown.length < 8;
+      if (countEl) countEl.textContent = `${shown.length} ${shown.length === 1 ? 'Arbeit' : 'Arbeiten'}${scene !== 'alle' ? ` in ${sceneLabels[scene]}` : ''}${onlyVideo ? ', nur Videos' : ''}`;
+      // Anfrage-Links nehmen die gefilterte Szene mit
+      document.querySelectorAll<HTMLAnchorElement>('[data-scene-link]').forEach((a) => (a.href = scene === 'alle' ? '/kontakt/' : `/kontakt/?szene=${scene}`));
+      gsap.set(shown.map((t) => t.querySelector('[data-relight]')), { clipPath: 'inset(0%)' });
+      gsap.set(shown.map((t) => t.querySelector('img, video')), { scale: 1, filter: 'none' });
+      ScrollTrigger.refresh();
+      if (animate && !reduce) gsap.fromTo(shown.slice(0, 12), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out', stagger: 0.03 });
+    };
+    if (animate && !reduce) gsap.to(tiles.filter((t) => !t.hidden), { opacity: 0, duration: 0.18, ease: 'power2.in', onComplete: () => (gsap.set(tiles, { opacity: 1 }), run()) });
+    else run();
+    const q = new URLSearchParams();
+    if (scene !== 'alle') q.set('szene', scene);
+    if (onlyVideo) q.set('videos', '1');
+    history.replaceState(null, '', q.toString() ? `?${q}` : location.pathname);
   };
-  if (reduce) apply();
-  else gsap.to(tiles.filter((t) => !t.hidden), { opacity: 0, y: -8, duration: 0.2, ease: 'power2.in', onComplete: apply });
-});
+
+  chips.forEach((c) =>
+    c.addEventListener('click', () => {
+      if (c.dataset.cat === scene) return;
+      scene = c.dataset.cat!;
+      apply(true);
+    }),
+  );
+  videoSwitch.addEventListener('click', () => {
+    onlyVideo = !onlyVideo;
+    apply(true);
+  });
+  apply(false);
+}
 
 /* ── Lightbox ── */
 const lb = document.getElementById('lb') as HTMLDialogElement | null;
@@ -36,16 +63,16 @@ if (lb) {
   const vid = document.getElementById('lbVid') as HTMLVideoElement;
   const cap = document.getElementById('lbCap')!;
   const count = document.getElementById('lbCount')!;
+  const projectLink = document.getElementById('lbProject') as HTMLAnchorElement;
+  const ask = document.getElementById('lbAsk') as HTMLAnchorElement;
   let list: HTMLElement[] = [];
   let pos = 0;
   let opener: HTMLElement | null = null;
 
   const show = () => {
-    const t = list[pos];
-    const d = t.dataset;
+    const d = list[pos].dataset;
     if (d.kind === 'vid') {
       img.hidden = true;
-      img.removeAttribute('src');
       vid.hidden = false;
       vid.poster = d.poster!;
       vid.src = d.full!;
@@ -58,8 +85,14 @@ if (lb) {
       img.src = d.full!;
       img.alt = d.alt || '';
     }
-    cap.textContent = `${d.title} — ${d.caption}${d.ai === 'true' ? ' · KI' : ''}`;
-    count.textContent = `${String(pos + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}`;
+    cap.innerHTML = '';
+    const b = document.createElement('b');
+    b.textContent = d.title!;
+    cap.append(b, document.createTextNode(`, ${d.caption}${d.ai === 'true' ? ' (KI)' : ''}`));
+    count.textContent = `${pos + 1} / ${list.length}`;
+    projectLink.href = d.url!;
+    projectLink.hidden = location.pathname === d.url;
+    ask.href = `/kontakt/?szene=${d.scene}`;
   };
   const open = (t: HTMLElement) => {
     list = tiles.filter((x) => !x.hidden);

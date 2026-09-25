@@ -1,18 +1,18 @@
 ---
-import { pic, pickWidths } from '../data/img';
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Media from '../components/Media.astro';
+import Arrow from '../components/Arrow.astro';
 import portrait from '../assets/portrait.jpg';
-import { clients, projects, site } from '../data/work';
+import { projects } from '../data/work';
+import { pic, pickWidths } from '../data/img';
 
 const ring = projects.find((p) => p.slug === 'muay-thai-gala')!.items[2];
 const club = projects.find((p) => p.slug === 'loca-noche')!.items[1];
 ---
-<Base title="Über mich" description="Alexander Malkevich, Südlicht Studio: Aftermovies, Eventfotografie, Motion Design und KI Content aus Kaufbeuren im Allgäu.">
+<Base title="Über mich" description="Alexander Malkevich, Südlicht Studio: Aftermovies, Eventfotografie, Motion Design und KI-Spots aus Kaufbeuren im Allgäu.">
   <header class="page-head wrap">
-    <span class="mono label">Über mich — {site.owner}</span>
-    <h1 class="display" data-split style="margin-top:20px">Hi, ich bin Alex.</h1>
+    <h1 class="display" data-split>Hi, ich bin Alex.</h1>
   </header>
 
   <section class="wrap" aria-label="Portrait">
@@ -20,48 +20,45 @@ const club = projects.find((p) => p.slug === 'loca-noche')!.items[1];
       <div class="portrait" data-relight>
         <Picture src={portrait} alt="Portrait von Alexander Malkevich" {...pic} widths={pickWidths([480, 800, 1000])} sizes="(max-width: 860px) 100vw, 40vw" loading="eager" />
       </div>
-      <div style="display:grid;gap:28px">
+      <div style="display:grid;gap:24px">
         <p class="lead" data-reveal>Angefangen hab ich mit der Kamera am Ring und im Club. Da lernt man schnell, dass der gute Moment genau einmal passiert.</p>
-        <p class="body-l" data-reveal style="margin:0">Heute schneide ich Aftermovies, animiere Logos und Announcements und baue mit KI Werbespots, für die es sonst ein Filmteam bräuchte.</p>
-        <p class="body-l" data-reveal style="margin:0">Mein Büro ist in Kaufbeuren, meine Kunden sitzen meistens irgendwo zwischen Allgäu und Ulm. Schnitt und Grafik laufen remote. Zum Event komme ich mit Kamera und Drohne.</p>
-        <div class="facts mono" data-reveal>
-          <div><b>{projects.length}</b>Projekte hier im Portfolio</div>
-          <div><b>{clients.length}</b>Kunden zuletzt</div>
-          <div><b>Allgäu</b>bis Ulm unterwegs</div>
-        </div>
+        <p class="body-l" data-reveal>Heute schneide ich Aftermovies, animiere Logos und Announcements und baue mit KI Werbespots, für die es sonst ein Filmteam bräuchte.</p>
+        <p class="body-l" data-reveal>Mein Büro ist in Kaufbeuren, meine Kunden sitzen meistens irgendwo zwischen Allgäu und Ulm. Schnitt und Grafik laufen remote. Zum Event komme ich mit Kamera und Drohne.</p>
+        <p data-reveal><a class="link-arrow" href="/arbeiten/">Meine Arbeiten ansehen <Arrow /></a></p>
       </div>
     </div>
   </section>
 
   <section class="wrap section" aria-label="Wo ich arbeite">
     <div class="p-gallery">
-      <figure class="tall" style="margin:0;grid-column:span 5">
+      <figure style="grid-column:span 5">
         <Media item={ring} alt="Muay Thai Gala, vor dem Wai Kru" ratio="4/5" sizes="(max-width: 760px) 100vw, 40vw" />
-        <figcaption class="tile-cap mono"><span>Am Ring</span><span>Muay Thai Gala</span></figcaption>
+        <figcaption class="tile-cap"><b>Am Ring</b><span>Muay Thai Gala</span></figcaption>
       </figure>
-      <figure style="margin:0;grid-column:span 7;align-self:end">
+      <figure style="grid-column:span 7;align-self:end">
         <Media item={club} alt="Loca Noche, DJ Set im Club" ratio="4/5" sizes="(max-width: 760px) 100vw, 55vw" />
-        <figcaption class="tile-cap mono"><span>Im Club</span><span>Loca Noche</span></figcaption>
+        <figcaption class="tile-cap"><b>Im Club</b><span>Loca Noche</span></figcaption>
       </figure>
     </div>
   </section>
 
-  <section class="wrap section" style="padding-top:0" aria-labelledby="ki-title">
+  <section class="wrap" style="padding-bottom:clamp(80px,10vw,140px)" aria-labelledby="ki-title">
     <div class="split">
-      <div><span class="mono label">Haltung zu KI</span></div>
+      <h2 id="ki-title" class="display h3" data-split>KI ja. Aber immer gekennzeichnet.</h2>
       <div style="display:grid;gap:22px">
-        <h2 id="ki-title" class="display h3" data-split>KI ja. Aber immer gekennzeichnet.</h2>
-        <p class="body-l" data-reveal style="margin:0">Einige Arbeiten sind ganz oder teilweise mit KI entstanden, vor allem mit Higgsfield und Kling. Im Portfolio tragen sie ein KI Label. Bei den Relight Bildern sind die Ausgangsfotos meine eigenen Aufnahmen.</p>
-        <p data-reveal><a class="btn" href="/ki-hinweis/">Hinweis zu KI <span class="arr" aria-hidden="true">↗</span></a></p>
+        <p class="body-l" data-reveal>Einige Arbeiten sind ganz oder teilweise mit KI entstanden, vor allem mit Higgsfield und Kling. Im Portfolio tragen sie ein KI-Label. Bei den Relight-Bildern sind die Ausgangsfotos meine eigenen Aufnahmen.</p>
+        <p data-reveal><a class="link-arrow" href="/ki-hinweis/">Hinweis zu KI <Arrow /></a></p>
       </div>
     </div>
   </section>
 
-  <section class="cta" aria-labelledby="cta-title">
-    <div class="wrap">
-      <span class="mono label">Kontakt</span>
-      <h2 id="cta-title" class="display" data-split style="margin:24px 0 32px">Nächstes Event?</h2>
-      <div data-reveal><a class="btn primary" href="/kontakt/">Projekt anfragen <span class="arr" aria-hidden="true">↗</span></a></div>
+  <section class="wrap" style="padding-bottom:clamp(64px,8vw,120px)" aria-labelledby="cta-title">
+    <div class="p-cta" data-reveal>
+      <div>
+        <h2 id="cta-title">Nächstes Event?</h2>
+        <p>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
+      </div>
+      <a class="btn" href="/kontakt/">Projekt anfragen <Arrow /></a>
     </div>
   </section>
 </Base>

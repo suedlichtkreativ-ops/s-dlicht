@@ -1,23 +1,30 @@
+---
+import Arrow from './Arrow.astro';
+---
 <dialog class="lb" id="lb" aria-label="Großansicht">
   <div class="lb-in">
     <div class="lb-top">
-      <div class="mono" id="lbCap" aria-live="polite"></div>
+      <div class="lb-cap" id="lbCap" aria-live="polite"></div>
       <div style="display:flex;gap:14px;align-items:center">
-        <span class="mono muted" id="lbCount"></span>
+        <span class="meta" id="lbCount"></span>
         <button class="ic" id="lbClose" type="button" aria-label="Schließen">
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
       </div>
     </div>
     <div class="lb-stage" id="lbStage">
-      <img id="lbImg" alt="" />
+      <img id="lbImg" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" hidden />
       <video id="lbVid" muted loop playsinline controls hidden></video>
       <button class="ic lb-nav lb-prev" id="lbPrev" type="button" aria-label="Vorherige Arbeit">
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2L4 8l6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <button class="ic lb-nav lb-next" id="lbNext" type="button" aria-label="Nächste Arbeit">
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
+    </div>
+    <div class="lb-foot">
+      <a class="link-arrow" id="lbProject" href="/arbeiten/">Zum Projekt <Arrow /></a>
+      <a class="btn primary" id="lbAsk" href="/kontakt/">So etwas anfragen <Arrow /></a>
     </div>
   </div>
 </dialog>

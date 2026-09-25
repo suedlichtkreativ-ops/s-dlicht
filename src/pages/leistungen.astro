@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Media from '../components/Media.astro';
+import Arrow from '../components/Arrow.astro';
 import { services } from '../data/services';
 import { projects } from '../data/work';
 
@@ -17,60 +18,47 @@ const steps = [
 const tools = ['Premiere Pro', 'After Effects', 'Photoshop', 'Illustrator', 'Lightroom', 'DaVinci Resolve', 'Higgsfield', 'Kling'];
 const gear = ['Sony A7 III', 'Drohne', 'Gimbal'];
 ---
-<Base title="Leistungen" description="Aftermovies und Reels, Motion und Grafik, KI Bildwelten und Fotografie vor Ort. Südlicht Studio aus Kaufbeuren, im Allgäu und bis Ulm unterwegs.">
+<Base title="Leistungen" description="Aftermovies und Reels, Motion und Grafik, KI-Spots und Fotografie vor Ort. Südlicht Studio aus Kaufbeuren, im Allgäu und bis Ulm unterwegs.">
   <header class="page-head wrap">
-    <span class="mono label">Leistungen — 04</span>
-    <h1 class="display" data-split style="margin-top:20px">Leistungen</h1>
-    <div class="page-head-row">
-      <p class="lead" data-reveal>Vom Dreh bis zum fertigen Reel. Zum Event komme ich mit Kamera und Drohne, Schnitt und Grafik laufen remote.</p>
-    </div>
+    <h1 class="display" data-split>Leistungen</h1>
+    <p class="lead" data-reveal>Vom Dreh bis zum fertigen Reel. Zum Event komme ich mit Kamera und Drohne, Schnitt und Grafik laufen remote.</p>
   </header>
 
   {services.map((s, i) => (
-    <section class="wrap" style="padding-block:clamp(40px,6vw,88px);border-top:1px solid var(--line)" aria-labelledby={`svc-${i}`}>
+    <section class="wrap svc-row" aria-labelledby={`svc-${i}`}>
       <div class="split" style="align-items:start">
-        <div style="display:grid;gap:22px;align-content:start">
-          <span class="mono accent">({String(i + 1).padStart(2, '0')})</span>
+        <div style="display:grid;gap:20px;align-content:start">
           <h2 id={`svc-${i}`} class="display h3" data-split>{s.title}</h2>
-          <p class="body-l" data-reveal style="margin:0">{s.text}</p>
-          <dl class="mono" style="margin:0" data-reveal>
-            <div style="display:grid;border-top:1px solid var(--line)">
-              {s.rows.map(([k, v]) => (
-                <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)"><dt class="muted">{k}</dt><dd style="margin:0;text-align:right">{v}</dd></div>
-              ))}
-            </div>
+          <p class="body-l" data-reveal>{s.text}</p>
+          <dl data-reveal>
+            {s.rows.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
           </dl>
         </div>
-        <Media item={visuals[i]} alt={alts[i]} sizes="(max-width: 860px) 100vw, 60vw" ratio={i % 2 ? '4/5' : '16/10'} class="svc-visual" />
+        <Media item={visuals[i]} alt={alts[i]} sizes="(max-width: 860px) 100vw, 60vw" ratio={i % 2 ? '4/5' : '16/10'} />
       </div>
     </section>
   ))}
 
   <section class="wrap section" aria-labelledby="steps-title">
-    <div class="sec-head mono muted"><span class="label">Ablauf</span><span>05 Schritte</span></div>
     <h2 id="steps-title" class="display h2" data-split style="margin-bottom:clamp(40px,6vw,72px)">So läuft ein Projekt.</h2>
     <ol class="steps">
-      {steps.map(([t, d], i) => (
-        <li data-reveal><span class="n">{String(i + 1).padStart(2, '0')}</span><h3>{t}</h3><p>{d}</p></li>
-      ))}
+      {steps.map(([t, d]) => <li data-reveal><h3>{t}</h3><p>{d}</p></li>)}
     </ol>
   </section>
 
-  <section class="wrap section" style="padding-top:0" aria-labelledby="tools-title">
-    <div class="sec-head mono muted"><span class="label" id="tools-title">Werkzeug</span><span>Software & Kamera</span></div>
-    <ul class="clients">
-      {tools.map((t) => <li data-reveal>{t}</li>)}
-    </ul>
-    <ul class="clients" style="margin-top:24px">
-      {gear.map((t) => <li data-reveal style="color:var(--orange)">{t}</li>)}
-    </ul>
+  <section class="wrap" style="padding-bottom:clamp(80px,10vw,140px)" aria-labelledby="tools-title">
+    <h2 id="tools-title" class="display h3" data-split style="margin-bottom:24px">Werkzeug</h2>
+    <ul class="tools" data-reveal>{tools.map((t) => <li>{t}</li>)}</ul>
+    <ul class="tools gear" data-reveal style="margin-top:10px">{gear.map((t) => <li>{t}</li>)}</ul>
   </section>
 
-  <section class="cta" aria-labelledby="cta-title">
-    <div class="wrap">
-      <span class="mono label">Kontakt</span>
-      <h2 id="cta-title" class="display" data-split style="margin:24px 0 32px">Lass uns reden.</h2>
-      <div data-reveal><a class="btn primary" href="/kontakt/">Projekt anfragen <span class="arr" aria-hidden="true">↗</span></a></div>
+  <section class="wrap" style="padding-bottom:clamp(64px,8vw,120px)" aria-labelledby="cta-title">
+    <div class="p-cta" data-reveal>
+      <div>
+        <h2 id="cta-title">Lass uns reden.</h2>
+        <p>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
+      </div>
+      <a class="btn" href="/kontakt/">Projekt anfragen <Arrow /></a>
     </div>
   </section>
 </Base>
