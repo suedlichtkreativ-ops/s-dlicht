@@ -496,12 +496,17 @@ dialog.lb[open]{animation:lbIn 380ms var(--ease-out)}
 
 /* ── Die ganze Startseite folgt der gewählten Szene ── */
 html[data-scene] .clients li{color:var(--muted);transition:color var(--t-med) var(--ease-out)}
-.svc{transition:background var(--t-med) var(--ease-out),box-shadow var(--t-med) var(--ease-out)}
+.svc{transition:background var(--t-med) var(--ease-out)}
+.svc h3{transition:color var(--t-med) var(--ease-out)}
 html[data-scene="club"] .clients li[data-s="club"]{color:var(--ink)}
-html[data-scene="club"] .svc[data-s~="club"]{background:var(--bg-2);box-shadow:inset 0 3px 0 var(--orange)}
+html[data-scene="club"] .svc[data-s~="club"]{background:var(--bg-2)}
+html[data-scene="club"] .svc[data-s~="club"] h3{color:var(--orange)}
 html[data-scene="ring"] .clients li[data-s="ring"]{color:var(--ink)}
-html[data-scene="ring"] .svc[data-s~="ring"]{background:var(--bg-2);box-shadow:inset 0 3px 0 var(--orange)}
+html[data-scene="ring"] .svc[data-s~="ring"]{background:var(--bg-2)}
+html[data-scene="ring"] .svc[data-s~="ring"] h3{color:var(--orange)}
 html[data-scene="marken"] .clients li[data-s="marken"]{color:var(--ink)}
-html[data-scene="marken"] .svc[data-s~="marken"]{background:var(--bg-2);box-shadow:inset 0 3px 0 var(--orange)}
+html[data-scene="marken"] .svc[data-s~="marken"]{background:var(--bg-2)}
+html[data-scene="marken"] .svc[data-s~="marken"] h3{color:var(--orange)}
 html[data-scene="ki"] .clients li[data-s="ki"]{color:var(--ink)}
-html[data-scene="ki"] .svc[data-s~="ki"]{background:var(--bg-2);box-shadow:inset 0 3px 0 var(--orange)}
+html[data-scene="ki"] .svc[data-s~="ki"]{background:var(--bg-2)}
+html[data-scene="ki"] .svc[data-s~="ki"] h3{color:var(--orange)}
