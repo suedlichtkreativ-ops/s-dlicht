@@ -57,6 +57,11 @@ if (filters) {
     apply(true);
   });
   apply(false);
+  // Bei einem Direktlink den aktiven Filter in den sichtbaren Bereich holen (Handy)
+  if (scene !== 'alle') {
+    const c = chips.find((x) => x.dataset.cat === scene);
+    if (c) c.parentElement!.scrollLeft = c.offsetLeft - c.parentElement!.clientWidth / 2 + c.clientWidth / 2;
+  }
 }
 
 /* ── Lightbox ── */

@@ -3,11 +3,10 @@ import { Picture, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Arrow from '../components/Arrow.astro';
-import { clientSlug, clients, projectsByScene, sceneReel, scenes, site } from '../data/work';
+import { clientScene, clientSlug, clients, projects, projectsByScene, sceneImage, sceneReel, scenes, site } from '../data/work';
 import { services } from '../data/services';
 import { pic, pickWidths } from '../data/img';
 import portrait from '../assets/portrait.jpg';
-import closerImg from '../assets/work/31_muay_thai_gala.jpg';
 
 // Monitor: ein Hochformat-Clip je Szene. Kanal-Vorschau: Standbild des Clips.
 const reels = await Promise.all(
@@ -15,9 +14,10 @@ const reels = await Promise.all(
     const r = sceneReel(s.id);
     const [posterImg, thumb] = await Promise.all([
       getImage({ src: r.poster, width: 720, format: 'webp' }),
-      getImage({ src: r.poster, width: 160, format: 'webp' }),
+      getImage({ src: r.poster, width: 200, format: 'webp' }),
     ]);
-    return { scene: s, src: r.src, poster: posterImg.src, thumb: thumb.src };
+    const project = projects.find((p) => p.slug === s.reelProject)!;
+    return { scene: s, src: r.src, poster: posterImg.src, thumb: thumb.src, project };
   }),
 );
 const first = scenes[0];
@@ -26,7 +26,7 @@ const first = scenes[0];
   title={site.name}
   description="Alexander Malkevich filmt und fotografiert Open Airs, Clubnächte und Fight Nights, macht Fotos für Gastro und Marken und baut KI-Spots. Südlicht Studio, Kaufbeuren."
 >
-  <section class="mixer wrap" aria-labelledby="hero-title" data-mixer data-scene="club">
+  <section class="mixer wrap" aria-labelledby="hero-title" data-mixer data-scene={first.id}>
     <div class="mixer-grid">
       <div class="mixer-copy">
         <h1 id="hero-title" class="display mixer-h1"><span class="l">Film, Foto</span> <span class="l">und KI&#8209;Spots</span> <em class="l">aus der Szene.</em></h1>
@@ -35,6 +35,19 @@ const first = scenes[0];
           <a class="btn primary" href="/kontakt/" data-scene-link="kontakt">Projekt anfragen <Arrow /></a>
           <a class="btn" href="/arbeiten/">Alle Arbeiten</a>
         </div>
+      </div>
+
+      <div class="channels" role="group" aria-label="Szene wählen">
+        <p class="channels-h">Wähle deine Szene</p>
+        {reels.map((r, i) => (
+          <button class="channel" type="button" data-channel={r.scene.id} data-label={r.scene.label} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`szene-${r.scene.id}`}>
+            <span class="channel-thumb" aria-hidden="true"><img src={r.thumb} alt="" width="200" height="356" loading="eager" decoding="async" /></span>
+            <span class="channel-text">
+              <span class="channel-name">{r.scene.short}</span>
+              <span class="channel-line">{r.scene.line}</span>
+            </span>
+          </button>
+        ))}
       </div>
 
       <div class="monitor" data-monitor aria-label="Clip der gewählten Szene">
@@ -60,35 +73,28 @@ const first = scenes[0];
             <svg data-icon="play" viewBox="0 0 16 16" aria-hidden="true" hidden><path d="M5 3l8 5-8 5z" fill="currentColor"/></svg>
           </button>
         </div>
-      </div>
-
-      <div class="channels" role="group" aria-label="Szene wählen">
-        <p class="channels-h">Wähle deine Szene</p>
         {reels.map((r, i) => (
-          <button class="channel" type="button" data-channel={r.scene.id} data-label={r.scene.label} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`szene-${r.scene.id}`}>
-            <span class="channel-thumb" aria-hidden="true"><img src={r.thumb} alt="" width="160" height="284" loading="lazy" decoding="async" /></span>
-            <span>
-              <span class="channel-name">{r.scene.short}</span>
-              <span class="channel-line">{r.scene.line}</span>
-            </span>
-          </button>
+          <div class="monitor-cap" data-cap={r.scene.id} hidden={i !== 0}>
+            <span>{r.project.title}</span>
+            <a href={`/arbeiten/${r.project.slug}/`}>Zum Projekt</a>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
   <section class="wrap" style="padding-block:clamp(40px,6vw,88px) clamp(80px,10vw,140px)" aria-label="Arbeiten nach Szene">
-    {scenes.map((s, i) => {
-      const list = projectsByScene(s.id);
+    {scenes.map((s) => {
+      const list = projectsByScene(s.id).slice(0, 3);
       return (
         <div class="scene-panel" id={`szene-${s.id}`} data-panel={s.id}>
           <div class="head-row">
             <h2 class="display h2">{s.headline}</h2>
             <a class="link-arrow" href={`/arbeiten/?szene=${s.id}`}>Alle Arbeiten: {s.label} <Arrow /></a>
           </div>
-          <div class="pgrid">
-            {list.slice(0, 3).map((p) => <ProjectCard project={p} />)}
-            <div class:list={['cta-card', { 'span-2': list.slice(0, 3).length === 2 }]}>
+          <div class="pgrid" style={`--cols:${list.length + 1}`}>
+            {list.map((p) => <ProjectCard project={p} />)}
+            <div class="cta-card">
               <h3>{s.cta}</h3>
               <div style="display:grid;gap:18px">
                 <p>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
@@ -105,7 +111,7 @@ const first = scenes[0];
     <h2 id="clients-title" class="lead" style="margin-bottom:24px;color:var(--muted)">Zuletzt gearbeitet für</h2>
     <ul class="clients">
       {clients.map((c) => (
-        <li data-reveal>{clientSlug[c] ? <a href={`/arbeiten/${clientSlug[c]}/`}>{c}</a> : c}</li>
+        <li data-reveal data-s={clientScene(c)}>{clientSlug[c] ? <a href={`/arbeiten/${clientSlug[c]}/`}>{c}</a> : c}</li>
       ))}
     </ul>
   </section>
@@ -117,7 +123,7 @@ const first = scenes[0];
     </div>
     <div class="svc-grid">
       {services.map((s) => (
-        <article class="svc" data-reveal>
+        <article class="svc" data-reveal data-s={s.scenes.join(' ')}>
           <h3>{s.title}</h3>
           <p>{s.text}</p>
           <dl>
@@ -145,10 +151,14 @@ const first = scenes[0];
 
   <section class="closer" aria-labelledby="closer-title">
     <div class="closer-bg" aria-hidden="true">
-      <Picture src={closerImg} alt="" {...pic} widths={pickWidths([800, 1600])} sizes="100vw" loading="lazy" />
+      {scenes.map((s, i) => (
+        <div class:list={['closer-img', { 'is-on': i === 0 }]} data-closer-img={s.id}>
+          <Picture src={sceneImage(s.closer)} alt="" {...pic} widths={pickWidths([800, 1600])} sizes="100vw" loading="lazy" />
+        </div>
+      ))}
     </div>
     <div class="wrap">
-      <h2 id="closer-title" class="display" data-split>Nächstes Event?</h2>
+      <h2 id="closer-title" class="display" data-closer-title data-reveal>{first.cta}</h2>
       <p class="lead" data-reveal>Schreib mir kurz, was du planst, wann und wo. Den Rest klären wir am Telefon.</p>
       <div class="btn-row" data-reveal>
         <a class="btn primary" href="/kontakt/" data-scene-link="kontakt">Projekt anfragen <Arrow /></a>
@@ -156,4 +166,5 @@ const first = scenes[0];
       </div>
     </div>
   </section>
+  <script type="application/json" id="scene-ctas" set:html={JSON.stringify(Object.fromEntries(scenes.map((s) => [s.id, s.cta])))} />
 </Base>

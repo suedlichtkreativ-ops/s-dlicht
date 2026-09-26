@@ -27,13 +27,26 @@ export const scenes: {
   headline: string;
   cta: string;
   reel: string;
+  /** Projekt, aus dem der Monitor-Clip stammt */
+  reelProject: string;
+  /** Bild für den Abschluss der Startseite */
+  closer: string;
 }[] = [
-  { id: 'club', label: 'Events & Clubs', short: 'Club', line: 'Open Airs, Clubnächte, Aftermovies', headline: 'Open Airs und Clubnächte', cta: 'Nächstes Event geplant?', reel: 'tanz' },
-  { id: 'ring', label: 'Kampfsport', short: 'Ring', line: 'Fight Nights, Galas, Seminare', headline: 'Fight Nights und Kampfsport', cta: 'Fight Night geplant?', reel: 'alina' },
-  { id: 'marken', label: 'Gastro & Marken', short: 'Marken', line: 'Gastro, Shops, Produktclips', headline: 'Gastro, Shops und Marken', cta: 'Shooting für deinen Laden?', reel: 'nfc' },
-  { id: 'ki', label: 'KI-Spots', short: 'KI', line: 'Werbespots ohne Filmteam', headline: 'KI-Spots und KI-Bildwelten', cta: 'Spot ohne Filmteam?', reel: 'schall' },
+  { id: 'club', label: 'Events & Clubs', short: 'Club', line: 'Open Airs, Clubnächte, Aftermovies', headline: 'Open Airs und Clubnächte', cta: 'Nächstes Event geplant?', reel: 'tanz', reelProject: 'tanzlauter-am-turm', closer: '00_tanzlauter_am_turm' },
+  { id: 'ring', label: 'Kampfsport', short: 'Ring', line: 'Fight Nights, Galas, Seminare', headline: 'Fight Nights und Kampfsport', cta: 'Fight Night geplant?', reel: 'alina', reelProject: 'seminar-alina-dalaslan', closer: '31_muay_thai_gala' },
+  { id: 'marken', label: 'Gastro & Marken', short: 'Gastro', line: 'Restaurants, Shops, Marken', headline: 'Gastro, Shops und Marken', cta: 'Shooting für deinen Laden?', reel: 'nfc', reelProject: 'sp-prints', closer: '19_vima_essbar' },
+  { id: 'ki', label: 'KI-Spots', short: 'KI', line: 'Werbespots ohne Filmteam', headline: 'KI-Spots und KI-Bildwelten', cta: 'Spot ohne Filmteam?', reel: 'schall', reelProject: 'automobile-schall', closer: '21_relight' },
 ];
 export const sceneById = (id: Scene) => scenes.find((s) => s.id === id)!;
+
+/** Weitere Anfragearten im Formular, die (noch) keine eigene Szene mit Arbeiten haben */
+export const extraInquiries = [
+  { id: 'hochzeit', label: 'Hochzeit', cta: 'Hochzeit geplant?' },
+  { id: 'anderes', label: 'Etwas anderes', cta: 'Was hast du vor?' },
+];
+
+/** Bild für eine Szene (für den Abschluss der Startseite) */
+export const sceneImage = (file: string) => img(file);
 
 /** Filter auf der Arbeiten-Seite: Alle + vier Szenen (Videos als eigener Schalter) */
 export const categories: { id: Scene | 'alle'; label: string }[] = [
@@ -284,6 +297,10 @@ export const clientSlug: Record<string, string | undefined> = {
   'SP Prints': 'sp-prints',
   'Vermögen Clever Steuern': 'vermoegen-clever-steuern',
 };
+
+/** Kunde → Szene (für die Hervorhebung auf der Startseite) */
+export const clientScene = (name: string): Scene | undefined =>
+  name === 'Underdogs MMA' ? 'ring' : projects.find((p) => p.slug === clientSlug[name])?.scene;
 
 export const projectsByScene = (sc: Scene) => projects.filter((p) => p.scene === sc);
 

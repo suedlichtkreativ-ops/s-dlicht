@@ -4,11 +4,18 @@ import Base from '../../layouts/Base.astro';
 import Tile from '../../components/Tile.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import Arrow from '../../components/Arrow.astro';
-import { projectHasAi, projects, sceneById, type Project } from '../../data/work';
+import { projectHasAi, projects, sceneById, scenes, type Project } from '../../data/work';
 import { pic, pickWidths } from '../../data/img';
 
 export function getStaticPaths() {
-  return projects.map((p, i) => ({ params: { slug: p.slug }, props: { project: p, next: projects[(i + 1) % projects.length] } }));
+  return projects.map((p) => {
+    // Nächstes Projekt aus derselben Szene; nach der letzten Arbeit einer Szene geht es in die nächste Szene
+    const same = projects.filter((x) => x.scene === p.scene);
+    const i = same.indexOf(p);
+    const nextScene = scenes[(scenes.findIndex((s) => s.id === p.scene) + 1) % scenes.length].id;
+    const next = same[i + 1] ?? projects.find((x) => x.scene === nextScene)!;
+    return { params: { slug: p.slug }, props: { project: p, next } };
+  });
 }
 interface Props { project: Project; next: Project }
 const { project: p, next } = Astro.props;

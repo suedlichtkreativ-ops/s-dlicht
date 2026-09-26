@@ -8,12 +8,13 @@ web
 
 ## Users
 
-Die Website soll vier Kundengruppen gewinnen, alle gleich wichtig:
+Die Website soll diese Kundengruppen gewinnen, alle gleich wichtig:
 
 - **Veranstalter und Clubs:** Open Airs, Clubnächte und Festivals, die Aftermovies, Teaser und Reels für Instagram und TikTok brauchen.
 - **Kampfsport:** Fight Nights, Galas, Gyms und Seminare, die Fotos und Event-Edits wollen.
 - **Gastro und lokale Marken:** Restaurants, Bars und Shops im Allgäu, die Fotos und Social-Media-Content brauchen.
 - **Firmen für KI-Werbespots:** Unternehmen, die Werbespots oder Kampagnenmotive mit KI wollen, ohne ein Filmteam zu buchen.
+- **Hochzeiten** (vom Nutzer am 2026-09-26 als fünfte Zielgruppe bestätigt): Paare, die Hochzeitsfotos oder -videos wollen. Noch kein Hochzeitsmaterial im Projekt; bis dahin nur als Anfrageart im Kontaktformular, keine eigene Szene. Nichts erfinden.
 
 Sie kommen meist aus der Region zwischen Allgäu und Ulm. Typische Situation: Ein Event oder eine Kampagne steht an, und sie suchen jemanden, der Content liefert, der im Feed funktioniert.
 

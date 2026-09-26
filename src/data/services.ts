@@ -1,6 +1,7 @@
 export const services = [
   {
     title: 'Aftermovies & Reels',
+    scenes: ['club', 'ring'],
     text: 'Recaps, Teaser und Highlights im Hochformat, auf den Beat geschnitten.',
     rows: [
       ['Für', 'Clubs, Open Airs, Fight Nights'],
@@ -10,6 +11,7 @@ export const services = [
   },
   {
     title: 'Motion & Grafik',
+    scenes: ['club', 'marken'],
     text: 'Artist Announcements, Line ups, Logo Animationen, Flyer.',
     rows: [
       ['Für', 'Veranstalter, Marken'],
@@ -19,6 +21,7 @@ export const services = [
   },
   {
     title: 'KI-Spots & Bildwelten',
+    scenes: ['ki'],
     text: 'Werbespots und Kampagnenmotive mit Higgsfield und Kling. Immer als KI gekennzeichnet.',
     rows: [
       ['Für', 'Kampagnen, Social Ads'],
@@ -28,6 +31,7 @@ export const services = [
   },
   {
     title: 'Foto vor Ort',
+    scenes: ['club', 'ring', 'marken'],
     text: 'Events, Nightlife und Kampfsport, bearbeitet und schnell geliefert.',
     rows: [
       ['Für', 'Events, Gastro, Marken'],

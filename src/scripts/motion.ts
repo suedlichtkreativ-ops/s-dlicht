@@ -90,8 +90,14 @@ function mixer() {
   let paused = reduce;
   let visible = false;
 
+  const caps = [...monitor.querySelectorAll<HTMLElement>('[data-cap]')];
+  const closerImgs = [...document.querySelectorAll<HTMLElement>('[data-closer-img]')];
+  const closerTitle = document.querySelector<HTMLElement>('[data-closer-title]');
+  const ctas: Record<string, string> = JSON.parse(document.getElementById('scene-ctas')?.textContent || '{}');
+
   // Ohne JS sind alle Szenen untereinander sichtbar; mit JS nur die gewählte
   panels.forEach((p, i) => (p.hidden = i !== 0));
+  root.dataset.scene = vids[0].dataset.scene;
 
   const load = (v: HTMLVideoElement) => {
     if (!v.src) v.src = v.dataset.reelSrc!;
@@ -126,6 +132,12 @@ function mixer() {
     if (tally) tally.textContent = channels.find((c) => c.dataset.channel === scene)?.dataset.label ?? '';
     setSceneLinks(scene);
     document.querySelector<HTMLElement>('[data-mixer]')?.setAttribute('data-scene', scene);
+    // Die ganze Seite folgt: Leistungen, Kunden, Abschluss
+    root.dataset.scene = scene;
+    caps.forEach((c) => (c.hidden = c.dataset.cap !== scene));
+    closerImgs.forEach((c) => c.classList.toggle('is-on', c.dataset.closerImg === scene));
+    if (closerTitle && ctas[scene]) closerTitle.textContent = ctas[scene];
+
 
     // Monitor: Wischblende von links, wie am Bildmischer
     const prev = current;
@@ -167,6 +179,13 @@ function mixer() {
       if (!reduce) gsap.fromTo(panel.querySelectorAll('.pcard, .cta-card, .head-row'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, ease: EASE, stagger: 0.05 });
       ScrollTrigger.refresh();
     }
+    // Handy: Monitor liegt unter den Kanälen; nach dem Neuberechnen in den Blick holen, damit man den Wechsel sieht
+    requestAnimationFrame(() => {
+      const r = monitor.getBoundingClientRect();
+      const group = channels[0].parentElement!.getBoundingClientRect();
+      // Kanäle oben halten, Monitor darunter: so sieht man Auswahl und Wechsel zusammen
+      if (r.bottom > window.innerHeight + 40) window.scrollTo({ top: window.scrollY + group.top - 12, behavior: reduce ? 'auto' : 'smooth' });
+    });
   };
   channels.forEach((c) => c.addEventListener('click', () => select(c.dataset.channel!)));
 }
