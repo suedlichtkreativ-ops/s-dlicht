@@ -70,7 +70,11 @@ function lazyVideos() {
 
 /* ── Anfrage-Links tragen die gewählte Szene mit ── */
 function setSceneLinks(scene: string) {
-  document.querySelectorAll<HTMLAnchorElement>('[data-scene-link]').forEach((a) => (a.href = `/kontakt/?szene=${scene}`));
+  document.querySelectorAll<HTMLAnchorElement>('[data-scene-link]').forEach((a) => {
+    // Basis-Link einmal merken (so bleibt es auch bei relativen Pfaden korrekt)
+    a.dataset.base ??= a.href.split('?')[0];
+    a.href = `${a.dataset.base}?szene=${scene}`;
+  });
 }
 
 /* ── Bildmischer auf der Startseite ── */

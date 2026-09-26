@@ -146,7 +146,7 @@ p{text-wrap:pretty}
 .mixer[data-scene="ki"]::after{opacity:1}
 .mixer-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:stretch;min-height:calc(100svh - var(--nav-h) - 110px)}
 .mixer-copy{grid-column:1 / span 5;display:flex;flex-direction:column;justify-content:flex-end;gap:24px;padding-bottom:4px}
-.mixer-h1{font-size:clamp(44px,5vw,88px);line-height:.92}
+.mixer-h1{font-size:clamp(44px,5vw,88px);line-height:1}
 .mixer-h1 .l{display:block;white-space:nowrap}
 .mixer-h1 em{font-style:normal;color:var(--orange)}
 .monitor{grid-column:6 / span 4;position:relative;align-self:stretch;min-height:520px;max-height:calc(100svh - var(--nav-h) - 110px);aspect-ratio:9/16;justify-self:center;width:auto;height:100%;overflow:hidden;border-radius:6px;background:#000;border:1px solid var(--line-strong)}
@@ -210,7 +210,7 @@ p{text-wrap:pretty}
 .cta-card .btn::before{background:#fff}
 .cta-card .btn:hover{color:var(--on-orange)}
 @media (max-width:1100px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.cta-card.span-2{grid-column:auto;aspect-ratio:4/5}}
-@media (max-width:560px){.pgrid{grid-template-columns:1fr 1fr;gap:10px}.pcard-t{font-size:24px}.pcard-m{font-size:13.5px}.cta-card{grid-column:1/-1;aspect-ratio:auto}}
+@media (max-width:560px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pcard-t{font-size:24px}.pcard-m{font-size:13.5px}.cta-card,.cta-card.span-2{grid-column:1/-1;aspect-ratio:auto}.cta-card.span-2 h3{font-size:clamp(34px,9vw,44px)}}
 
 /* ── Kundenliste ── */
 .clients{display:flex;flex-wrap:wrap;gap:4px 0;list-style:none;margin:0;padding:0}

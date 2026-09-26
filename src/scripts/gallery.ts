@@ -28,7 +28,10 @@ if (filters) {
       if (mid) mid.hidden = shown.length < 8;
       if (countEl) countEl.textContent = `${shown.length} ${shown.length === 1 ? 'Arbeit' : 'Arbeiten'}${scene !== 'alle' ? ` in ${sceneLabels[scene]}` : ''}${onlyVideo ? ', nur Videos' : ''}`;
       // Anfrage-Links nehmen die gefilterte Szene mit
-      document.querySelectorAll<HTMLAnchorElement>('[data-scene-link]').forEach((a) => (a.href = scene === 'alle' ? '/kontakt/' : `/kontakt/?szene=${scene}`));
+      document.querySelectorAll<HTMLAnchorElement>('[data-scene-link]').forEach((a) => {
+        a.dataset.base ??= a.href.split('?')[0];
+        a.href = scene === 'alle' ? a.dataset.base : `${a.dataset.base}?szene=${scene}`;
+      });
       gsap.set(shown.map((t) => t.querySelector('[data-relight]')), { clipPath: 'inset(0%)' });
       gsap.set(shown.map((t) => t.querySelector('img, video')), { scale: 1, filter: 'none' });
       ScrollTrigger.refresh();
@@ -68,6 +71,7 @@ if (lb) {
   let list: HTMLElement[] = [];
   let pos = 0;
   let opener: HTMLElement | null = null;
+  const askBase = ask.href.split('?')[0];
 
   const show = () => {
     const d = list[pos].dataset;
@@ -91,8 +95,8 @@ if (lb) {
     cap.append(b, document.createTextNode(`, ${d.caption}${d.ai === 'true' ? ' (KI)' : ''}`));
     count.textContent = `${pos + 1} / ${list.length}`;
     projectLink.href = d.url!;
-    projectLink.hidden = location.pathname === d.url;
-    ask.href = `/kontakt/?szene=${d.scene}`;
+    projectLink.hidden = new URL(d.url!, location.href).pathname === location.pathname;
+    ask.href = `${askBase}?szene=${d.scene}`;
   };
   const open = (t: HTMLElement) => {
     list = tiles.filter((x) => !x.hidden);

@@ -1,0 +1,411 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T00:00:00Z",
+  "title": "Design System: Südlicht Studio",
+  "extensions": {
+    "colorMeta": {
+      "orange": {
+        "role": "primary",
+        "displayName": "Stage Orange",
+        "canonical": "#FF5A1F",
+        "tonalRamp": [
+          "oklch(15% 0.1 40)",
+          "oklch(25% 0.2 40)",
+          "oklch(35% 0.2 40)",
+          "oklch(45% 0.2 40)",
+          "oklch(55% 0.2 40)",
+          "oklch(65% 0.2 40)",
+          "oklch(80% 0.2 40)",
+          "oklch(95% 0.1 40)"
+        ]
+      },
+      "on-orange": {
+        "role": "primary",
+        "displayName": "Tally Black",
+        "canonical": "#140702",
+        "tonalRamp": [
+          "oklch(15% 0.015 40)",
+          "oklch(25% 0.03 40)",
+          "oklch(35% 0.03 40)",
+          "oklch(45% 0.03 40)",
+          "oklch(55% 0.03 40)",
+          "oklch(65% 0.03 40)",
+          "oklch(80% 0.03 40)",
+          "oklch(95% 0.015 40)"
+        ]
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "Laser Blue",
+        "canonical": "#5B78FF",
+        "tonalRamp": [
+          "oklch(15% 0.095 272)",
+          "oklch(25% 0.19 272)",
+          "oklch(35% 0.19 272)",
+          "oklch(45% 0.19 272)",
+          "oklch(55% 0.19 272)",
+          "oklch(65% 0.19 272)",
+          "oklch(80% 0.19 272)",
+          "oklch(95% 0.095 272)"
+        ]
+      },
+      "amber": {
+        "role": "tertiary",
+        "displayName": "Warm Amber",
+        "canonical": "#FFB23E",
+        "tonalRamp": [
+          "oklch(15% 0.075 72)",
+          "oklch(25% 0.15 72)",
+          "oklch(35% 0.15 72)",
+          "oklch(45% 0.15 72)",
+          "oklch(55% 0.15 72)",
+          "oklch(65% 0.15 72)",
+          "oklch(80% 0.15 72)",
+          "oklch(95% 0.075 72)"
+        ]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "Club Black",
+        "canonical": "#0A0A0B",
+        "tonalRamp": [
+          "#0A0A0B",
+          "#131315",
+          "#1B1B1E",
+          "#3a3a3f",
+          "#8a857f",
+          "#A39E97",
+          "#D6D1CA",
+          "#F2EEE8"
+        ]
+      },
+      "bg-2": {
+        "role": "neutral",
+        "displayName": "Booth Grey",
+        "canonical": "#131315"
+      },
+      "bg-3": {
+        "role": "neutral",
+        "displayName": "Rack Grey",
+        "canonical": "#1B1B1E"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Paper Ink",
+        "canonical": "#F2EEE8",
+        "tonalRamp": [
+          "#0A0A0B",
+          "#131315",
+          "#1B1B1E",
+          "#3a3a3f",
+          "#8a857f",
+          "#A39E97",
+          "#D6D1CA",
+          "#F2EEE8"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#D6D1CA"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Ash",
+        "canonical": "#A39E97"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(242,238,232,.12)"
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "rgba(242,238,232,.26)"
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Signal Red",
+        "canonical": "#FF6B6B"
+      },
+      "success": {
+        "role": "neutral",
+        "displayName": "Signal Green",
+        "canonical": "#59D98E"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Subpage heads, closing line, next-project link. Big Shoulders 900 uppercase."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2 headings."
+      },
+      "hero": {
+        "displayName": "Hero",
+        "purpose": "Homepage H1 in the mixer copy column; last line orange."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card, service, CTA-panel, channel, index and client names."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Intro paragraphs in Soft Ink, max 30em."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav, buttons, chips, form labels. Sentence case."
+      },
+      "data": {
+        "displayName": "Data",
+        "purpose": "JetBrains Mono for tally, counts, timecodes, dates only."
+      }
+    },
+    "gradients": [
+      {
+        "name": "stage",
+        "value": "linear-gradient(90deg,#5a1603 0%,#FF5A1F 55%,#FFB23E 100%)",
+        "purpose": "8px gradbar, scaled in from the left."
+      },
+      {
+        "name": "room-glow-orange",
+        "value": "radial-gradient(45% 55% at 58% 42%,rgba(255,90,31,.26),transparent 70%)",
+        "purpose": "Mixer room light (page heads use 22% at 90% 0%)."
+      },
+      {
+        "name": "room-glow-ki",
+        "value": "radial-gradient(45% 55% at 58% 42%,rgba(91,120,255,.30),transparent 70%)",
+        "purpose": "Mixer room light while the KI channel is on program only."
+      }
+    ],
+    "shadows": [
+      {
+        "name": "tally-halo",
+        "value": "0 0 0 3px rgba(255,90,31,.25)",
+        "purpose": "Ring around the monitor tally dot."
+      },
+      {
+        "name": "dock-lift",
+        "value": "0 12px 30px -10px rgba(0,0,0,.7)",
+        "purpose": "Floating mobile inquiry button only."
+      },
+      {
+        "name": "focus-underline",
+        "value": "0 2px 0 0 var(--orange)",
+        "purpose": "Input keyboard focus."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 2px solid var(--amber); outline-offset: 3px",
+        "purpose": "Global :focus-visible."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Default for reveals, hovers, button wipe."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(.65,0,.35,1)",
+        "purpose": "Menu clip-path, glow crossfade, page transition out."
+      },
+      {
+        "name": "t-fast",
+        "value": "180ms",
+        "purpose": "Color and border state changes."
+      },
+      {
+        "name": "t-med",
+        "value": "420ms",
+        "purpose": "Button fill wipe, surface steps, nav hide."
+      },
+      {
+        "name": "monitor-wipe",
+        "value": "clip-path inset(0 100% 0 0) to inset(0), 0.7s expo.inOut",
+        "purpose": "Channel switch on the program monitor."
+      },
+      {
+        "name": "relight",
+        "value": "clip-path inset(10% 5%) + scale 1.14 + brightness .2 saturate .4 to rest, 1.3 to 1.6s",
+        "purpose": "Media reveal on scroll."
+      },
+      {
+        "name": "view-transition",
+        "value": "out 240ms fade, in 560ms fade + 16px rise",
+        "purpose": "Native page transitions; nav excluded."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "channels-compact",
+        "value": "1180px"
+      },
+      {
+        "name": "grid-2up",
+        "value": "1100px"
+      },
+      {
+        "name": "nav-collapse",
+        "value": "980px"
+      },
+      {
+        "name": "stack",
+        "value": "860px"
+      },
+      {
+        "name": "index-compact",
+        "value": "760px"
+      },
+      {
+        "name": "form-1col",
+        "value": "700px"
+      },
+      {
+        "name": "svc-1col",
+        "value": "620px"
+      },
+      {
+        "name": "phone",
+        "value": "560px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Orange pill for the one primary action; ink panel wipes up on hover.",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\">Projekt anfragen <svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 8h10M9 4l4 4-4 4\"/></svg></a>",
+      "css": ".ds-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border:1px solid var(--line-strong,rgba(242,238,232,.26));border-radius:999px;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;white-space:nowrap;cursor:pointer;overflow:hidden;isolation:isolate;background:transparent;color:var(--ink,#F2EEE8);text-decoration:none;transition:color 420ms cubic-bezier(.16,1,.3,1),border-color 420ms cubic-bezier(.16,1,.3,1),transform 180ms}.ds-btn::before{content:\"\";position:absolute;inset:0;z-index:-1;background:var(--ink,#F2EEE8);transform:translateY(101%);transition:transform 420ms cubic-bezier(.16,1,.3,1)}.ds-btn:hover{color:var(--bg,#0A0A0B);border-color:var(--ink,#F2EEE8)}.ds-btn:hover::before{transform:none}.ds-btn svg{width:16px;height:16px;transition:transform 420ms cubic-bezier(.16,1,.3,1)}.ds-btn:hover svg{transform:translateX(3px)}.ds-btn:active{transform:scale(.98)}.ds-btn:focus-visible{outline:2px solid var(--amber,#FFB23E);outline-offset:3px}.ds-btn-primary{background:var(--orange,#FF5A1F);border-color:var(--orange,#FF5A1F);color:var(--on-orange,#140702)}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Default outlined pill for secondary actions.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">Alle Arbeiten</a>",
+      "css": ".ds-btn-ghost{position:relative;display:inline-flex;align-items:center;min-height:52px;padding:0 24px;border:1px solid var(--line-strong,rgba(242,238,232,.26));border-radius:999px;font-family:'Figtree',sans-serif;font-weight:600;font-size:16px;color:var(--ink,#F2EEE8);background:transparent;overflow:hidden;isolation:isolate;text-decoration:none;transition:color 420ms cubic-bezier(.16,1,.3,1),border-color 420ms cubic-bezier(.16,1,.3,1)}.ds-btn-ghost::before{content:\"\";position:absolute;inset:0;z-index:-1;background:var(--ink,#F2EEE8);transform:translateY(101%);transition:transform 420ms cubic-bezier(.16,1,.3,1)}.ds-btn-ghost:hover{color:var(--bg,#0A0A0B);border-color:var(--ink,#F2EEE8)}.ds-btn-ghost:hover::before{transform:none}.ds-btn-ghost:focus-visible{outline:2px solid var(--amber,#FFB23E);outline-offset:3px}"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Pill filter with mono count; selected fills with ink.",
+      "html": "<div style=\"display:flex;gap:8px\"><button class=\"ds-chip\" aria-pressed=\"true\">Alle<span class=\"ds-n\">42</span></button><button class=\"ds-chip\" aria-pressed=\"false\">Club<span class=\"ds-n\">14</span></button></div>",
+      "css": ".ds-chip{min-height:44px;padding:0 16px;border:1px solid var(--line-strong,rgba(242,238,232,.26));border-radius:999px;background:transparent;color:var(--ink,#F2EEE8);cursor:pointer;font-family:'Figtree',sans-serif;font-size:15px;font-weight:500;transition:background 180ms,color 180ms,border-color 180ms}.ds-chip .ds-n{color:var(--muted,#A39E97);margin-left:6px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-variant-numeric:tabular-nums}.ds-chip:hover{border-color:var(--ink,#F2EEE8)}.ds-chip:focus-visible{outline:2px solid var(--amber,#FFB23E);outline-offset:3px}.ds-chip[aria-pressed=\"true\"]{background:var(--ink,#F2EEE8);color:var(--bg,#0A0A0B);border-color:var(--ink,#F2EEE8)}.ds-chip[aria-pressed=\"true\"] .ds-n{color:inherit;opacity:.6}"
+    },
+    {
+      "name": "Channel Button",
+      "kind": "custom",
+      "refersTo": "channel",
+      "description": "Vision-mixer scene button; on-air state gets orange border, wash and tally dot.",
+      "html": "<div style=\"display:grid;gap:10px;max-width:320px\"><button class=\"ds-channel\" aria-pressed=\"true\"><span class=\"ds-name\">Club</span><span class=\"ds-line\">Open Airs, Clubnächte, Festivals</span></button><button class=\"ds-channel\" aria-pressed=\"false\"><span class=\"ds-name\">KI-Spots</span><span class=\"ds-line\">Werbespots ohne Filmteam</span></button></div>",
+      "css": ".ds-channel{position:relative;display:block;width:100%;min-height:96px;padding:14px;border:1px solid var(--line,rgba(242,238,232,.12));border-radius:6px;background:var(--bg-2,#131315);color:var(--ink,#F2EEE8);text-align:left;cursor:pointer;transition:border-color 420ms cubic-bezier(.16,1,.3,1),background 420ms cubic-bezier(.16,1,.3,1)}.ds-channel:hover{border-color:var(--line-strong,rgba(242,238,232,.26));background:var(--bg-3,#1B1B1E)}.ds-channel:focus-visible{outline:2px solid var(--amber,#FFB23E);outline-offset:3px}.ds-channel .ds-name{display:block;font-family:'Big Shoulders Display','Arial Narrow',sans-serif;font-weight:900;text-transform:uppercase;font-size:30px;line-height:.95}.ds-channel .ds-line{display:block;font-family:'Figtree',sans-serif;font-size:14px;color:var(--muted,#A39E97);margin-top:4px;line-height:1.35}.ds-channel[aria-pressed=\"true\"]{border-color:var(--orange,#FF5A1F);background:linear-gradient(90deg,rgba(255,90,31,.14),rgba(255,90,31,.04))}.ds-channel[aria-pressed=\"true\"]::after{content:\"\";position:absolute;right:14px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--orange,#FF5A1F)}"
+    },
+    {
+      "name": "Underline Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Boxless field with a single bottom rule that turns orange on focus.",
+      "html": "<label class=\"ds-field\"><span>Wann ist das Event?</span><input class=\"ds-input\" placeholder=\"z. B. 14. März, Kaufbeuren\"></label>",
+      "css": ".ds-field{display:grid;gap:8px;font-family:'Figtree',sans-serif}.ds-field>span{font-size:15px;font-weight:600;color:var(--ink,#F2EEE8)}.ds-input{width:100%;min-height:54px;padding:12px 0;border:0;border-bottom:1px solid var(--line-strong,rgba(242,238,232,.26));background:transparent;color:var(--ink,#F2EEE8);font:inherit;font-size:18px;border-radius:0;transition:border-color 180ms}.ds-input::placeholder{color:#8a857f}.ds-input:hover{border-color:var(--muted,#A39E97)}.ds-input:focus{outline:none;border-color:var(--orange,#FF5A1F)}.ds-input:focus-visible{outline:none;box-shadow:0 2px 0 0 var(--orange,#FF5A1F)}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Muted links, ink on hover, orange underline on the current page.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Start</a><a href=\"#\">Arbeiten</a><a href=\"#\">Leistungen</a><a href=\"#\">Über mich</a></nav>",
+      "css": ".ds-nav{display:flex;gap:32px;font-family:'Figtree',sans-serif}.ds-nav a{position:relative;font-size:15px;font-weight:500;color:var(--muted,#A39E97);padding:12px 0;text-decoration:none;transition:color 180ms}.ds-nav a:hover,.ds-nav a[aria-current=\"page\"]{color:var(--ink,#F2EEE8)}.ds-nav a:focus-visible{outline:2px solid var(--amber,#FFB23E);outline-offset:3px}.ds-nav a[aria-current=\"page\"]::after{content:\"\";position:absolute;left:0;right:0;bottom:6px;height:2px;background:var(--orange,#FF5A1F)}"
+    },
+    {
+      "name": "KI Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Glass pill over media; blue dot marks AI work.",
+      "html": "<span class=\"ds-tag ds-ki\">KI</span>",
+      "css": ".ds-tag{display:inline-flex;align-items:center;gap:6px;min-height:26px;padding:3px 10px;border-radius:999px;background:rgba(10,10,11,.72);backdrop-filter:blur(8px);color:#fff;font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:600}.ds-ki::before{content:\"\";width:7px;height:7px;border-radius:50%;background:var(--blue,#5B78FF)}"
+    },
+    {
+      "name": "CTA Panel",
+      "kind": "card",
+      "refersTo": "cta-card",
+      "description": "Solid orange block with display title and inverted button; takes a grid slot.",
+      "html": "<div class=\"ds-cta\"><h3>Dein Event als Reel?</h3><p>Schreib mir kurz, was du planst, wann und wo.</p><a class=\"ds-cta-btn\" href=\"#\">Projekt anfragen</a></div>",
+      "css": ".ds-cta{display:grid;gap:18px;max-width:320px;padding:28px;border-radius:6px;background:var(--orange,#FF5A1F);color:var(--on-orange,#140702);font-family:'Figtree',sans-serif}.ds-cta h3{font-family:'Big Shoulders Display','Arial Narrow',sans-serif;font-weight:900;text-transform:uppercase;font-size:44px;line-height:.92;margin:0}.ds-cta p{margin:0;font-size:15.5px;font-weight:500}.ds-cta-btn{justify-self:start;display:inline-flex;align-items:center;min-height:52px;padding:0 24px;border-radius:999px;background:var(--on-orange,#140702);color:#fff;font-weight:600;text-decoration:none;transition:background 420ms,color 420ms}.ds-cta-btn:hover{background:#fff;color:var(--on-orange,#140702)}.ds-cta-btn:focus-visible{outline:2px solid var(--on-orange,#140702);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Vision Mixer at 3 a.m.",
+    "overview": "The site is a dark room where footage is the only light. Near-black surfaces carry a faint static film grain; a single warm radial glow of stage orange sits behind the key content like a spot hitting haze. Real stills and vertical clips do the talking; type is loud and condensed only where it names a scene or a section, and plain, readable Figtree everywhere else.\n\nThe system borrows its working grammar from a live-production vision mixer: a program monitor with a 1px frame and a tally dot, channel buttons that light up when they are on air, mono type only for data a machine would print (timecodes, counts, metadata). Orange is the tally and the action; blue appears only when the subject is AI work, and when it does, the room light itself turns laser blue. Depth comes from tonal steps and light, not from floating cards.\n\nDensity is generous at section level (80 to 160px between sections) and tight inside modules (hairline-divided grids, 1px dividers, compact rows). Motion is filmic: expo-style easing, clip-path wipes and \"relight\" reveals where media fades up from dark and desaturated to full exposure.",
+    "keyCharacteristics": [
+      "Near-black canvas (#0A0A0B range) with warm off-white ink, never pure white on page surfaces.",
+      "One accent that means \"on air / act now\": stage orange; laser blue reserved for AI.",
+      "Condensed uppercase Big Shoulders Display for names and headings; Figtree for all reading; JetBrains Mono for data only.",
+      "Pills for anything you press; small radii (3 to 6px) for anything you look at.",
+      "Flat surfaces, 1px lines, light-as-depth (radial glows, gradient scrims over media).",
+      "Clip-path wipes and relight reveals, all disabled under reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The Tally Rule",
+        "body": "Orange marks what is live or what to do next. If an element is neither on air nor an action, it is not orange.",
+        "section": "colors"
+      },
+      {
+        "name": "The Laser Rule",
+        "body": "Blue appears only on AI work and AI-related state. It is never decoration, never a link color, never a second accent for non-AI content.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Pure White Rule",
+        "body": "Page text is Paper Ink, not #FFF. Pure white is reserved for text laid over footage (monitor bar, captions, media tags) and for text on Tally Black buttons.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Big Shoulders names things (scenes, sections, clients, projects); Figtree says things. A sentence meant to be read is never set in the display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono Is Data Rule",
+        "body": "JetBrains Mono only for machine-like values: counts, timecodes, dates, tally labels. Never for labels above headings, never for body or consent text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light Not Shadow Rule",
+        "body": "Cards and panels never cast shadows. If something needs to feel lifted, raise its tone or light it; the only drop shadow belongs to an element that genuinely floats over content (the mobile dock).",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep page backgrounds on Club Black and step to bg-2 and bg-3 for rest and hover surfaces.",
+      "**Do** use Stage Orange for the one primary action per view, for active/on-air state, and for small markers (tally dots, separators, step numbers).",
+      "**Do** mark every AI piece with the blue KI tag or mark; use blue for nothing else.",
+      "**Do** set names and headings in Big Shoulders Display 900 uppercase with line-height 0.88 to 0.95, and all readable copy in Figtree.",
+      "**Do** make every pressable control a pill with a 44px minimum target and give it the amber 2px focus ring.",
+      "**Do** reveal media with the relight treatment (clip-path inset plus brightness and saturation fading up) and honor prefers-reduced-motion.",
+      "**Do** darken footage with gradient scrims before placing text on it, and use white only there."
+    ],
+    "donts": [
+      "**Don't** put shadows on cards, panels or media; express depth with tone and light.",
+      "**Don't** use Laser Blue on non-AI content, links or decoration.",
+      "**Don't** set body copy, labels or consent text in JetBrains Mono or in uppercase display type.",
+      "**Don't** place small uppercase tracked labels above headings; section headings stand alone or sit in a head-row with a link.",
+      "**Don't** use pure #FFF for page text or introduce a new accent hue.",
+      "**Don't** round media frames beyond 6px or square off buttons; the pill/near-square split is the shape language.",
+      "**Don't** load external fonts, scripts or icon fonts; icons are inline 16px line SVGs (1.5 stroke)."
+    ]
+  }
+}
