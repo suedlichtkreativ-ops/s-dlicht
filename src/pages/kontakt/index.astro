@@ -29,6 +29,8 @@ import { scenes, site } from '../../data/work';
             {scenes.map((sc, i) => (
               <label class="opt"><input type="radio" name="art" value={sc.label} data-scene={sc.id} checked={i === 0} /><span>{sc.label}</span></label>
             ))}
+            <label class="opt"><input type="radio" name="art" value="Hochzeit" data-scene="hochzeit" /><span>Hochzeit</span></label>
+            <label class="opt"><input type="radio" name="art" value="Etwas anderes" data-scene="anderes" /><span>Etwas anderes</span></label>
           </div>
         </fieldset>
 
