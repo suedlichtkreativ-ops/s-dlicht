@@ -6,5 +6,38 @@
       "maxFindings": 5,
       "maxChars": 8000
     }
+  },
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          "src/pages/bewerbung/esvk.astro"
+        ],
+        "createdAt": "2026-09-28T07:17:28.744Z",
+        "reason": "Agent: Bewerbungsseite ist bewusst eine eigene helle Eis-Welt, getrennt vom dunklen Website-System in DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          "src/pages/bewerbung/esvk.astro"
+        ],
+        "createdAt": "2026-09-28T07:17:28.758Z",
+        "reason": "Agent: Bewerbungsseite ist bewusst eine eigene helle Eis-Welt, getrennt vom dunklen Website-System in DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          "src/pages/bewerbung/esvk.astro"
+        ],
+        "createdAt": "2026-09-28T07:17:28.771Z",
+        "reason": "Agent: Bewerbungsseite ist bewusst eine eigene helle Eis-Welt, getrennt vom dunklen Website-System in DESIGN.md"
+      }
+    ]
   }
 }

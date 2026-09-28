@@ -1,0 +1,422 @@
+---
+/**
+ * Bewerbung als freier Mitarbeiter für das Medienteam des ESV Kaufbeuren.
+ * Eigenständige Seite ohne Website-Navigation, nicht verlinkt, noindex.
+ * Welt: Eisfläche. Spielfeldlinien sind die einzige Dekoration; das Angebot läuft wie ein Heimspiel ab.
+ */
+import { Picture, getImage } from 'astro:assets';
+import { site } from '../../data/work';
+import portrait from '../../assets/portrait.jpg';
+import prep1 from '../../assets/work/40_muay_thai_gala.jpg';
+import prep2 from '../../assets/work/23_muay_thai_gala.jpg';
+import atmo1 from '../../assets/work/17_boxen_im_festzelt.jpg';
+import atmo2 from '../../assets/work/30_tanzlauter_am_turm.jpg';
+import peak1 from '../../assets/work/31_muay_thai_gala.jpg';
+import peak2 from '../../assets/work/02_muay_thai_gala.jpg';
+import reelPoster from '../../assets/posters/alina.jpg';
+
+/** Instagram-Account. Leer lassen, bis der Name feststeht; dann erscheint ein markierter Platzhalter. */
+const instagram = '';
+const igUrl = instagram ? `https://www.instagram.com/${instagram.replace(/^@/, '')}/` : null;
+
+const poster = await getImage({ src: reelPoster, width: 720, format: 'webp' });
+
+const proof = [
+  {
+    title: 'Die Vorbereitungen',
+    text: 'Die ruhigen Minuten vorher erzählen oft mehr als das Ergebnis. Rituale, Konzentration, der Blick kurz vor dem Start.',
+    images: [
+      { src: prep1, alt: 'Muay Thai Gala: Kämpfer beim Ritual vor dem Kampf', cap: 'Ritual vor dem Kampf, Muay Thai Gala' },
+      { src: prep2, alt: 'Muay Thai Gala: Kämpfer mit Blumenkette vor dem Wai Kru', cap: 'Vor dem Wai Kru, Muay Thai Gala' },
+    ],
+  },
+  {
+    title: 'Die Atmosphäre',
+    text: 'Volle Ränge, Licht, Lautstärke. Ich stehe mittendrin und zeige, wie es sich anfühlt, dabei zu sein.',
+    images: [
+      { src: atmo1, alt: 'Boxabend im Festzelt in Kaufbeuren, Ring vor vollem Zelt', cap: 'Boxen im Festzelt, Kaufbeuren' },
+      { src: atmo2, alt: 'Open Air Tanzlauter am Turm: Publikum filmt mit dem Handy', cap: 'Crowd beim Tanzlauter am Turm' },
+    ],
+  },
+  {
+    title: 'Die emotionalen Höhepunkte',
+    text: 'Der eine Moment passiert genau einmal. Am Ring habe ich gelernt, ihn nicht zu verpassen.',
+    images: [
+      { src: peak1, alt: 'Muay Thai Gala: Schlagabtausch im Ring', cap: 'Schlagabtausch, Muay Thai Gala' },
+      { src: peak2, alt: 'Muay Thai Gala: German Champion mit Gürtel nach dem Kampf', cap: 'Champion nach dem Kampf' },
+    ],
+  },
+];
+
+// Das Angebot als Heimspiel: echte zeitliche Abfolge, deshalb nummeriert
+const matchday = [
+  { when: 'Vor dem Spiel', what: 'Stories vom Aufbau, vom Warm-up und von den Fans beim Einlass. Was genau geht, klären wir über die Akkreditierung.' },
+  { when: '1. Drittel', what: 'Einlauf der Mannschaft und die ersten Chancen live in der Story. Tore sofort, im Hochformat.' },
+  { when: 'Drittelpausen', what: 'Zwischenstand, kurze Clips aus der Halle, Stimmung auf den Rängen.' },
+  { when: '2. und 3. Drittel', what: 'Die großen Szenen in Foto und Video, damit nach dem Spiel alles bereitliegt.' },
+  { when: 'Schlusssirene', what: 'Ergebnis-Post und der Jubel mit den Fans, solange die Halle noch voll ist.' },
+  { when: 'Nach dem Spiel', what: 'Highlight-Reel auf den Beat geschnitten und eine Fotoauswahl. Den Zeitpunkt legen wir gemeinsam fest.' },
+];
+
+const terms = [
+  ['Rolle', 'Freier Mitarbeiter über Südlicht Studio, mit Rechnung (Kleinunternehmer nach § 19 UStG)'],
+  ['Einsätze', 'Heimspiele in der energie schwaben arena, Termine stimmen wir pro Saison ab'],
+  ['Ausrüstung', 'Eigene Kamera (Sony A7 III) und Gimbal, Schnitt und Bearbeitung am eigenen Rechner'],
+  ['Formate', 'Stories, Reels und Posts im Hochformat, Fotos für Feed und Website'],
+  ['Vergütung', 'Nach Absprache'],
+];
+
+const fits = [
+  ['Mindestalter 18 Jahre', 'Erfüllt.'],
+  ['Flexibilität', 'Ich arbeite projektweise und plane Heimspiele fest ein, sobald der Spielplan steht.'],
+  ['Zuverlässigkeit', 'Bei Fight Nights und Clubnächten gibt es keine zweite Chance. Ich bin vor dem ersten Gong da.'],
+  ['Freundliches, gepflegtes Auftreten', 'Ich bin bei Events mitten unter Gästen, Sportlern und Veranstaltern unterwegs. Das gehört dazu.'],
+];
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Bewerbung fürs Medienteam des ESVK | Alexander Malkevich</title>
+    <meta name="description" content="Bewerbung von Alexander Malkevich (Südlicht Studio, Kaufbeuren) als freier Mitarbeiter für das Medienteam des ESV Kaufbeuren." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#EEF3F7" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/figtree-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+    <header class="top wrap">
+      <a class="sender" href={site.url}>Südlicht Studio</a>
+      <a class="btn btn-goal" href={`mailto:${site.email}?subject=ESVK%20Medienteam`}>Alex schreiben</a>
+    </header>
+
+    <main id="inhalt">
+      <section class="hero wrap" aria-labelledby="h1">
+        <svg class="rink" viewBox="0 0 1200 700" preserveAspectRatio="none" aria-hidden="true">
+          <line class="ln ln-blue" x1="770" y1="0" x2="770" y2="700" vector-effect="non-scaling-stroke" />
+          <line class="ln ln-red" x1="1010" y1="0" x2="1010" y2="700" vector-effect="non-scaling-stroke" />
+        </svg>
+        <svg class="faceoff" viewBox="0 0 320 320" aria-hidden="true">
+          <circle class="ln ln-red-thin" cx="160" cy="160" r="150" />
+          <circle class="dot" cx="160" cy="160" r="6" />
+        </svg>
+        <div class="hero-copy">
+          <h1 id="h1" class="display">Ich zeige, was beim ESVK passiert.</h1>
+          <p class="lead">Bewerbung als freier Mitarbeiter für euer Medienteam. Ich bin Alex, Fotograf und Videograf aus Kaufbeuren, und würde eure Heimspiele auf Instagram begleiten: von der Vorbereitung bis nach der Schlusssirene.</p>
+          <div class="btn-row">
+            <a class="btn btn-goal" href={`mailto:${site.email}?subject=ESVK%20Medienteam`}>Alex schreiben</a>
+            {igUrl ? (
+              <a class="btn btn-line" href={igUrl}>Arbeiten auf Instagram</a>
+            ) : (
+              <a class="btn btn-line" href="#instagram">Arbeiten auf Instagram</a>
+            )}
+          </div>
+        </div>
+        <figure class="phone">
+          <video muted playsinline loop preload="metadata" poster={poster.src} src="/video/alina.mp4" data-reel aria-label="Event-Edit im Hochformat vom Seminar mit Alina Dalaslan im Gladiator Camp"></video>
+          <img class="print-poster" src={poster.src} alt="" width="720" height="1280" />
+          <figcaption>Event-Edit im Hochformat, Seminar im Gladiator Camp. <button type="button" class="reel-toggle" data-reel-toggle aria-pressed="false">Video pausieren</button></figcaption>
+        </figure>
+      </section>
+
+      <section class="why wrap" aria-labelledby="why-h">
+        <div class="why-grid">
+          <div class="portrait">
+            <Picture src={portrait} alt="Portrait von Alexander Malkevich" formats={['avif', 'webp']} widths={[320, 640]} sizes="(max-width: 760px) 40vw, 260px" />
+          </div>
+          <div class="why-text">
+            <h2 id="why-h" class="h2">Warum als freier Mitarbeiter?</h2>
+            <p>Ich bin fest angestellt und mache daneben mit meinem Studio Südlicht Foto, Film und Social-Media-Content: Aftermovies von Open Airs und Clubnächten, Fotos von Fight Nights, Motion Design und KI-Spots für Marken aus der Region.</p>
+            <p>Deshalb biete ich euch meine Mitarbeit auf freier Basis an. Für euch heißt das: fertige Inhalte zu klaren Absprachen, eigene Ausrüstung und eine Rechnung über mein Studio.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="proof wrap" aria-labelledby="proof-h">
+        <h2 id="proof-h" class="h2">Was ihr sucht, habe ich schon fotografiert.</h2>
+        <p class="intro">In eurer Anzeige steht: Vorbereitungen, Atmosphäre, emotionale Höhepunkte. Genau das zeigen diese Bilder, alle von mir, bei Kampfsport-Events und Veranstaltungen.</p>
+        {proof.map((p) => (
+          <article class="proof-row">
+            <div class="proof-text">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+            <div class="proof-imgs">
+              {p.images.map((im) => (
+                <figure>
+                  <Picture src={im.src} alt={im.alt} formats={['avif', 'webp']} widths={[480, 900]} sizes="(max-width: 760px) 50vw, 32vw" loading="lazy" />
+                  <figcaption>{im.cap}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section class="matchday" aria-labelledby="md-h">
+        <div class="wrap">
+          <h2 id="md-h" class="h2">So sähe ein Heimspiel mit mir aus.</h2>
+          <p class="intro">Ein Vorschlag, kein fester Plan. Was ihr braucht, stimmen wir vor der Saison gemeinsam ab.</p>
+        </div>
+        <ol class="track wrap">
+          {matchday.map((m) => (
+            <li>
+              <h3>{m.when}</h3>
+              <p>{m.what}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="offer wrap" aria-labelledby="offer-h">
+        <div class="offer-grid">
+          <div>
+            <h2 id="offer-h" class="h2">Mein Angebot</h2>
+            <dl class="terms">
+              {terms.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+            </dl>
+          </div>
+          <div>
+            <h2 class="h2">Was ihr mitbringen wollt</h2>
+            <dl class="terms">
+              {fits.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="ig wrap" id="instagram" aria-labelledby="ig-h">
+        <h2 id="ig-h" class="h2">Die meisten meiner Arbeiten findet ihr auf Instagram.</h2>
+        <p class="intro">Dort liegen der Großteil meiner Bilder und Videos, fertige Ergebnisse und Referenzen. Eine Auswahl steht zusätzlich auf meiner Website.</p>
+        <div class="ig-links">
+          {igUrl ? (
+            <a class="ig-handle" href={igUrl}>{instagram}</a>
+          ) : (
+            <span class="ig-handle ig-todo" title="Instagram-Namen eintragen">@instagram-name</span>
+          )}
+          <a class="ig-web" href={site.url}>suedlicht-studio.de</a>
+        </div>
+      </section>
+
+      <section class="close wrap" aria-labelledby="close-h">
+        <h2 id="close-h" class="display close-h">Ich freu mich auf ein kurzes Gespräch.</h2>
+        <p class="lead">Am schnellsten erreicht ihr mich per Mail oder Telefon. Gern komme ich auch vorab zu einem Heimspiel vorbei.</p>
+        <div class="btn-row">
+          <a class="btn btn-goal" href={`mailto:${site.email}?subject=ESVK%20Medienteam`}>{site.email}</a>
+          <a class="btn btn-line" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+        </div>
+        <p class="sig">Alexander Malkevich, Südlicht Studio<br />{site.street}, {site.zip} {site.city}</p>
+      </section>
+    </main>
+
+    <script>
+      // Clip spielt nur ohne „Bewegung reduzieren“; jederzeit pausierbar (WCAG 2.2.2)
+      const v = document.querySelector<HTMLVideoElement>('[data-reel]')!;
+      const btn = document.querySelector<HTMLButtonElement>('[data-reel-toggle]')!;
+      const set = (paused: boolean) => {
+        paused ? v.pause() : v.play().catch(() => {});
+        btn.setAttribute('aria-pressed', String(paused));
+        btn.textContent = paused ? 'Video abspielen' : 'Video pausieren';
+      };
+      set(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      btn.addEventListener('click', () => set(!v.paused));
+    </script>
+
+    <style is:global>
+      @font-face{font-family:'Big Shoulders Display';font-weight:900;font-display:swap;src:url(/fonts/big-shoulders-display-latin-900-normal.woff2) format('woff2')}
+      @font-face{font-family:'Big Shoulders Display';font-weight:800;font-display:swap;src:url(/fonts/big-shoulders-display-latin-800-normal.woff2) format('woff2')}
+      @font-face{font-family:'Figtree';font-weight:400;font-display:swap;src:url(/fonts/figtree-latin-400-normal.woff2) format('woff2')}
+      @font-face{font-family:'Figtree';font-weight:500;font-display:swap;src:url(/fonts/figtree-latin-500-normal.woff2) format('woff2')}
+      @font-face{font-family:'Figtree';font-weight:600;font-display:swap;src:url(/fonts/figtree-latin-600-normal.woff2) format('woff2')}
+
+      /* Eisfläche: kaltes Weiß, Bande, Tinte, blaue Linie, Torlicht */
+      :root{
+        color-scheme:light;
+        --ice:#EEF3F7;
+        --board:#DCE5EC;
+        --ink:#0E1621;
+        --muted:#4A5868;
+        --blue:#1F4FD1;
+        --goal:#D7262E;
+        --on-goal:#FFFFFF;
+        --display:'Big Shoulders Display','Arial Narrow',sans-serif;
+        --body:'Figtree','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+        --gutter:clamp(18px,4vw,48px);
+        --ease:cubic-bezier(.16,1,.3,1);
+      }
+      *,*::before,*::after{box-sizing:border-box}
+      html{-webkit-text-size-adjust:100%}
+      body{margin:0;background:var(--ice);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+      img,video,svg{display:block;max-width:100%}
+      a{color:inherit}
+      h1,h2,h3{text-wrap:balance;margin:0}
+      p{text-wrap:pretty;margin:0}
+      ::selection{background:var(--blue);color:#fff}
+      :focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:2px}
+      .skip{position:fixed;left:12px;top:-60px;z-index:10;background:var(--ink);color:#fff;padding:10px 16px;font-weight:600}
+      .skip:focus{top:12px}
+      .wrap{width:100%;max-width:1240px;margin-inline:auto;padding-inline:var(--gutter)}
+
+      .display{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:-.005em}
+      .h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(38px,5.2vw,72px);line-height:.92;max-width:16ch}
+      .lead{font-size:clamp(19px,1.8vw,23px);line-height:1.45;max-width:34em}
+      .intro{color:var(--muted);max-width:40em;margin-top:18px}
+
+      .btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:2px solid var(--ink);transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease);touch-action:manipulation}
+      .btn-goal{background:var(--goal);border-color:var(--goal);color:var(--on-goal)}
+      .btn-goal:hover{background:var(--ink);border-color:var(--ink)}
+      .btn-line{background:transparent}
+      .btn-line:hover{background:var(--ink);color:#fff}
+      .btn-row{display:flex;flex-wrap:wrap;gap:12px}
+
+      .top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px}
+      .sender{font-family:var(--display);font-weight:900;font-size:26px;text-transform:uppercase;text-decoration:none}
+      .top .btn{min-height:44px;padding:0 18px;font-size:15px}
+
+      /* Hero auf dem Eis: Mittellinie rot, blaue Linien, Bullykreis */
+      .hero{position:relative;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:clamp(24px,5vw,72px);align-items:center;padding-block:clamp(40px,7vw,96px) clamp(56px,8vw,112px);isolation:isolate}
+      .rink{position:absolute;inset:0;z-index:-1;width:100%;height:100%}
+      .ln{fill:none;stroke-linecap:round}
+      .ln-red{stroke:var(--goal);stroke-width:6;opacity:.55}
+      .ln-red-thin{stroke:var(--goal);stroke-width:3;opacity:.35}
+      .ln-blue{stroke:var(--blue);stroke-width:8;opacity:.22}
+      .dot{fill:var(--goal);opacity:.5}
+      .hero-copy{display:grid;gap:26px}
+      .hero h1{font-size:clamp(56px,8.2vw,120px);max-width:10ch}
+      .phone{margin:0;justify-self:end;width:min(100%,300px);position:relative}
+      /* Bullykreis hinter dem Handy: das Handy steht am Anspielpunkt */
+      .faceoff{position:absolute;z-index:-1;width:min(34vw,470px);right:calc(var(--gutter) + 150px - min(17vw,235px));top:50%;transform:translateY(-50%)}
+      .phone video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:22px;border:6px solid var(--ink);background:var(--ink)}
+      .phone figcaption{font-size:14px;color:var(--muted);margin-top:10px}
+      .reel-toggle{display:inline-block;min-height:44px;padding:0;border:0;background:none;font:inherit;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+      .print-poster{display:none}
+
+      .why{padding-block:clamp(48px,7vw,96px);border-top:2px solid var(--board)}
+      .why-grid{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:start}
+      .portrait{border-radius:8px;overflow:hidden;background:#111;aspect-ratio:4/5}
+      .portrait img{width:100%;height:100%;object-fit:cover}
+      .why-text{display:grid;gap:18px;max-width:40em}
+      .why-text .h2{margin-bottom:6px}
+
+      .proof{padding-block:clamp(48px,7vw,96px);border-top:2px solid var(--board)}
+      .proof-row{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(20px,4vw,56px);align-items:start;padding-top:clamp(40px,5vw,64px)}
+      .proof-text{display:grid;gap:12px;position:sticky;top:24px}
+      .proof-text h3{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,3vw,44px);line-height:.95;color:var(--blue)}
+      .proof-text p{color:var(--muted)}
+      .proof-imgs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,18px)}
+      .proof-imgs figure{margin:0}
+      .proof-imgs img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:6px;background:var(--board)}
+      .proof-imgs figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+
+      /* Heimspiel als Spur über das Eis: die rote Linie verbindet die Phasen */
+      .matchday{padding-block:clamp(56px,8vw,112px);background:var(--ink);color:#EEF3F7}
+      .matchday .intro{color:#B7C3CF}
+      .track{list-style:none;margin:clamp(36px,5vw,56px) auto 0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;counter-reset:t;position:relative}
+      .track::before{content:"";position:absolute;left:var(--gutter);right:var(--gutter);top:22px;height:3px;background:var(--goal)}
+      .track li{counter-increment:t;position:relative;padding:0 18px 0 0}
+      .track li::before{content:counter(t);display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--ink);border:3px solid var(--goal);font-family:var(--display);font-weight:900;font-size:22px;color:#fff;position:relative;margin-bottom:18px}
+      .track h3{font-size:18px;font-weight:600;margin-bottom:6px}
+      .track p{font-size:16px;color:#B7C3CF}
+
+      .offer{padding-block:clamp(56px,8vw,112px)}
+      .offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,88px)}
+      .terms{margin:28px 0 0;border-top:2px solid var(--ink)}
+      .terms div{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--board)}
+      .terms dt{font-weight:600}
+      .terms dd{margin:0;color:var(--muted)}
+
+      .ig{padding-block:clamp(56px,8vw,112px);border-top:2px solid var(--board)}
+      .ig .h2{max-width:20ch}
+      .ig-links{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 36px;margin-top:32px}
+      .ig-handle{font-family:var(--display);font-weight:900;font-size:clamp(44px,7vw,96px);line-height:1;color:var(--blue);text-decoration:none}
+      a.ig-handle:hover{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:8px}
+      .ig-todo{outline:3px dashed var(--goal);outline-offset:6px}
+      .ig-web{font-weight:600;font-size:20px;text-underline-offset:5px}
+
+      .close{padding-block:clamp(56px,8vw,112px) clamp(48px,6vw,80px);border-top:2px solid var(--board);display:grid;gap:24px}
+      .close-h{font-size:clamp(48px,7vw,104px);max-width:14ch}
+      .sig{font-size:15px;color:var(--muted);margin-top:24px}
+
+      @media (max-width:980px){
+        .track{grid-template-columns:1fr;gap:28px;padding-left:calc(var(--gutter) + 0px)}
+        .track::before{left:calc(var(--gutter) + 21px);right:auto;top:0;bottom:0;width:3px;height:auto}
+        .track li{display:grid;grid-template-columns:46px 1fr;column-gap:18px;padding:0}
+        .track li::before{grid-row:span 2;margin:0}
+      }
+      @media (max-width:860px){
+        .rink,.faceoff{display:none}
+        .hero{grid-template-columns:1fr;background:linear-gradient(var(--goal),var(--goal)) top / 100% 3px no-repeat}
+        .phone{justify-self:start;width:min(62vw,260px)}
+        .proof-row{grid-template-columns:1fr}
+        .proof-text{position:static}
+        .offer-grid{grid-template-columns:1fr}
+        .why-grid{grid-template-columns:1fr}
+        .portrait{width:min(60vw,260px)}
+      }
+      @media (max-width:520px){
+        .top .btn{display:none}
+        .terms div{grid-template-columns:1fr;gap:2px}
+      }
+
+      /* Eine Bewegung: die Linien werden beim Laden gezogen */
+      @media (prefers-reduced-motion:no-preference){
+        .ln{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 1.6s var(--ease) forwards}
+        .ln-red{animation-delay:.15s}
+        .ln-red-thin{animation-delay:.35s}
+      }
+      @keyframes draw{to{stroke-dashoffset:0}}
+
+      /* Druck/PDF: Video durch Standbild ersetzen, dunklen Block hell drucken */
+      @media print{
+        @page{size:A4;margin:14mm}
+        body{font-size:11pt;background:#fff}
+        .skip,.top .btn{display:none}
+        .hero{padding-block:0 24px}
+        .phone video,.reel-toggle{display:none}
+        .print-poster{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:22px;border:4px solid var(--ink)}
+        .matchday{background:#fff;color:var(--ink);border-top:2px solid var(--board)}
+        .matchday .intro,.track p{color:var(--muted)}
+        .track li::before{background:#fff;color:var(--ink)}
+        .proof-row,.track li,.terms div,figure{break-inside:avoid}
+        .proof-text{position:static}
+        .ln{stroke-dasharray:none;stroke-dashoffset:0;animation:none}
+        a{text-decoration:none}
+        /* Kompaktes A4-Layout: Druckbreite würde sonst das Handy-Layout auslösen */
+        .rink,.faceoff{display:none!important}
+        .top{padding-block:0 8px}
+        .hero{grid-template-columns:minmax(0,1fr) 150px!important;background:none!important;padding-block:8px 18px!important;gap:28px!important}
+        .hero h1{font-size:46px}
+        .lead{font-size:13pt}
+        .phone{width:150px!important;justify-self:end!important}
+        .phone figcaption{font-size:8pt}
+        .h2{font-size:28px;break-after:avoid-page}
+        .intro{break-before:avoid-page}
+        .matchday .wrap,.ig{break-inside:avoid-page}
+        .intro{margin-top:8px}
+        .why,.proof,.offer,.ig,.close{padding-block:18px!important}
+        .matchday{padding-block:18px!important}
+        .why-grid{grid-template-columns:130px minmax(0,1fr)!important;gap:24px!important}
+        .portrait{width:130px!important}
+        .proof-row{grid-template-columns:minmax(0,1fr) minmax(0,2fr)!important;padding-top:16px!important;gap:20px!important}
+        .proof-text h3{font-size:22px}
+        .proof-imgs figcaption{font-size:8pt}
+        .track{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px 18px!important;margin-top:16px!important;padding-left:var(--gutter)!important}
+        .track::before{display:none}
+        .track li{display:block!important}
+        .track li::before{width:30px;height:30px;font-size:15px;margin-bottom:6px!important}
+        .track h3{font-size:11pt}
+        .track p{font-size:9.5pt}
+        .offer-grid{grid-template-columns:1fr 1fr!important;gap:28px!important}
+        .terms{margin-top:12px}
+        .terms div{grid-template-columns:minmax(0,2fr) minmax(0,3fr)!important;padding:6px 0;font-size:9.5pt}
+        .ig-handle{font-size:40px}
+        .close-h{font-size:40px}
+        .btn{min-height:0;padding:6px 14px;font-size:10pt}
+      }
+    </style>
+  </body>
+</html>
