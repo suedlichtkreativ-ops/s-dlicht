@@ -9,7 +9,7 @@ Da ich fest angestellt bin, biete ich euch die Mitarbeit auf freier Basis an, ü
 
 Erfahrung mit genau solchen Momenten habe ich von Fight Nights, Box- und Muay-Thai-Events sowie Open Airs und Clubnächten. Die meisten meiner Bilder, Videos und Referenzen findet ihr auf Instagram: @INSTAGRAM-NAME
 
-Eine kurze Bewerbung mit Fotos und einem Vorschlag, wie ein Heimspiel mit mir aussehen könnte, hängt als PDF an. Online gibt es sie auch hier: https://suedlicht-studio.de/bewerbung/esvk/
+Eine kurze Bewerbung mit Fotos und einem Vorschlag, wie ein Heimspiel mit mir aussehen könnte, hängt als PDF an.
 
 Ich freu mich, von euch zu hören.
 
