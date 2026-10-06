@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import { INSTAGRAM_DM_LINK, INSTAGRAM_NAME, INSTAGRAM_PROFIL, MAIL, plans } from '../data/refresh';
+import { site } from '../data/work';
+
+const ext = { target: '_blank', rel: 'noopener' };
+const labels = ['Alte Shootings', 'Handyvideos', 'Eventaufnahmen', 'Trainings', 'Baustellen und Fahrzeuge'];
+const steps = [
+  ['Material schicken', 'Per WeTransfer oder WhatsApp, gerne unsortiert.'],
+  ['Kurze Abstimmung', 'Welche Ziele, welcher Stil, was soll gezeigt werden.'],
+  ['Schnitt', 'Lieferung innerhalb von 5 Werktagen, beim Monatspaket verteilt über den Monat.'],
+  ['Feedback und Lieferung', 'Eine Korrekturrunde ist inklusive, danach bekommt ihr die fertigen Dateien.'],
+];
+const terms = [
+  ['Format', 'Hochformat 9:16 als MP4, optimiert für Reels, Stories und TikTok'],
+  ['Inklusive', 'Auswahl der besten Szenen, Schnitt, Untertitel, Texteinblendungen, lizenzfreie Musik und eine Korrekturrunde'],
+  ['Weitere Korrekturen', '20 € pro Reel'],
+  ['Zahlung', 'Per Rechnung. Im Abo monatlich im Voraus.'],
+  ['Nutzungsrechte', 'Ihr dürft die fertigen Videos zeitlich unbegrenzt auf euren eigenen Kanälen nutzen. Ihr bestätigt, dass ihr die Rechte am gelieferten Material habt.'],
+  ['Steuer', 'Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.'],
+];
+// og:image: Platzhalter. Eigenes Vorschaubild (1200 × 630 px) als public/og-refresh.jpg ablegen
+// und hier image="/og-refresh.jpg" eintragen. Bis dahin wird das allgemeine og.jpg genutzt.
+const ogImage = '/og.jpg';
+---
+<Base
+  title="Content Refresh"
+  ogTitle="Content Refresh · Südlicht Studio"
+  description="Neuer Content aus eurem alten Material. Kostenloser Probeschnitt."
+  image={ogImage}
+  dockLink={{ href: INSTAGRAM_DM_LINK, label: 'Kostenlose Probe anfragen', external: true }}
+>
+  <div class="rf">
+    <header class="page-head wrap">
+      <p class="meta rf-kicker">Content Refresh</p>
+      <h1 class="display rf-h1" data-split>Aus eurem alten Material wird neuer Content.</h1>
+      <p class="lead" data-reveal>Ihr schickt mir euer vorhandenes Videomaterial, ich mache daraus neue Reels und Story Clips. Kein Drehtag, kein Aufwand für euer Team.</p>
+      <div class="btn-row rf-ctas" data-reveal>
+        <a class="btn primary" href={INSTAGRAM_DM_LINK} {...ext}>Kostenlose Probe anfragen <Arrow dir="up-right" /></a>
+        <a class="btn" href={`mailto:${MAIL}?subject=Content%20Refresh`}>Per Mail anfragen</a>
+      </div>
+    </header>
+
+    <section class="wrap rf-sec" aria-labelledby="rf-fit">
+      <div class="split">
+        <h2 id="rf-fit" class="display h3" data-split>Geeignet ist fast alles</h2>
+        <div class="rf-stack">
+          <p class="body-l" data-reveal>Ich kümmere mich um Auswahl, Schnitt, Untertitel, Musik und das passende Format für Instagram und TikTok.</p>
+          <ul class="tools" data-reveal>{labels.map((l) => <li>{l}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap rf-sec" aria-labelledby="rf-probe">
+      <div class="p-cta rf-probe" data-reveal>
+        <div>
+          <h2 id="rf-probe">Der Einstieg: ein kostenloser Probeschnitt</h2>
+          <p>Bevor ihr etwas bucht, schneide ich euch aus 2 bis 3 eurer alten Clips ein Reel zur Probe. Kostenlos und unverbindlich, innerhalb von 5 Werktagen. So seht ihr direkt, was aus eurem Material herauszuholen ist.</p>
+        </div>
+        <a class="btn" href={INSTAGRAM_DM_LINK} {...ext}>Probe anfragen <Arrow dir="up-right" /></a>
+      </div>
+    </section>
+
+    <section class="wrap rf-sec" aria-labelledby="rf-plans">
+      <h2 id="rf-plans" class="display h2" data-split style="margin-bottom:clamp(32px,5vw,56px)">Pakete und Preise</h2>
+      <ul class="rf-plans">
+        {plans.map((p) => (
+          <li class:list={['rf-plan', { 'is-tip': p.tip }]} data-reveal>
+            <h3>{p.name}</h3>
+            <p class="rf-scope">{p.scope}</p>
+            <p class="rf-price">{p.price}{p.per && <span> {p.per}</span>}</p>
+            <a class="btn" href={p.href} {...ext} aria-label={`${p.name} anfragen`}>Paket anfragen <Arrow dir="up-right" /></a>
+          </li>
+        ))}
+      </ul>
+      <p class="rf-tip" data-reveal><strong>Mein Tipp:</strong> Startet mit einem Monatspaket ohne Bindung. Seid ihr zufrieden, wechselt ihr ins Abo und spart ab dann 50 € im Monat.</p>
+      <p class="rf-small">Das Angebot richtet sich ausschließlich an Gewerbetreibende. Mit der Buchung akzeptiert ihr die <a href="/agb/">AGB</a>.</p>
+    </section>
+
+    <section class="wrap rf-sec" aria-labelledby="rf-steps">
+      <h2 id="rf-steps" class="display h2" data-split style="margin-bottom:clamp(32px,5vw,56px)">So läuft es ab</h2>
+      <ol class="steps rf-steps">
+        {steps.map(([t, d]) => <li data-reveal><h3>{t}</h3><p>{d}</p></li>)}
+      </ol>
+    </section>
+
+    <section class="wrap rf-sec" aria-labelledby="rf-terms">
+      <div class="split">
+        <h2 id="rf-terms" class="display h3" data-split>Leistungen und Konditionen</h2>
+        <dl class="rf-terms" data-reveal>
+          {terms.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="wrap rf-sec rf-end" aria-labelledby="rf-next">
+      <h2 id="rf-next" class="display h2" data-split>Nächster Schritt</h2>
+      <p class="lead" data-reveal>Schickt mir einfach 2 bis 3 alte Clips für euren kostenlosen Probeschnitt. Danach entscheidet ihr ganz in Ruhe, ob und welches Paket ihr bucht.</p>
+      <div class="btn-row rf-ctas" data-reveal>
+        <a class="btn primary" href={INSTAGRAM_DM_LINK} {...ext}>Kostenlose Probe anfragen <Arrow dir="up-right" /></a>
+        <a class="btn" href={`mailto:${MAIL}?subject=Content%20Refresh`}>Per Mail anfragen</a>
+      </div>
+      <p class="rf-sign">{site.name} · {site.owner} · <a href={INSTAGRAM_PROFIL} {...ext}>{INSTAGRAM_NAME}</a></p>
+    </section>
+  </div>
+</Base>

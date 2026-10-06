@@ -12,8 +12,12 @@ interface Props {
   noindex?: boolean;
   /** Mobile Anfrage-Leiste unten (auf der Kontaktseite aus) */
   dock?: boolean;
+  /** Eigener Titel für Linkvorschauen (og:title), sonst wie <title> */
+  ogTitle?: string;
+  /** Eigener Button für die mobile Leiste (externer Link öffnet in neuem Tab) */
+  dockLink?: { href: string; label: string; external?: boolean };
 }
-const { title, description, image = '/og.jpg', noindex = false, dock = true } = Astro.props;
+const { title, description, image = '/og.jpg', noindex = false, dock = true, ogTitle, dockLink } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const fullTitle = title === site.name ? `${site.name} | Aftermovies, Eventfotografie und KI Content aus dem Allgäu` : `${title} | ${site.name}`;
 const ld = {
@@ -44,7 +48,7 @@ const ld = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:title" content={ogTitle ?? fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(image, site.url).href} />
@@ -71,7 +75,11 @@ const ld = {
     <Footer />
     {dock && (
       <div class="dock" data-dock>
-        <a class="btn primary" href="/kontakt/" data-scene-link="kontakt">Projekt anfragen <Arrow /></a>
+        {dockLink ? (
+          <a class="btn primary" href={dockLink.href} {...(dockLink.external ? { target: '_blank', rel: 'noopener' } : {})}>{dockLink.label} <Arrow dir={dockLink.external ? 'up-right' : 'right'} /></a>
+        ) : (
+          <a class="btn primary" href="/kontakt/" data-scene-link="kontakt">Projekt anfragen <Arrow /></a>
+        )}
       </div>
     )}
     <div class="grain" aria-hidden="true"></div>
