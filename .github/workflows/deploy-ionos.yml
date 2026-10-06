@@ -4,10 +4,21 @@
 #   IONOS_SFTP_USER  (SFTP-Benutzer aus dem IONOS Kundenbereich)
 #   IONOS_SFTP_PASS  (Passwort des SFTP-Benutzers)
 # Start: manuell unter Actions → "Deploy zu IONOS" → Run workflow.
+# Erst mit "probelauf" starten: zeigt den Inhalt des Zielordners und was sich ändern würde,
+# ohne etwas hochzuladen oder zu löschen.
 name: Deploy zu IONOS
 
 on:
   workflow_dispatch:
+    inputs:
+      ziel:
+        description: Zielordner auf dem Server
+        default: /
+        required: true
+      probelauf:
+        description: Nur anzeigen, nichts ändern
+        type: boolean
+        default: true
 
 jobs:
   deploy:
@@ -25,6 +36,14 @@ jobs:
           HOST: ${{ secrets.IONOS_SFTP_HOST }}
           USER: ${{ secrets.IONOS_SFTP_USER }}
           PASS: ${{ secrets.IONOS_SFTP_PASS }}
+          ZIEL: ${{ inputs.ziel }}
+          PROBE: ${{ inputs.probelauf }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -e "set sftp:auto-confirm yes; set net:max-retries 3; mirror --reverse --delete --verbose --exclude-glob .DS_Store dist/ /; bye" -u "$USER","$PASS" "sftp://$HOST"
+          OPTS="--reverse --delete --verbose --exclude-glob .DS_Store"
+          if [ "$PROBE" = "true" ]; then
+            echo "Probelauf: Inhalt von $ZIEL"
+            lftp -e "set sftp:auto-confirm yes; cls -la \"$ZIEL\"; mirror $OPTS --dry-run dist/ \"$ZIEL\"; bye" -u "$USER","$PASS" "sftp://$HOST"
+          else
+            lftp -e "set sftp:auto-confirm yes; set net:max-retries 3; mirror $OPTS dist/ \"$ZIEL\"; bye" -u "$USER","$PASS" "sftp://$HOST"
+          fi
