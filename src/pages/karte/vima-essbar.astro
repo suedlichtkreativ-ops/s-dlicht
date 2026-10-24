@@ -2,12 +2,12 @@
 /**
  * Speisekarte VIMA ESSBAR, Kaufbeuren. Web-Karte für den QR-Code am Tisch und Druckvorlage zugleich.
  * Inhalte kommen aus src/data/vima-karte.ts. Eigenständige Seite ohne Website-Navigation, noindex.
- * Welt: Espressobar am Abend. Tiefes Braun, Messing als einziges Akzentmetall, Fotos aus dem VIMA-Shooting.
+ * Welt: der Auftritt seit der Wiedereröffnung. Brauner Verlauf, Creme und Gold aus dem Logo, Fotos aus dem VIMA-Shooting.
  */
 import { Picture } from 'astro:assets';
 import { info, reise, fruehstueck, getraenke, zusatzstoffe, hinweise, type Posten } from '../../data/vima-karte';
 
-import siebtraeger from '../../assets/work/19_vima_essbar.jpg';
+import VimaLogo from '../../components/VimaLogo.astro';
 import espresso from '../../assets/work/06_vima_essbar.jpg';
 
 const nav = [
@@ -31,19 +31,16 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#1c130f" />
+    <meta name="theme-color" content="#4b2a10" />
     <title>Speisekarte | {info.name} {info.ort}</title>
     <meta name="description" content={`Frühstück, Kaffee und Wein in der ${info.name} in ${info.ort}.`} />
     <link rel="preload" href="/fonts/vima/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/vima/great-vibes-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/vima/cinzel-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <figure class="hero">
-      <Picture src={siebtraeger} widths={[640, 1080, 1600]} sizes="100vw" formats={['avif', 'webp']} loading="eager" fetchpriority="high" alt="" />
-    </figure>
     <header class="cover">
-      <p class="vima">Vima</p>
-      <h1 class="wordmark"><span class="sr">{info.name}</span><span aria-hidden="true">essbar</span></h1>
+      <h1 class="logo"><VimaLogo title={`${info.name}, ${info.ort}, since 2006`} /></h1>
       <div class="cover-print">
         <p>{info.ort}</p>
         <dl>
@@ -179,7 +176,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
         </section>
       {i === bar.length - 1 && (
       <footer class="foot">
-        <p class="foot-mark" aria-hidden="true">essbar</p>
+        <p class="foot-mark" aria-hidden="true">Essbar</p>
         <ul>
           {Object.entries(zusatzstoffe).map(([n, t]) => <li><sup>{n}</sup> {t}</li>)}
           <li>{hinweise[2]}</li>
@@ -218,15 +215,19 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
 <style is:global>
   @font-face { font-family: 'Newsreader'; src: url('/fonts/vima/newsreader-latin-wght-normal.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
   @font-face { font-family: 'Newsreader'; src: url('/fonts/vima/newsreader-latin-wght-italic.woff2') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Cinzel'; src: url('/fonts/vima/cinzel-latin-wght-normal.woff2') format('woff2'); font-weight: 400 900; font-display: block; }
   @font-face { font-family: 'Essbar Script'; src: url('/fonts/vima/great-vibes-latin-400-normal.woff2') format('woff2'); font-display: block; }
 
   :root {
-    --grund: #1c130f;
-    --blatt: #261a14;
-    --messing: #c9a467;
-    --tinte: #f2e8da;
-    --grau: #b4a18b;
-    --linie: rgb(201 164 103 / 0.16);
+    /* Farben aus dem Logo */
+    --grund: #2e1906;
+    --blatt: #3a210c;
+    --verlauf: radial-gradient(130% 95% at 0% 0%, #814e29 0%, #4b2a10 52%, #361d05 100%);
+    --gold: #c2a874;
+    --tinte: #ece7df;
+    --grau: #c3b39f;
+    --linie: rgb(194 168 116 / 0.2);
+    --caps: 'Cinzel', 'Trajan Pro', serif;
     --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
     --script: 'Essbar Script', cursive;
     --gutter: clamp(1rem, 5vw, 3.5rem);
@@ -250,36 +251,17 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   sup { font-size: 0.62em; line-height: 0; margin-left: 0.1em; font-style: normal; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   a { color: inherit; }
-  :focus-visible { outline: 2px solid var(--messing); outline-offset: 3px; border-radius: 2px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
 
-  /* Titelbild: Siebträger im Gegenlicht, läuft ins Espressobraun aus */
-  .hero { position: absolute; inset: 0 0 auto; height: clamp(26rem, 105vw, 44rem); overflow: hidden; z-index: 0; }
-  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; opacity: 0.62; }
-  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgb(28 19 15 / 0.35), rgb(28 19 15 / 0.2) 40%, var(--grund)); }
-
-  /* Umschlag: Schriftzug ragt über die Kante des Blatts */
+  /* Titel: Logo auf dem Braunverlauf wie im Instagram-Auftritt */
   .cover {
-    max-width: calc(var(--measure) + 2 * var(--gutter));
-    margin: 0 auto;
-    padding: clamp(13rem, 62vw, 25rem) var(--gutter) 0;
+    background: linear-gradient(transparent 55%, var(--grund)), var(--verlauf);
+    padding: clamp(2.5rem, 9vw, 5rem) var(--gutter) clamp(3rem, 9vw, 5.5rem);
     display: grid;
     justify-items: center;
-    position: relative;
-    z-index: 6;
   }
-  .vima {
-    font-size: 0.95rem;
-    letter-spacing: 0.42em;
-    margin: 0 0 0.3rem 0.42em;
-    color: var(--tinte);
-    font-weight: 500;
-  }
-  .wordmark {
-    font: 400 clamp(5.5rem, 27vw, 12.5rem)/0.8 var(--script);
-    color: var(--messing);
-    margin-bottom: -0.2em;
-    letter-spacing: -0.01em;
-  }
+  .logo { width: min(23rem, 76vw); line-height: 0; }
+  .logo svg { width: 100%; height: auto; display: block; }
 
   /* Das Blatt */
   .sheet {
@@ -291,7 +273,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     z-index: 1;
   }
   @media (min-width: 48rem) {
-    .sheet { outline: 1px solid rgb(201 164 103 / 0.35); outline-offset: -14px; }
+    .sheet { outline: 1px solid rgb(194 168 116 / 0.4); outline-offset: -14px; }
   }
 
   .tabs {
@@ -322,7 +304,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     border-bottom: 2px solid transparent;
   }
   .tabs a:hover { color: var(--tinte); }
-  .tabs a[aria-current] { color: var(--tinte); border-bottom-color: var(--messing); }
+  .tabs a[aria-current] { color: var(--tinte); border-bottom-color: var(--gold); }
 
   /* Frühstückszeiten */
   .hours { padding: clamp(2.5rem, 7vw, 3.5rem) 0 0; }
@@ -370,7 +352,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     left: 0.3rem;
     top: 1.6rem;
     bottom: 2.5rem;
-    border-left: 1px dashed var(--messing);
+    border-left: 1px dashed var(--gold);
     opacity: 0.7;
   }
   .stop { --city: clamp(1.9rem, 7.5vw, 2.7rem); position: relative; padding: 0 0 1.9rem; }
@@ -383,9 +365,9 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     height: 12px;
     border-radius: 50%;
     background: var(--blatt);
-    border: 1.5px solid var(--messing);
+    border: 1.5px solid var(--gold);
   }
-  .stop:first-child::before { background: var(--messing); }
+  .stop:first-child::before { background: var(--gold); }
   .stop-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
   .city {
     font-size: var(--city);
@@ -393,10 +375,10 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
-  .km { font-style: italic; color: var(--messing); font-size: 0.95rem; white-space: nowrap; }
+  .km { font-style: italic; color: var(--gold); font-size: 0.95rem; white-space: nowrap; }
   .stop-head .price { margin-left: auto; font-size: 1.15rem; }
   .dish { font-weight: 500; margin-top: 0.15rem; }
-  .flag { font-style: italic; color: var(--messing); margin-top: 0.1rem; }
+  .flag { font-style: italic; color: var(--gold); margin-top: 0.1rem; }
   .stop .desc { margin-top: 0.3rem; display: block; }
 
   .notes { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--linie); display: grid; gap: 0.5rem; color: var(--grau); font-size: 0.95rem; max-width: 34rem; }
@@ -407,9 +389,9 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     font-size: 1.05rem;
     font-weight: 400;
     font-style: italic;
-    color: var(--messing);
+    color: var(--gold);
     padding: 0 1.2rem 0.2rem 0;
-    border-bottom: 1px solid var(--messing);
+    border-bottom: 1px solid var(--gold);
     margin-bottom: 0.4rem;
   }
 
@@ -430,7 +412,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   }
 
   .foot { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--linie); display: grid; gap: 1rem; justify-items: start; }
-  .foot-mark { font: 400 4rem/0.9 var(--script); color: var(--messing); }
+  .foot-mark { font: 500 1.6rem/1 var(--caps); letter-spacing: 0.08em; color: var(--gold); }
   .foot ul { display: grid; gap: 0.35rem; color: var(--grau); font-size: 0.92rem; }
 
   .pg { display: contents; }
@@ -458,8 +440,8 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       text-align: center;
       break-after: page;
     }
-    .vima { font-size: 13pt; margin: 0 0 4mm 0.42em; }
-    .wordmark { font-size: 176pt; margin: 0; }
+    .cover { align-content: center; padding-bottom: 0; background: var(--verlauf); }
+    .logo { width: 128mm; }
     .cover-print { display: block; margin: 14mm 0 0; font-size: 11pt; line-height: 1.5; }
     .cover-print p { font-size: 13pt; margin-bottom: 8mm; }
     .cover-print dt { font-style: italic; margin-bottom: 1mm; }
@@ -477,12 +459,13 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       break-after: page;
     }
     .pg::before {
-      content: 'essbar';
+      content: 'Essbar';
       position: absolute;
       right: 2mm;
-      top: -21mm;
-      font: 400 44pt/1 var(--script);
-      color: var(--messing);
+      top: -15mm;
+      font: 500 17pt/1 var(--caps);
+      letter-spacing: 0.08em;
+      color: var(--gold);
     }
 
     .chapter { max-width: none; margin: 0; padding: 0; }
@@ -509,12 +492,9 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     .photo { margin: -11mm -14mm 0; }
     .photo img { height: 62mm; }
     .photo + .chapter { margin-top: -6mm; }
-    .hero { height: 200mm; }
-    .hero img { opacity: 0.7; }
-    .cover { position: relative; }
-    .pg { outline: 0.3mm solid rgb(201 164 103 / 0.45); outline-offset: -4mm; }
+    .pg { outline: 0.3mm solid rgb(194 168 116 / 0.5); outline-offset: -4mm; }
     .foot { max-width: none; margin: 0; padding: 0; position: absolute; left: 14mm; right: 14mm; bottom: 12mm; }
-    .foot-mark { font-size: 40pt; }
+    .foot-mark { font-size: 15pt; }
     .foot ul { font-size: 8.8pt; }
   }
 </style>

@@ -1,0 +1,29 @@
+---
+/**
+ * Logo VI-MA ESSBAR, nachgebaut nach dem Instagram-Auftritt (Stand Dezember 2025).
+ * Platzhalter, bis die Originaldatei vorliegt: dann hier das SVG des Logos einsetzen.
+ * Schriften: Essbar Script und Cinzel müssen auf der Seite geladen sein.
+ */
+interface Props { class?: string; title?: string }
+const { class: cls, title = 'VI-MA ESSBAR, since 2006' } = Astro.props;
+---
+
+<svg class={cls} viewBox="0 0 600 720" role="img" aria-label={title} xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="vima-arc" d="M 14 372 Q 300 196 586 372" fill="none" />
+  </defs>
+  <text x="300" y="118" text-anchor="middle" font-family="Essbar Script, cursive" font-size="92" letter-spacing="10" fill="var(--logo-vima, #7a5536)">Vi-Ma</text>
+  <text font-family="Cinzel, serif" font-weight="600" font-size="148" letter-spacing="0" fill="var(--logo-cream, #e9e4dc)">
+    <textPath href="#vima-arc" startOffset="50%" text-anchor="middle">ESSBAR</textPath>
+  </text>
+  <!-- Dampf -->
+  <path d="M 262 478 C 232 452 246 410 292 414 C 334 418 342 446 372 438 C 398 431 400 404 378 393"
+    fill="none" stroke="var(--logo-gold, #c2a874)" stroke-width="15" stroke-linecap="round" />
+  <!-- Tasse -->
+  <path d="M 196 492 L 404 492 C 404 570 360 612 300 612 C 240 612 196 570 196 492 Z" fill="var(--logo-cup, #6f4d2b)" />
+  <path d="M 400 510 C 452 496 466 556 392 576" fill="none" stroke="var(--logo-cup, #6f4d2b)" stroke-width="17" stroke-linecap="round" />
+  <path d="M 252 512 C 252 490 284 488 300 510 C 316 488 348 490 348 512 C 348 548 312 572 300 580 C 288 572 252 548 252 512 Z" fill="var(--logo-heart, #5c3d20)" />
+  <!-- Untertasse -->
+  <path d="M 176 630 L 424 630 Q 300 664 176 630 Z" fill="var(--logo-gold, #c2a874)" />
+  <text x="300" y="712" text-anchor="middle" font-family="Essbar Script, cursive" font-size="58" letter-spacing="3" word-spacing="22" fill="var(--logo-since, #b9ac9c)">since 2006</text>
+</svg>
