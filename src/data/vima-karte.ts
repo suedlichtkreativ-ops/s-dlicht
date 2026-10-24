@@ -119,7 +119,7 @@ export const reise: Reise[] = [
 export const fruehstueck: Kapitel[] = [
   {
     id: 'klassiker',
-    titel: 'Essbar Klassiker',
+    titel: 'Vima Essbar Klassiker',
     gruppen: [
       {
         posten: [

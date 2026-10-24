@@ -2,7 +2,8 @@
 /**
  * Speisekarte VIMA ESSBAR, Kaufbeuren. Web-Karte für den QR-Code am Tisch und Druckvorlage zugleich.
  * Inhalte kommen aus src/data/vima-karte.ts. Eigenständige Seite ohne Website-Navigation, noindex.
- * Welt: der Auftritt seit der Wiedereröffnung. Brauner Verlauf, Creme und Gold aus dem Logo, Fotos aus dem VIMA-Shooting.
+ * Welt: klassisches Kaffeehaus. Braun, Creme und Gold aus dem Logo, dazu Elfenbein fürs Frühstück und Flaschengrün
+ * für Wein und Sekt. Ein feines Rautengitter in Gold als einziges Muster. Nirgends nur „Essbar“, immer „Vima Essbar“.
  */
 import { Picture } from 'astro:assets';
 import { info, reise, fruehstueck, getraenke, zusatzstoffe, hinweise, type Posten } from '../../data/vima-karte';
@@ -12,7 +13,7 @@ import espresso from '../../assets/work/06_vima_essbar.jpg';
 
 const nav = [
   { id: 'weltreise', label: 'Weltreise' },
-  ...fruehstueck.map((k) => ({ id: k.id, label: k.titel.replace('Essbar ', '').replace('Für Unentschlossene', 'Kleinigkeiten') })),
+  ...fruehstueck.map((k) => ({ id: k.id, label: k.titel.replace('Vima Essbar ', '').replace('Für Unentschlossene', 'Kleinigkeiten') })),
   { id: 'warm', label: 'Kaffee' },
   { id: 'wein', label: 'Wein' },
   { id: 'sekt', label: 'Sekt' },
@@ -57,7 +58,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     </nav>
 
     <main class="sheet">
-
+      <div class="pg hell">
       <section class="hours" aria-label="Frühstückszeiten">
         <h2>Frühstück</h2>
         <dl>
@@ -65,7 +66,6 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
         </dl>
       </section>
 
-      <div class="pg">
       <section id="weltreise" class="chapter">
         <h2 class="chapter-title">Weltreise</h2>
         <p class="intro">Frühstücken wie in den Städten dieser Welt. Die Reise beginnt in Kaufbeuren.</p>
@@ -91,7 +91,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       </div>
 
       {fruehstueckSeiten.map((seite, i) => (
-      <div class="pg">
+      <div class="pg hell">
       {seite.map((k) => (
         <section id={k.id} class="chapter">
           <h2 class="chapter-title">{k.titel}</h2>
@@ -117,7 +117,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       </div>
       ))}
 
-      <div class="pg">
+      <div class="pg braun">
       <figure class="photo">
         <Picture src={espresso} widths={[640, 1080, 1600]} sizes="(min-width: 48rem) 46rem, 100vw" formats={['avif', 'webp']} alt="Espresso läuft aus dem Siebträger in die Tasse" />
       </figure>
@@ -141,7 +141,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       </div>
 
       {bar.map((k, i) => (
-      <div class="pg">
+      <div class="pg gruen">
         <section id={k.id} class="chapter">
           <h2 class="chapter-title">{k.titel}</h2>
           {k.gruppen.map((g) => {
@@ -176,7 +176,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
         </section>
       {i === bar.length - 1 && (
       <footer class="foot">
-        <p class="foot-mark" aria-hidden="true">Essbar</p>
+        <p class="foot-mark" aria-hidden="true">Vima Essbar</p>
         <ul>
           {Object.entries(zusatzstoffe).map(([n, t]) => <li><sup>{n}</sup> {t}</li>)}
           <li>{hinweise[2]}</li>
@@ -228,6 +228,9 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     --grau: #c3b39f;
     --linie: rgb(194 168 116 / 0.2);
     --caps: 'Cinzel', 'Trajan Pro', serif;
+    /* Rautengitter in Gold, Art déco */
+    --muster: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M0 14 14 0 28 14 14 28Z' fill='none' stroke='%23c2a874' stroke-opacity='.17' stroke-width='.8'/%3E%3Ccircle cx='14' cy='14' r='1.3' fill='%23c2a874' fill-opacity='.32'/%3E%3Ccircle cx='0' cy='0' r='1.3' fill='%23c2a874' fill-opacity='.32'/%3E%3Ccircle cx='28' cy='0' r='1.3' fill='%23c2a874' fill-opacity='.32'/%3E%3Ccircle cx='0' cy='28' r='1.3' fill='%23c2a874' fill-opacity='.32'/%3E%3Ccircle cx='28' cy='28' r='1.3' fill='%23c2a874' fill-opacity='.32'/%3E%3C/svg%3E");
+    --ornament: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='14' viewBox='0 0 160 14'%3E%3Cpath d='M0 7h62M98 7h62' stroke='black' stroke-width='1'/%3E%3Ccircle cx='69' cy='7' r='1.6'/%3E%3Ccircle cx='91' cy='7' r='1.6'/%3E%3Cpath d='M80 1 86 7 80 13 74 7Z'/%3E%3C/svg%3E");
     --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
     --script: 'Essbar Script', cursive;
     --gutter: clamp(1rem, 5vw, 3.5rem);
@@ -240,7 +243,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
     margin: 0;
-    background: var(--grund);
+    background: var(--muster) var(--grund);
     color: var(--tinte);
     font: 400 1.0625rem/1.5 var(--serif);
     font-variant-numeric: lining-nums;
@@ -255,7 +258,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
 
   /* Titel: Logo auf dem Braunverlauf wie im Instagram-Auftritt */
   .cover {
-    background: linear-gradient(transparent 55%, var(--grund)), var(--verlauf);
+    background: var(--muster), linear-gradient(transparent 60%, rgb(46 25 6 / 0.85)), var(--verlauf);
     padding: clamp(2.5rem, 9vw, 5rem) var(--gutter) clamp(3rem, 9vw, 5.5rem);
     display: grid;
     justify-items: center;
@@ -263,17 +266,43 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   .logo { width: min(23rem, 76vw); line-height: 0; }
   .logo svg { width: 100%; height: auto; display: block; }
 
-  /* Das Blatt */
+  /* Die Blätter: Elfenbein am Morgen, Kaffeebraun für warme Getränke, Flaschengrün für Wein und Sekt */
+  .hell {
+    --blatt: #f3ebdc;
+    --tinte: #3b2415;
+    --grau: #75604f;
+    --gold: #8f6d38;
+    --linie: rgb(59 36 21 / 0.14);
+    --rahmen: rgb(143 109 56 / 0.45);
+  }
+  .braun {
+    --blatt: #3a210c;
+    --rahmen: rgb(194 168 116 / 0.4);
+  }
+  .gruen {
+    --blatt: #1e382c;
+    --tinte: #eee9de;
+    --grau: #bcc3af;
+    --gold: #c9b07a;
+    --linie: rgb(201 176 122 / 0.22);
+    --rahmen: rgb(201 176 122 / 0.42);
+  }
   .sheet {
     max-width: calc(var(--measure) + 2 * var(--gutter));
     margin: 0 auto;
-    background: var(--blatt);
-    padding: 0 var(--gutter) clamp(3rem, 8vw, 5rem);
     position: relative;
     z-index: 1;
   }
+  .pg {
+    display: block;
+    background: var(--blatt);
+    color: var(--tinte);
+    padding: 0 var(--gutter) clamp(3rem, 8vw, 4.5rem);
+  }
   @media (min-width: 48rem) {
-    .sheet { outline: 1px solid rgb(194 168 116 / 0.4); outline-offset: -14px; }
+    .sheet { padding-bottom: 4rem; }
+    .pg { outline: 1px solid var(--rahmen); outline-offset: -14px; }
+    .pg + .pg { margin-top: 1.25rem; }
   }
 
   .tabs {
@@ -282,7 +311,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     z-index: 5;
     max-width: calc(var(--measure) + 2 * var(--gutter));
     margin: 0 auto;
-    background: var(--blatt);
+    background: #3a210c;
     border-bottom: 1px solid var(--linie);
   }
   .tabs ul {
@@ -308,7 +337,17 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
 
   /* Frühstückszeiten */
   .hours { padding: clamp(2.5rem, 7vw, 3.5rem) 0 0; }
-  .hours h2 { font: 400 clamp(3.2rem, 12vw, 4.4rem)/1 var(--script); }
+  .hours h2 { font: 400 clamp(3.2rem, 12vw, 4.4rem)/1 var(--script); text-align: center; }
+  .hours h2::after, .chapter-title::after {
+    content: '';
+    display: block;
+    width: 10rem;
+    height: 14px;
+    margin: 0.7rem auto 0;
+    background: var(--gold);
+    -webkit-mask: var(--ornament) center / contain no-repeat;
+    mask: var(--ornament) center / contain no-repeat;
+  }
   .hours dl { margin-top: 1.1rem; display: grid; gap: 0.2rem; }
   .hours div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--linie); padding: 0.45rem 0; }
   .hours dt { color: var(--grau); }
@@ -318,9 +357,10 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   .chapter { padding-top: clamp(3rem, 9vw, 4.5rem); }
   .chapter-title {
     font: 400 clamp(2.6rem, 9vw, 3.3rem)/1.05 var(--script);
-    margin-bottom: 1.1rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
   }
-  .intro { color: var(--grau); font-style: italic; margin: -0.5rem 0 1.75rem; max-width: 30rem; }
+  .intro { color: var(--grau); font-style: italic; text-align: center; margin: -0.4rem auto 2rem; max-width: 26rem; }
 
   .item {
     display: grid;
@@ -396,7 +436,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   }
 
   /* Foto auf dem Blatt, läuft ins Braun aus */
-  .photo { position: relative; margin: clamp(3rem, 9vw, 4.5rem) calc(-1 * var(--gutter)) 0; }
+  .photo { position: relative; margin: 0 calc(-1 * var(--gutter)); }
   .photo img { display: block; width: 100%; height: clamp(14rem, 55vw, 24rem); object-fit: cover; object-position: 50% 62%; }
   .photo::after { content: ''; position: absolute; inset: auto 0 0; height: 40%; background: linear-gradient(transparent, var(--blatt)); }
   .photo + .chapter { padding-top: 0; margin-top: -1.5rem; position: relative; }
@@ -412,16 +452,15 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   }
 
   .foot { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--linie); display: grid; gap: 1rem; justify-items: start; }
-  .foot-mark { font: 500 1.6rem/1 var(--caps); letter-spacing: 0.08em; color: var(--gold); }
+  .foot-mark { font: 500 1.35rem/1 var(--caps); letter-spacing: 0.08em; color: var(--gold); }
   .foot ul { display: grid; gap: 0.35rem; color: var(--grau); font-size: 0.92rem; }
 
-  .pg { display: contents; }
   .print-only { display: none; }
   .cover-print { display: none; }
 
   /*
-   * Druck: A4 mit 3 mm Beschnitt (216 × 303 mm). Jede Seite ist ein braunes Blatt mit feinem Messingrahmen,
-   * wie am Bildschirm. Für die Druckerei als PDF exportieren, Hintergrundgrafiken an.
+   * Druck: A4 mit 3 mm Beschnitt (216 × 303 mm). Jede Seite ist ein Blatt mit feinem Goldrahmen auf braunem Grund
+   * mit Rautengitter, wie am Bildschirm. Für die Druckerei als PDF exportieren, Hintergrundgrafiken an.
    */
   @page { size: 216mm 303mm; margin: 0; }
   @media print {
@@ -440,37 +479,41 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       text-align: center;
       break-after: page;
     }
-    .cover { align-content: center; padding-bottom: 0; background: var(--verlauf); }
+    .cover { align-content: center; padding-bottom: 0; background: var(--muster), var(--verlauf); }
     .logo { width: 128mm; }
     .cover-print { display: block; margin: 14mm 0 0; font-size: 11pt; line-height: 1.5; }
     .cover-print p { font-size: 13pt; margin-bottom: 8mm; }
     .cover-print dt { font-style: italic; margin-bottom: 1mm; }
 
-    .sheet { max-width: none; margin: 0; padding: 0; background: none; box-shadow: none; outline: none; }
+    .sheet { max-width: none; margin: 0; padding: 0; }
+    .pg + .pg { margin-top: 0; }
 
     .pg {
       display: block;
       position: relative;
       height: 303mm;
-      border: solid var(--grund);
+      border: solid transparent;
       border-width: 27mm 12mm 12mm;
-      background: var(--blatt);
+      background: linear-gradient(var(--blatt), var(--blatt)) padding-box, var(--muster) border-box, var(--grund);
       padding: 11mm 14mm 10mm;
       break-after: page;
     }
     .pg::before {
-      content: 'Essbar';
+      content: 'Vima Essbar';
       position: absolute;
-      right: 2mm;
-      top: -15mm;
-      font: 500 17pt/1 var(--caps);
+      right: 0;
+      top: -15.5mm;
+      font: 500 15pt/1 var(--caps);
       letter-spacing: 0.08em;
-      color: var(--gold);
+      color: #c2a874;
     }
 
     .chapter { max-width: none; margin: 0; padding: 0; }
     .chapter + .chapter { margin-top: 7mm; }
-    .chapter-title { font-size: 30pt; margin-bottom: 3mm; }
+    #kleinigkeiten, #extras { margin-top: 5mm; }
+    #muesli .item, #kleinigkeiten .item, #extras .item { padding: 0.85mm 0; }
+    .chapter-title { font-size: 30pt; margin-bottom: 4mm; }
+    .chapter-title::after, .hours h2::after { width: 34mm; height: 3.2mm; margin-top: 1.5mm; }
     .intro { margin: -1mm 0 5mm; }
     .item { padding: 1.15mm 0; column-gap: 6mm; }
     #klassiker .item { padding: 2mm 0; }
@@ -490,9 +533,10 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     .group + .group { margin-top: 6mm; }
     .group-title { margin-bottom: 1mm; }
     .photo { margin: -11mm -14mm 0; }
+    .photo + .chapter { padding-top: 0; }
     .photo img { height: 62mm; }
     .photo + .chapter { margin-top: -6mm; }
-    .pg { outline: 0.3mm solid rgb(194 168 116 / 0.5); outline-offset: -4mm; }
+    .pg { outline: 0.3mm solid var(--rahmen); outline-offset: -4mm; }
     .foot { max-width: none; margin: 0; padding: 0; position: absolute; left: 14mm; right: 14mm; bottom: 12mm; }
     .foot-mark { font-size: 15pt; }
     .foot ul { font-size: 8.8pt; }
