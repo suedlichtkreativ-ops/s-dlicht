@@ -7,7 +7,6 @@
 import { Picture } from 'astro:assets';
 import { info, reise, fruehstueck, getraenke, zusatzstoffe, hinweise, type Posten } from '../../data/vima-karte';
 import espresso from '../../assets/work/06_vima_essbar.jpg';
-import portrait from '../../assets/work/18_vima_essbar.jpg';
 
 const nav = [
   { id: 'weltreise', label: 'Weltreise' },
@@ -76,7 +75,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
                 <span class="km">{km(r.km)}</span>
                 <span class="price">{r.preis}</span>
               </div>
-              {r.name !== r.stadt && <p class="dish">{r.name}</p>}
+              {r.name !== r.stadt && <p class="dish">»{r.name}«</p>}
               {r.hinweis && <p class="flag">{r.hinweis}</p>}
               <p class="desc">{r.text}{fn(r) && <sup>{fn(r)}</sup>}</p>
             </li>
@@ -98,7 +97,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
             <ul class="items">
               {g.posten.map((p) => (
                 <li class="item">
-                  <span class="name">{p.name}{fn(p) && <sup>{fn(p)}</sup>}{p.vegan && <span class="vegan">auch vegan</span>}</span>
+                  <span class="name">{k.id === 'klassiker' ? `»${p.name}«` : p.name}{fn(p) && <sup>{fn(p)}</sup>}{p.vegan && <span class="vegan">auch vegan</span>}</span>
                   <span class="price">{p.preis}</span>
                   {p.text && <span class="desc">{p.text}</span>}
                 </li>
@@ -115,19 +114,17 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       )}
       </div>
       ))}
-    </main>
 
-    <div class="bar">
       <div class="pg">
-      <figure class="bar-photo">
-        <Picture src={espresso} widths={[640, 1080, 1600]} sizes="100vw" formats={['avif', 'webp']} alt="Espresso läuft aus dem Siebträger in die Tasse" />
+      <figure class="photo">
+        <Picture src={espresso} widths={[640, 1080, 1600]} sizes="(min-width: 48rem) 46rem, 100vw" formats={['avif', 'webp']} alt="Espresso läuft aus dem Siebträger in die Tasse" />
       </figure>
 
-      <section id={warm.id} class="chapter dark">
+      <section id={warm.id} class="chapter">
         <h2 class="chapter-title">{warm.titel}</h2>
         {warm.gruppen.map((g) => (
           <div class="group">
-            {g.titel && <h3 class="group-title">{g.titel}</h3>}
+            {g.titel && <h3 class="group-title">»{g.titel}«</h3>}
             <ul class="items">
               {g.posten.map((p) => (
                 <li class="item">
@@ -144,18 +141,13 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
 
       {bar.map((k, i) => (
       <div class="pg">
-      {i === 0 && (
-      <figure class="bar-photo slim">
-        <Picture src={portrait} widths={[640, 1080, 1600]} sizes="100vw" formats={['avif', 'webp']} alt="Lachende Mitarbeiterin hinter der Bar der VIMA ESSBAR" />
-      </figure>
-      )}
-        <section id={k.id} class="chapter dark">
+        <section id={k.id} class="chapter">
           <h2 class="chapter-title">{k.titel}</h2>
           {k.gruppen.map((g) => {
             const split = g.posten.some((p) => p.preis.includes('/'));
             return (
               <div class="group">
-                {g.titel && <h3 class="group-title">{g.titel}</h3>}
+                {g.titel && <h3 class="group-title">»{g.titel}«</h3>}
                 {split && <p class="cols" aria-hidden="true">{(g.posten[0].menge ?? '').split(' / ').map((m) => <span>{m}</span>)}</p>}
                 <ul class={split ? 'items wine' : 'items'}>
                   {g.posten.map((p) => {
@@ -193,7 +185,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       )}
       </div>
       ))}
-    </div>
+    </main>
 
     <script>
       // Aktuellen Bereich in der Leiste markieren und sichtbar halten
@@ -227,11 +219,10 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   :root {
     --lachs: #f2a487;
     --rot: #d6372b;
-    --papier: #fffcf8;
-    --espresso: #2b1b15;
-    --kakao: #6e4a3a;
-    --schaum: #f4e6da;
-    --crema: #c99a74;
+    --papier: #fffefc;
+    --tinte: #262321;
+    --grau: #5f5a56;
+    --linie: rgb(38 35 33 / 0.1);
     --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
     --script: 'Essbar Script', cursive;
     --gutter: clamp(1rem, 5vw, 3.5rem);
@@ -245,7 +236,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   body {
     margin: 0;
     background: var(--lachs);
-    color: var(--espresso);
+    color: var(--tinte);
     font: 400 1.0625rem/1.5 var(--serif);
     font-variant-numeric: lining-nums;
     -webkit-font-smoothing: antialiased;
@@ -271,7 +262,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     font-size: 0.95rem;
     letter-spacing: 0.32em;
     margin-right: 0.6em;
-    color: var(--espresso);
+    color: var(--tinte);
     font-weight: 500;
   }
   .wordmark {
@@ -291,7 +282,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     z-index: 1;
   }
   @media (min-width: 48rem) {
-    .sheet { box-shadow: 0 1px 0 rgb(43 27 21 / 0.06), 0 24px 48px -32px rgb(120 50 30 / 0.45); }
+    .sheet { box-shadow: 0 1px 0 rgb(38 35 33 / 0.06), 0 24px 48px -32px rgb(150 60 40 / 0.4); }
   }
 
   .tabs {
@@ -301,7 +292,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     max-width: calc(var(--measure) + 2 * var(--gutter));
     margin: 0 auto;
     background: var(--papier);
-    border-bottom: 1px solid rgb(43 27 21 / 0.1);
+    border-bottom: 1px solid var(--linie);
   }
   .tabs ul {
     display: flex;
@@ -317,51 +308,48 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     white-space: nowrap;
     text-decoration: none;
     font-size: 1rem;
-    color: var(--kakao);
+    color: var(--grau);
     padding: 0.25rem 0;
     border-bottom: 2px solid transparent;
   }
-  .tabs a:hover { color: var(--espresso); }
-  .tabs a[aria-current] { color: var(--espresso); border-bottom-color: var(--rot); }
+  .tabs a:hover { color: var(--tinte); }
+  .tabs a[aria-current] { color: var(--tinte); border-bottom-color: var(--rot); }
 
   /* Frühstückszeiten */
   .hours { padding: clamp(2.5rem, 7vw, 3.5rem) 0 0; }
-  .hours h2 { font-size: clamp(2.6rem, 9vw, 3.6rem); font-weight: 350; line-height: 1; letter-spacing: -0.02em; }
+  .hours h2 { font: 400 clamp(3.2rem, 12vw, 4.4rem)/1 var(--script); }
   .hours dl { margin-top: 1.1rem; display: grid; gap: 0.2rem; }
-  .hours div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid rgb(43 27 21 / 0.1); padding: 0.45rem 0; }
-  .hours dt { color: var(--kakao); }
+  .hours div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--linie); padding: 0.45rem 0; }
+  .hours dt { color: var(--grau); }
   .hours dd { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
   /* Kapitel und Posten */
   .chapter { padding-top: clamp(3rem, 9vw, 4.5rem); }
   .chapter-title {
-    font-size: clamp(1.9rem, 6vw, 2.4rem);
-    font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.015em;
-    margin-bottom: 1.25rem;
+    font: 400 clamp(2.6rem, 9vw, 3.3rem)/1.05 var(--script);
+    margin-bottom: 1.1rem;
   }
-  .intro { color: var(--kakao); font-style: italic; margin: -0.5rem 0 1.75rem; max-width: 30rem; }
+  .intro { color: var(--grau); font-style: italic; margin: -0.5rem 0 1.75rem; max-width: 30rem; }
 
   .item {
     display: grid;
     grid-template-columns: 1fr auto;
     column-gap: 1.25rem;
     padding: 0.55rem 0;
-    border-bottom: 1px solid rgb(43 27 21 / 0.08);
+    border-bottom: 1px solid var(--linie);
   }
   .item:last-child { border-bottom: 0; }
   .name { font-weight: 450; }
   .price { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; font-weight: 450; }
-  .desc { grid-column: 1 / -1; color: var(--kakao); font-style: italic; font-size: 0.97rem; line-height: 1.45; max-width: 34rem; margin-top: 0.1rem; }
+  .desc { grid-column: 1 / -1; color: var(--grau); font-style: italic; font-size: 0.97rem; line-height: 1.45; max-width: 34rem; margin-top: 0.1rem; }
   .vegan, .size {
     font-style: italic;
     font-weight: 400;
     font-size: 0.9em;
-    color: var(--kakao);
+    color: var(--grau);
     margin-left: 0.5em;
   }
-  .extra { font-weight: 400; margin-left: 0.4em; color: var(--kakao); }
+  .extra { font-weight: 400; margin-left: 0.4em; color: var(--grau); }
   #klassiker .item { padding: 0.9rem 0; }
   #klassiker .name { font-size: 1.15rem; }
 
@@ -402,36 +390,25 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   .flag { font-style: italic; color: var(--rot); margin-top: 0.1rem; }
   .stop .desc { margin-top: 0.3rem; display: block; }
 
-  .notes { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid rgb(43 27 21 / 0.15); display: grid; gap: 0.5rem; color: var(--kakao); font-size: 0.95rem; max-width: 34rem; }
+  .notes { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--linie); display: grid; gap: 0.5rem; color: var(--grau); font-size: 0.95rem; max-width: 34rem; }
 
-  /* Barlicht: Getränke */
-  .bar {
-    background: var(--espresso);
-    color: var(--schaum);
-    margin-top: clamp(-2rem, -4vw, -1rem);
-    padding-bottom: clamp(3rem, 8vw, 5rem);
-  }
-  .bar-photo { position: relative; }
-  .bar-photo img { display: block; width: 100%; height: clamp(16rem, 62vw, 34rem); object-fit: cover; object-position: 50% 62%; }
-  .bar-photo::after { content: ''; position: absolute; inset: auto 0 0; height: 45%; background: linear-gradient(transparent, var(--espresso)); }
-  .bar-photo.slim { margin-top: clamp(3rem, 8vw, 5rem); }
-  .bar-photo.slim img { height: clamp(14rem, 48vw, 26rem); object-position: 50% 28%; }
+  /* Foto auf dem Blatt, randabfallend */
+  .photo { margin: clamp(3rem, 9vw, 4.5rem) calc(-1 * var(--gutter)) 0; }
+  .photo img { display: block; width: 100%; height: clamp(14rem, 55vw, 24rem); object-fit: cover; object-position: 50% 62%; }
 
-  .chapter.dark, .foot {
-    max-width: calc(var(--measure) + 2 * var(--gutter));
-    margin: 0 auto;
-    padding-inline: var(--gutter);
-  }
-  .bar-photo + .chapter.dark { padding-top: 0; margin-top: clamp(-4rem, -8vw, -2.5rem); position: relative; }
-  .dark .chapter-title { color: var(--schaum); }
-  .dark .item { border-bottom-color: rgb(244 230 218 / 0.1); }
-  .dark .desc, .dark .size, .dark .extra { color: var(--crema); }
   .group + .group { margin-top: 2.25rem; }
-  .group-title { font-size: 1.05rem; font-style: italic; font-weight: 400; color: var(--crema); margin-bottom: 0.35rem; }
+  .group-title {
+    display: inline-block;
+    font-size: 1.05rem;
+    font-weight: 450;
+    padding: 0 1.2rem 0.2rem 0;
+    border-bottom: 1px solid var(--tinte);
+    margin-bottom: 0.4rem;
+  }
 
   /* Wein: zwei Preisspalten */
   .cols, .pair { display: grid; grid-template-columns: 3.4rem 3.4rem; gap: 0 0.9rem; text-align: right; }
-  .cols { justify-content: end; font-style: italic; color: var(--crema); font-size: 0.9rem; }
+  .cols { justify-content: end; font-style: italic; color: var(--grau); font-size: 0.9rem; margin-top: -1.2rem; }
   .cols span, .pair > span { display: block; }
 
   @media (min-width: 60rem) {
@@ -439,9 +416,9 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     #warm .group:first-of-type .item { break-inside: avoid; }
   }
 
-  .foot { padding-top: clamp(3.5rem, 9vw, 5rem); display: grid; gap: 1.25rem; justify-items: start; }
-  .foot-mark { font: 400 4.5rem/0.9 var(--script); color: var(--lachs); }
-  .foot ul { display: grid; gap: 0.35rem; color: var(--crema); font-size: 0.92rem; }
+  .foot { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--linie); display: grid; gap: 1rem; justify-items: start; }
+  .foot-mark { font: 400 4rem/0.9 var(--script); color: var(--rot); }
+  .foot ul { display: grid; gap: 0.35rem; color: var(--grau); font-size: 0.92rem; }
 
   .pg { display: contents; }
   .print-only { display: none; }
@@ -473,7 +450,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     .cover-print p { font-size: 13pt; margin-bottom: 8mm; }
     .cover-print dt { font-style: italic; margin-bottom: 1mm; }
 
-    .sheet, .bar { max-width: none; margin: 0; padding: 0; background: none; box-shadow: none; }
+    .sheet { max-width: none; margin: 0; padding: 0; background: none; box-shadow: none; }
 
     .pg {
       display: block;
@@ -493,17 +470,16 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       font: 400 44pt/1 var(--script);
       color: var(--rot);
     }
-    .bar .pg { background: var(--espresso); }
 
-    .chapter, .chapter.dark { max-width: none; margin: 0; padding: 0; }
-    .chapter + .chapter { margin-top: 9mm; }
-    .chapter-title { font-size: 21pt; margin-bottom: 3mm; }
+    .chapter { max-width: none; margin: 0; padding: 0; }
+    .chapter + .chapter { margin-top: 7mm; }
+    .chapter-title { font-size: 30pt; margin-bottom: 3mm; }
     .intro { margin: -1mm 0 5mm; }
-    .item { padding: 1.3mm 0; column-gap: 6mm; }
+    .item { padding: 1.15mm 0; column-gap: 6mm; }
     #klassiker .item { padding: 2mm 0; }
     #klassiker .name { font-size: 11pt; }
     .desc { font-size: 9.2pt; line-height: 1.32; max-width: 135mm; }
-    .item, .stop, .group { break-inside: avoid; }
+    .item, .stop { break-inside: avoid; }
 
     .stop { --city: 18pt; padding-bottom: 4.2mm; }
     .route::before { top: 4mm; bottom: 8mm; }
@@ -512,10 +488,10 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
 
     .notes { margin-top: 7mm; padding-top: 3mm; font-size: 8.8pt; gap: 1mm; }
 
-    .bar-photo, .bar-photo.slim { margin: -11mm -14mm 0; }
-    .bar-photo img { height: 82mm; }
-    .bar-photo.slim img { height: 70mm; }
-    .bar-photo + .chapter.dark { margin-top: -13mm; }
+    .photo { margin: -11mm -14mm 7mm; }
+    .photo img { height: 62mm; }
+    #warm .group:first-of-type .items { columns: 2; column-gap: 9mm; }
+    #warm .group:first-of-type .item { break-inside: avoid; }
     .group + .group { margin-top: 6mm; }
     .group-title { margin-bottom: 1mm; }
     .foot { max-width: none; margin: 0; padding: 0; position: absolute; left: 14mm; right: 14mm; bottom: 12mm; }
