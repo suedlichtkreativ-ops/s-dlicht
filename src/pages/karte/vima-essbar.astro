@@ -2,7 +2,7 @@
 /**
  * Speisekarte VIMA ESSBAR, Kaufbeuren. Web-Karte für den QR-Code am Tisch und Druckvorlage zugleich.
  * Inhalte kommen aus src/data/vima-karte.ts. Eigenständige Seite ohne Website-Navigation, noindex.
- * Welt: klassisches Kaffeehaus. Braun, Creme und Gold aus dem Logo, dazu Elfenbein fürs Frühstück und Flaschengrün
+ * Welt: klassisches Kaffeehaus. Braun, Creme und Gold aus dem Logo, dazu Elfenbein fürs Frühstück und Bordeaux
  * für Wein und Sekt. Ein feines Rautengitter in Gold als einziges Muster. Nirgends nur „Essbar“, immer „Vima Essbar“.
  */
 import { Picture } from 'astro:assets';
@@ -141,7 +141,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       </div>
 
       {bar.map((k, i) => (
-      <div class="pg gruen">
+      <div class="pg bordeaux">
         <section id={k.id} class="chapter">
           <h2 class="chapter-title">{k.titel}</h2>
           {k.gruppen.map((g) => {
@@ -266,7 +266,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
   .logo { width: min(23rem, 76vw); line-height: 0; }
   .logo svg { width: 100%; height: auto; display: block; }
 
-  /* Die Blätter: Elfenbein am Morgen, Kaffeebraun für warme Getränke, Flaschengrün für Wein und Sekt */
+  /* Die Blätter: Elfenbein am Morgen, Kaffeebraun für warme Getränke, Bordeaux für Wein und Sekt */
   .hell {
     --blatt: #f3ebdc;
     --tinte: #3b2415;
@@ -279,13 +279,13 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     --blatt: #3a210c;
     --rahmen: rgb(194 168 116 / 0.4);
   }
-  .gruen {
-    --blatt: #1e382c;
-    --tinte: #eee9de;
-    --grau: #bcc3af;
-    --gold: #c9b07a;
-    --linie: rgb(201 176 122 / 0.22);
-    --rahmen: rgb(201 176 122 / 0.42);
+  .bordeaux {
+    --blatt: #43201d;
+    --tinte: #f0e8de;
+    --grau: #cdb5a6;
+    --gold: #c9ab74;
+    --linie: rgb(201 171 116 / 0.22);
+    --rahmen: rgb(201 171 116 / 0.42);
   }
   .sheet {
     max-width: calc(var(--measure) + 2 * var(--gutter));
