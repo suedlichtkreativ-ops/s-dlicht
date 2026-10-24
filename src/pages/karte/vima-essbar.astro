@@ -2,11 +2,9 @@
 /**
  * Speisekarte VIMA ESSBAR, Kaufbeuren. Web-Karte für den QR-Code am Tisch und Druckvorlage zugleich.
  * Inhalte kommen aus src/data/vima-karte.ts. Eigenständige Seite ohne Website-Navigation, noindex.
- * Welt: das weiße Blatt auf dem lachsfarbenen Umschlag der Mappe. Morgens Papier, ab den Getränken Barlicht.
+ * Welt: das weiße Blatt auf dem lachsfarbenen Umschlag der Mappe, wie in der bisherigen Karte.
  */
-import { Picture } from 'astro:assets';
 import { info, reise, fruehstueck, getraenke, zusatzstoffe, hinweise, type Posten } from '../../data/vima-karte';
-import espresso from '../../assets/work/06_vima_essbar.jpg';
 
 const nav = [
   { id: 'weltreise', label: 'Weltreise' },
@@ -116,9 +114,6 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
       ))}
 
       <div class="pg">
-      <figure class="photo">
-        <Picture src={espresso} widths={[640, 1080, 1600]} sizes="(min-width: 48rem) 46rem, 100vw" formats={['avif', 'webp']} alt="Espresso läuft aus dem Siebträger in die Tasse" />
-      </figure>
 
       <section id={warm.id} class="chapter">
         <h2 class="chapter-title">{warm.titel}</h2>
@@ -220,9 +215,9 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     --lachs: #f2a487;
     --rot: #d6372b;
     --papier: #fffefc;
-    --tinte: #262321;
-    --grau: #5f5a56;
-    --linie: rgb(38 35 33 / 0.1);
+    --tinte: #222222;
+    --grau: #5c5c5c;
+    --linie: rgb(34 34 34 / 0.1);
     --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
     --script: 'Essbar Script', cursive;
     --gutter: clamp(1rem, 5vw, 3.5rem);
@@ -282,7 +277,7 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
     z-index: 1;
   }
   @media (min-width: 48rem) {
-    .sheet { box-shadow: 0 1px 0 rgb(38 35 33 / 0.06), 0 24px 48px -32px rgb(150 60 40 / 0.4); }
+    .sheet { box-shadow: 0 1px 0 rgb(34 34 34 / 0.06), 0 24px 48px -32px rgb(150 60 40 / 0.4); }
   }
 
   .tabs {
@@ -392,10 +387,6 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
 
   .notes { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--linie); display: grid; gap: 0.5rem; color: var(--grau); font-size: 0.95rem; max-width: 34rem; }
 
-  /* Foto auf dem Blatt, randabfallend */
-  .photo { margin: clamp(3rem, 9vw, 4.5rem) calc(-1 * var(--gutter)) 0; }
-  .photo img { display: block; width: 100%; height: clamp(14rem, 55vw, 24rem); object-fit: cover; object-position: 50% 62%; }
-
   .group + .group { margin-top: 2.25rem; }
   .group-title {
     display: inline-block;
@@ -488,8 +479,6 @@ const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
 
     .notes { margin-top: 7mm; padding-top: 3mm; font-size: 8.8pt; gap: 1mm; }
 
-    .photo { margin: -11mm -14mm 7mm; }
-    .photo img { height: 62mm; }
     #warm .group:first-of-type .items { columns: 2; column-gap: 9mm; }
     #warm .group:first-of-type .item { break-inside: avoid; }
     .group + .group { margin-top: 6mm; }
