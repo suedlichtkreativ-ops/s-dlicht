@@ -1,0 +1,525 @@
+---
+/**
+ * Speisekarte VIMA ESSBAR, Kaufbeuren. Web-Karte für den QR-Code am Tisch und Druckvorlage zugleich.
+ * Inhalte kommen aus src/data/vima-karte.ts. Eigenständige Seite ohne Website-Navigation, noindex.
+ * Welt: das weiße Blatt auf dem lachsfarbenen Umschlag der Mappe. Morgens Papier, ab den Getränken Barlicht.
+ */
+import { Picture } from 'astro:assets';
+import { info, reise, fruehstueck, getraenke, zusatzstoffe, hinweise, type Posten } from '../../data/vima-karte';
+import espresso from '../../assets/work/06_vima_essbar.jpg';
+import portrait from '../../assets/work/18_vima_essbar.jpg';
+
+const nav = [
+  { id: 'weltreise', label: 'Weltreise' },
+  ...fruehstueck.map((k) => ({ id: k.id, label: k.titel.replace('Essbar ', '').replace('Für Unentschlossene', 'Kleinigkeiten') })),
+  { id: 'warm', label: 'Kaffee' },
+  { id: 'wein', label: 'Wein' },
+  { id: 'sekt', label: 'Sekt' },
+];
+
+const km = (n: number) => (n === 0 ? 'hier bei uns' : `${n.toLocaleString('de-DE')} km`);
+const fn = (p: Posten) => (p.fn?.length ? p.fn.join(',') : '');
+const [warm, ...bar] = getraenke;
+// Druckseiten: welche Kapitel zusammen auf ein Blatt kommen. Am Bildschirm wirken die Seiten-Container nicht.
+const fruehstueckSeiten = [fruehstueck.slice(0, 2), fruehstueck.slice(2)];
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#F2A487" />
+    <title>Speisekarte | {info.name} {info.ort}</title>
+    <meta name="description" content={`Frühstück, Kaffee und Wein in der ${info.name} in ${info.ort}.`} />
+    <link rel="preload" href="/fonts/vima/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/vima/great-vibes-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <header class="cover">
+      <p class="vima">Vima</p>
+      <h1 class="wordmark"><span class="sr">{info.name}</span><span aria-hidden="true">essbar</span></h1>
+      <div class="cover-print">
+        <p>{info.ort}</p>
+        <dl>
+          <dt>Frühstück</dt>
+          {info.fruehstueck.map((f) => <dd>{f.tage}, {f.zeit}</dd>)}
+        </dl>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Bereiche der Karte">
+      <ul>
+        {nav.map((n) => <li><a href={`#${n.id}`}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <main class="sheet">
+
+      <section class="hours" aria-label="Frühstückszeiten">
+        <h2>Frühstück</h2>
+        <dl>
+          {info.fruehstueck.map((f) => (<div><dt>{f.tage}</dt><dd>{f.zeit}</dd></div>))}
+        </dl>
+      </section>
+
+      <div class="pg">
+      <section id="weltreise" class="chapter">
+        <h2 class="chapter-title">Weltreise</h2>
+        <p class="intro">Frühstücken wie in den Städten dieser Welt. Die Reise beginnt in Kaufbeuren.</p>
+        <ol class="route">
+          {reise.map((r) => (
+            <li class="stop">
+              <div class="stop-head">
+                <h3 class="city">{r.stadt}</h3>
+                <span class="km">{km(r.km)}</span>
+                <span class="price">{r.preis}</span>
+              </div>
+              {r.name !== r.stadt && <p class="dish">{r.name}</p>}
+              {r.hinweis && <p class="flag">{r.hinweis}</p>}
+              <p class="desc">{r.text}{fn(r) && <sup>{fn(r)}</sup>}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <aside class="notes print-only">
+        <p>{hinweise[0]}</p>
+        <p>{hinweise[1]}</p>
+      </aside>
+      </div>
+
+      {fruehstueckSeiten.map((seite, i) => (
+      <div class="pg">
+      {seite.map((k) => (
+        <section id={k.id} class="chapter">
+          <h2 class="chapter-title">{k.titel}</h2>
+          {k.gruppen.map((g) => (
+            <ul class="items">
+              {g.posten.map((p) => (
+                <li class="item">
+                  <span class="name">{p.name}{fn(p) && <sup>{fn(p)}</sup>}{p.vegan && <span class="vegan">auch vegan</span>}</span>
+                  <span class="price">{p.preis}</span>
+                  {p.text && <span class="desc">{p.text}</span>}
+                </li>
+              ))}
+            </ul>
+          ))}
+        </section>
+      ))}
+      {i === fruehstueckSeiten.length - 1 && (
+        <aside class="notes screen-only">
+          <p>{hinweise[0]}</p>
+          <p>{hinweise[1]}</p>
+        </aside>
+      )}
+      </div>
+      ))}
+    </main>
+
+    <div class="bar">
+      <div class="pg">
+      <figure class="bar-photo">
+        <Picture src={espresso} widths={[640, 1080, 1600]} sizes="100vw" formats={['avif', 'webp']} alt="Espresso läuft aus dem Siebträger in die Tasse" />
+      </figure>
+
+      <section id={warm.id} class="chapter dark">
+        <h2 class="chapter-title">{warm.titel}</h2>
+        {warm.gruppen.map((g) => (
+          <div class="group">
+            {g.titel && <h3 class="group-title">{g.titel}</h3>}
+            <ul class="items">
+              {g.posten.map((p) => (
+                <li class="item">
+                  <span class="name">{p.name}{p.menge && <span class="size">{p.menge}</span>}</span>
+                  <span class="price">{p.preis}</span>
+                  {p.text && <span class="desc">{p.text}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+      </div>
+
+      {bar.map((k, i) => (
+      <div class="pg">
+      {i === 0 && (
+      <figure class="bar-photo slim">
+        <Picture src={portrait} widths={[640, 1080, 1600]} sizes="100vw" formats={['avif', 'webp']} alt="Lachende Mitarbeiterin hinter der Bar der VIMA ESSBAR" />
+      </figure>
+      )}
+        <section id={k.id} class="chapter dark">
+          <h2 class="chapter-title">{k.titel}</h2>
+          {k.gruppen.map((g) => {
+            const split = g.posten.some((p) => p.preis.includes('/'));
+            return (
+              <div class="group">
+                {g.titel && <h3 class="group-title">{g.titel}</h3>}
+                {split && <p class="cols" aria-hidden="true">{(g.posten[0].menge ?? '').split(' / ').map((m) => <span>{m}</span>)}</p>}
+                <ul class={split ? 'items wine' : 'items'}>
+                  {g.posten.map((p) => {
+                    const [a, b] = p.preis.split(' / ');
+                    const [ma, mb] = (p.menge ?? '').split(' / ');
+                    return (
+                      <li class="item">
+                        <span class="name">{p.name}{p.zusatz && <em class="extra">{p.zusatz}</em>}{!split && p.menge && <span class="size">{p.menge}</span>}</span>
+                        {split ? (
+                          <span class="price pair">
+                            <span><span class="sr">{ma} </span>{a}</span>
+                            <span><span class="sr">{mb} </span>{b}</span>
+                          </span>
+                        ) : (
+                          <span class="price">{p.preis}</span>
+                        )}
+                        {p.text && <span class="desc">{p.text}</span>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+        </section>
+      {i === bar.length - 1 && (
+      <footer class="foot">
+        <p class="foot-mark" aria-hidden="true">essbar</p>
+        <ul>
+          {Object.entries(zusatzstoffe).map(([n, t]) => <li><sup>{n}</sup> {t}</li>)}
+          <li>{hinweise[2]}</li>
+          <li>{hinweise[3]}</li>
+        </ul>
+      </footer>
+      )}
+      </div>
+      ))}
+    </div>
+
+    <script>
+      // Aktuellen Bereich in der Leiste markieren und sichtbar halten
+      const links = [...document.querySelectorAll<HTMLAnchorElement>('.tabs a')];
+      const byId = new Map(links.map((a) => [a.hash.slice(1), a]));
+      let current: HTMLAnchorElement | undefined;
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            const a = byId.get(e.target.id);
+            if (!a || a === current) continue;
+            current?.removeAttribute('aria-current');
+            a.setAttribute('aria-current', 'true');
+            current = a;
+            a.scrollIntoView({ block: 'nearest', inline: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+          }
+        },
+        { rootMargin: '-30% 0px -65% 0px' },
+      );
+      byId.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @font-face { font-family: 'Newsreader'; src: url('/fonts/vima/newsreader-latin-wght-normal.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Newsreader'; src: url('/fonts/vima/newsreader-latin-wght-italic.woff2') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Essbar Script'; src: url('/fonts/vima/great-vibes-latin-400-normal.woff2') format('woff2'); font-display: block; }
+
+  :root {
+    --lachs: #f2a487;
+    --rot: #d6372b;
+    --papier: #fffcf8;
+    --espresso: #2b1b15;
+    --kakao: #6e4a3a;
+    --schaum: #f4e6da;
+    --crema: #c99a74;
+    --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+    --script: 'Essbar Script', cursive;
+    --gutter: clamp(1rem, 5vw, 3.5rem);
+    --measure: 40rem;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--lachs);
+    color: var(--espresso);
+    font: 400 1.0625rem/1.5 var(--serif);
+    font-variant-numeric: lining-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  sup { font-size: 0.62em; line-height: 0; margin-left: 0.1em; font-style: normal; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--rot); outline-offset: 3px; border-radius: 2px; }
+
+  /* Umschlag: Schriftzug ragt über die Kante des Blatts, wie in der Mappe */
+  .cover {
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: clamp(2.5rem, 9vw, 5rem) var(--gutter) 0;
+    display: grid;
+    justify-items: end;
+    position: relative;
+    z-index: 6;
+  }
+  .vima {
+    font-size: 0.95rem;
+    letter-spacing: 0.32em;
+    margin-right: 0.6em;
+    color: var(--espresso);
+    font-weight: 500;
+  }
+  .wordmark {
+    font: 400 clamp(5.5rem, 27vw, 12.5rem)/0.8 var(--script);
+    color: var(--rot);
+    margin-bottom: -0.2em;
+    letter-spacing: -0.01em;
+  }
+
+  /* Das Blatt */
+  .sheet {
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+    margin: 0 auto;
+    background: var(--papier);
+    padding: 0 var(--gutter) clamp(3rem, 8vw, 5rem);
+    position: relative;
+    z-index: 1;
+  }
+  @media (min-width: 48rem) {
+    .sheet { box-shadow: 0 1px 0 rgb(43 27 21 / 0.06), 0 24px 48px -32px rgb(120 50 30 / 0.45); }
+  }
+
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+    margin: 0 auto;
+    background: var(--papier);
+    border-bottom: 1px solid rgb(43 27 21 / 0.1);
+  }
+  .tabs ul {
+    display: flex;
+    gap: 1.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 1.6rem var(--gutter) 0.85rem;
+    scroll-padding-inline: var(--gutter);
+  }
+  .tabs ul::-webkit-scrollbar { display: none; }
+  .tabs a {
+    display: block;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 1rem;
+    color: var(--kakao);
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+  }
+  .tabs a:hover { color: var(--espresso); }
+  .tabs a[aria-current] { color: var(--espresso); border-bottom-color: var(--rot); }
+
+  /* Frühstückszeiten */
+  .hours { padding: clamp(2.5rem, 7vw, 3.5rem) 0 0; }
+  .hours h2 { font-size: clamp(2.6rem, 9vw, 3.6rem); font-weight: 350; line-height: 1; letter-spacing: -0.02em; }
+  .hours dl { margin-top: 1.1rem; display: grid; gap: 0.2rem; }
+  .hours div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid rgb(43 27 21 / 0.1); padding: 0.45rem 0; }
+  .hours dt { color: var(--kakao); }
+  .hours dd { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* Kapitel und Posten */
+  .chapter { padding-top: clamp(3rem, 9vw, 4.5rem); }
+  .chapter-title {
+    font-size: clamp(1.9rem, 6vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin-bottom: 1.25rem;
+  }
+  .intro { color: var(--kakao); font-style: italic; margin: -0.5rem 0 1.75rem; max-width: 30rem; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 1.25rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgb(43 27 21 / 0.08);
+  }
+  .item:last-child { border-bottom: 0; }
+  .name { font-weight: 450; }
+  .price { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; font-weight: 450; }
+  .desc { grid-column: 1 / -1; color: var(--kakao); font-style: italic; font-size: 0.97rem; line-height: 1.45; max-width: 34rem; margin-top: 0.1rem; }
+  .vegan, .size {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.9em;
+    color: var(--kakao);
+    margin-left: 0.5em;
+  }
+  .extra { font-weight: 400; margin-left: 0.4em; color: var(--kakao); }
+  #klassiker .item { padding: 0.9rem 0; }
+  #klassiker .name { font-size: 1.15rem; }
+
+  /* Weltreise: Route ab Kaufbeuren */
+  .route { position: relative; padding-left: 1.75rem; }
+  .route::before {
+    content: '';
+    position: absolute;
+    left: 0.3rem;
+    top: 1.6rem;
+    bottom: 2.5rem;
+    border-left: 2px dashed var(--rot);
+    opacity: 0.55;
+  }
+  .stop { --city: clamp(1.9rem, 7.5vw, 2.7rem); position: relative; padding: 0 0 1.9rem; }
+  .stop::before {
+    content: '';
+    position: absolute;
+    left: calc(-1.75rem + 0.3rem - 5px);
+    top: calc(var(--city) * 0.66 - 6px);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--papier);
+    border: 2px solid var(--rot);
+  }
+  .stop:first-child::before { background: var(--rot); }
+  .stop-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+  .city {
+    font-size: var(--city);
+    font-weight: 330;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .km { font-style: italic; color: var(--rot); font-size: 0.95rem; white-space: nowrap; }
+  .stop-head .price { margin-left: auto; font-size: 1.15rem; }
+  .dish { font-weight: 500; margin-top: 0.15rem; }
+  .flag { font-style: italic; color: var(--rot); margin-top: 0.1rem; }
+  .stop .desc { margin-top: 0.3rem; display: block; }
+
+  .notes { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid rgb(43 27 21 / 0.15); display: grid; gap: 0.5rem; color: var(--kakao); font-size: 0.95rem; max-width: 34rem; }
+
+  /* Barlicht: Getränke */
+  .bar {
+    background: var(--espresso);
+    color: var(--schaum);
+    margin-top: clamp(-2rem, -4vw, -1rem);
+    padding-bottom: clamp(3rem, 8vw, 5rem);
+  }
+  .bar-photo { position: relative; }
+  .bar-photo img { display: block; width: 100%; height: clamp(16rem, 62vw, 34rem); object-fit: cover; object-position: 50% 62%; }
+  .bar-photo::after { content: ''; position: absolute; inset: auto 0 0; height: 45%; background: linear-gradient(transparent, var(--espresso)); }
+  .bar-photo.slim { margin-top: clamp(3rem, 8vw, 5rem); }
+  .bar-photo.slim img { height: clamp(14rem, 48vw, 26rem); object-position: 50% 28%; }
+
+  .chapter.dark, .foot {
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+  .bar-photo + .chapter.dark { padding-top: 0; margin-top: clamp(-4rem, -8vw, -2.5rem); position: relative; }
+  .dark .chapter-title { color: var(--schaum); }
+  .dark .item { border-bottom-color: rgb(244 230 218 / 0.1); }
+  .dark .desc, .dark .size, .dark .extra { color: var(--crema); }
+  .group + .group { margin-top: 2.25rem; }
+  .group-title { font-size: 1.05rem; font-style: italic; font-weight: 400; color: var(--crema); margin-bottom: 0.35rem; }
+
+  /* Wein: zwei Preisspalten */
+  .cols, .pair { display: grid; grid-template-columns: 3.4rem 3.4rem; gap: 0 0.9rem; text-align: right; }
+  .cols { justify-content: end; font-style: italic; color: var(--crema); font-size: 0.9rem; }
+  .cols span, .pair > span { display: block; }
+
+  @media (min-width: 60rem) {
+    #warm .group:first-of-type .items { columns: 2; column-gap: 3rem; }
+    #warm .group:first-of-type .item { break-inside: avoid; }
+  }
+
+  .foot { padding-top: clamp(3.5rem, 9vw, 5rem); display: grid; gap: 1.25rem; justify-items: start; }
+  .foot-mark { font: 400 4.5rem/0.9 var(--script); color: var(--lachs); }
+  .foot ul { display: grid; gap: 0.35rem; color: var(--crema); font-size: 0.92rem; }
+
+  .pg { display: contents; }
+  .print-only { display: none; }
+  .cover-print { display: none; }
+
+  /*
+   * Druck: A4 mit 3 mm Beschnitt (216 × 303 mm). Jede Seite ist ein Blatt im lachsfarbenen Rahmen der Mappe,
+   * der Getränketeil ein dunkles Blatt. Für die Druckerei als PDF exportieren, Hintergrundgrafiken an.
+   */
+  @page { size: 216mm 303mm; margin: 0; }
+  @media print {
+    html { scroll-behavior: auto; }
+    body { font-size: 10pt; line-height: 1.38; background: var(--lachs); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tabs, .hours, .screen-only { display: none; }
+    .print-only { display: grid; }
+
+    .cover {
+      height: 303mm;
+      max-width: none;
+      margin: 0;
+      padding: 0 24mm 30mm;
+      align-content: end;
+      justify-items: start;
+      break-after: page;
+    }
+    .vima { font-size: 13pt; margin: 0 0 4mm 2mm; }
+    .wordmark { font-size: 176pt; margin: 0 0 0 -2mm; }
+    .cover-print { display: block; margin: 14mm 0 0 2mm; font-size: 11pt; line-height: 1.5; }
+    .cover-print p { font-size: 13pt; margin-bottom: 8mm; }
+    .cover-print dt { font-style: italic; margin-bottom: 1mm; }
+
+    .sheet, .bar { max-width: none; margin: 0; padding: 0; background: none; box-shadow: none; }
+
+    .pg {
+      display: block;
+      position: relative;
+      height: 303mm;
+      border: solid var(--lachs);
+      border-width: 27mm 12mm 12mm;
+      background: var(--papier);
+      padding: 11mm 14mm 10mm;
+      break-after: page;
+    }
+    .pg::before {
+      content: 'essbar';
+      position: absolute;
+      right: 2mm;
+      top: -21mm;
+      font: 400 44pt/1 var(--script);
+      color: var(--rot);
+    }
+    .bar .pg { background: var(--espresso); }
+
+    .chapter, .chapter.dark { max-width: none; margin: 0; padding: 0; }
+    .chapter + .chapter { margin-top: 9mm; }
+    .chapter-title { font-size: 21pt; margin-bottom: 3mm; }
+    .intro { margin: -1mm 0 5mm; }
+    .item { padding: 1.3mm 0; column-gap: 6mm; }
+    #klassiker .item { padding: 2mm 0; }
+    #klassiker .name { font-size: 11pt; }
+    .desc { font-size: 9.2pt; line-height: 1.32; max-width: 135mm; }
+    .item, .stop, .group { break-inside: avoid; }
+
+    .stop { --city: 18pt; padding-bottom: 4.2mm; }
+    .route::before { top: 4mm; bottom: 8mm; }
+    .stop-head .price { font-size: 11pt; }
+    .stop .desc { margin-top: 0.6mm; }
+
+    .notes { margin-top: 7mm; padding-top: 3mm; font-size: 8.8pt; gap: 1mm; }
+
+    .bar-photo, .bar-photo.slim { margin: -11mm -14mm 0; }
+    .bar-photo img { height: 82mm; }
+    .bar-photo.slim img { height: 70mm; }
+    .bar-photo + .chapter.dark { margin-top: -13mm; }
+    .group + .group { margin-top: 6mm; }
+    .group-title { margin-bottom: 1mm; }
+    .foot { max-width: none; margin: 0; padding: 0; position: absolute; left: 14mm; right: 14mm; bottom: 12mm; }
+    .foot-mark { font-size: 40pt; }
+    .foot ul { font-size: 8.8pt; }
+  }
+</style>
